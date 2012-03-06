@@ -1,0 +1,24 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+<h3>List of calendar assignments defined</h3>
+<ul>
+{% for event in user.calevents %}
+    <li><a href="{{event.url}}">{{event.name}}</a>
+        {% if event.shortname in user.challenges %}
+        -
+        <a href="{{user.challenges[event.shortname].userchallengeurl(user.shortname)}}">Submit File</a>
+            {% if user.challenges[event.shortname].submitted() and user.challenges[event.shortname].passes() %}
+            (<span class='passed'>PASSED!</span>)
+            {% elif user.challenges[event.shortname].submitted() and not user.challenges[event.shortname].passes() %}
+            (<span class='failed'>FAILED!</span>)
+            {% else %}
+            (missing)
+            {% endif %}
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

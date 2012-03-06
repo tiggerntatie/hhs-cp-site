@@ -1,0 +1,216 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+        
+        <p>
+            Once you have PyCharm up and running for the first time, you should create a new project. It doesn't matter
+            what you call it at this point, but you might name it something like "test". Your choice.
+        </p>
+        <p>
+            With the project created, you can access the Python console. If you are using your own personal computer
+            (especially a Mac) you can access the Python console from terminal. Since the school computers are
+            configured to not allow students access to terminal, we will have to use the terminal that is built in 
+            to PyCharm.
+        </p>
+        <h3>Accessing the console</h3>
+        <p>
+            The console is accessible from Pycharm at <code>Tools/Run Python Console...</code>. This will open
+            a window at the bottom of the PyCharm screen. The console is divided into two sections, top and bottom.
+            The bottom section is the place where you do your typing. There is a prompt that looks like:
+        </p>
+        <pre class="prettyprint lang-py">>>></pre>
+        <p>
+            This is where you will do your typing. The top section will display Python's response.
+        </p>
+        <h3>By the numbers</h3>
+        <p>
+            Start by typing some numbers. Press return or enter when you are done with each number. Try typing numbers
+            with and without decimal points. You can even enter complex numbers! Each time you type a number, Python 
+            creates an <em>object</em> in the computer's memory that represents the number, then it shows you the value.
+            Once Python has shown you the value, it throws the number away and forgets all about it!
+        </p>
+        <p>
+            Your window might look something like this (the number with the <strong>j</strong> is imaginary):
+        </p>
+        <pre class="prettyprint lang-py">>>> 3
+Out[3]: 3
+>>> 3.
+Out[4]: 3.0
+>>> 55532235
+Out[5]: 55532235
+>>> 234234.23423525
+Out[6]: 234234.23423525001
+>>> 32j
+Out[7]: 32j</pre>
+        <p>
+            If you want to keep your numbers around, you have assign them to variable names using the assignment 
+            operator: <strong>=</strong> . This is sort of like using the M+ key on your calculator:
+        </p>
+        <pre class="prettyprint lang-py">>>> a = 1
+>>> b = 23.5
+>>> pi = 3.14159
+>>> num77 = 77
+>>> a
+Out[12]: 1
+>>> b
+Out[13]: 23.5
+>>> pi
+Out[14]: 3.1415899999999999</pre>
+        <p>
+            Notice that floating point numbers often aren't <em>exactly</em> the same as what you entered! Integer
+            numbers <em>will</em> be exactly what you entered. Variable names must begin with a letter (upper or
+            lower case) and can be as long as you like, and may contain underscore characters or numerals (but not
+            as the first character). Since there a lot of variable names that you could imagine, this is like having
+            as many M+ keys on a calculator as you want.
+        </p>
+        <h3>Math (ugh)</h3>
+        <p>
+            As you might expect, Python can actually <em>do things</em> with those numbers.
+        </p>
+        <pre class="prettyprint lang-py">>>> a*b
+Out[44]: 23.5
+>>> a*b # multiplication
+Out[45]: 23.5
+>>> a/b # division
+Out[46]: 0.042553191489361701
+>>> a//b # integer division
+Out[47]: 0.0
+>>> b//a
+Out[48]: 23.0
+>>> (3+5)*pi/43.0 # Parentheses are good too
+Out[49]: 0.5844818604651163</pre>
+        <h3>Strings (text)</h3>
+        <p>
+            Python isn't just a calculator. You can create text objects on the fly by typing text, enclosed in either
+            single ('), double ("), or triple (""" or ''') quotes. These are called <em>strings</em> (for historical)
+            reasons, not because they are very stringy):
+        </p>
+        <pre class="prettyprint lang-py">>>> "Python is named after Monty Python"
+Out[19]: 'Python is named after Monty Python'
+>>> '''This is text enclosed in a triple single quote!'''
+Out[20]: 'This is text enclosed in a triple single quote!'
+>>> """Triple quoted text can include quotes in it (like this: ") without confusing Pythons"""
+Out[21]: 'Triple quoted text can include quotes in it (like this: ") without confusing Pythons'
+>>> myname = "Mr. Dennison"
+>>> myname
+Out[23]: 'Mr. Dennison'</pre>
+        <h3>Collections</h3>
+        <p>
+            One of Python's strengths is that it very good at handling lots of objects at once. One way
+            Python lets you do this is by putting objects (like numbers or strings) into <em>lists</em>:
+        </p>
+        <pre class="prettyprint lang-py">>>> someevens = [2,4,6,8,10,12,14,16,18,20]
+>>> somenames = ['Tom', 'Dick', 'Harry']
+>>> somelastnames = ['Wilson', 'Smith', 'Jones']</pre>
+        <p>
+            Once you have a list of things you can pull out individual items from the list, or sections of the list:
+        </p>
+        <pre class="prettyprint lang-py">>>> someevens[0]
+Out[27]: 2
+>>> someevens[5]
+Out[28]: 12
+>>> someevens[0]  # This retrieves the zeroth (or first) item
+Out[29]: 2
+>>> someevens[5]  # The sixth item (zeroth is first)
+Out[30]: 12
+>>> someevens[5:7]  # Sixth up to but not including seventh
+Out[31]: [12, 14]
+>>> someevens[5:]
+Out[32]: [12, 14, 16, 18, 20]
+>>> someevens[:7]  # Can you figure out what this does?
+Out[33]: [2, 4, 6, 8, 10, 12, 14]
+>>> someevens[7:5:-1]  # how about in reverse?
+Out[34]: [16, 14]</pre>
+        <p>
+            You can change parts of the list too. Remember <code>somelastnames</code>?:
+        </p>
+        <pre class="prettyprint lang-py">>>> somelastnames
+Out[35]: ['Wilson', 'Smith', 'Jones']
+>>> somelastnames[1] = 'Ramalamadingdong'
+>>> somelastnames
+Out[37]: ['Wilson', 'Ramalamadingdong', 'Jones']</pre>
+        <p>
+            I can even assign variables to other variables, but it does not make a new copy of the object. Try this:
+        </p>
+        <pre class="prettyprint lang-py">>>> morelastnames = somelastnames
+>>> print(morelastnames)
+['Wilson', 'Ramalamadingdong', 'Jones']
+>>> print(somelastnames)
+['Wilson', 'Ramalamadingdong', 'Jones']
+>>> somelastnames[1] = 'Boring'
+>>> print(somelastnames)
+['Wilson', 'Boring', 'Jones']
+>>> print(morelastnames)
+['Wilson', 'Boring', 'Jones']</pre>
+        <p>
+            I made change to the list object <code>somelastnames</code>, and it changed not only <code>somelastnames</code>,
+            it also changed <code>morelastnames</code>! This is because both variables were pointing to the same object.
+            So variables are <em>not</em> exactly like the post office box model for computer memory. Different names
+            (variables) can quite easily refer to the same object in memory.
+        </p>
+        <p>
+            You may have noticed that I'm not just typing the variable, I am using a <em>function</em> for printing
+            the value of these variables or expressions to the screen. When you start writing programs that produce
+            text on the screen, you will have to use the <code>print</code> function too.
+        </p>
+        <h3>Generating lists and list comprehensions</h3>
+        <p>
+            Now it's time to make some magic with lists! You can use one list to generate another list. Suppose
+            I want to generate a list of odd numbers from my list of even numbers:
+        </p>
+        <pre class="prettyprint lang-py">>>> print(someevens)
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+>>> someodds = [x+1 for x in someevens]
+>>> print(someodds)
+[3, 5, 7, 9, 11, 13, 15, 17, 19, 21]</pre>
+        <p>
+            If you need a quick way of generating a list of integers, use the built in range function:
+        </p>
+        <pre class="prettyprint lang-py">>>> hundred = range(1,100)
+>>> print(hundred)
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99]</pre>
+        <p>
+            You can zip two lists together and make a list of tiny tuples (a tuple is a special kind of list that can't
+            be modified):
+        </p>
+        <pre class="prettyprint lang-py">>>> evenodd = zip(someevens, someodds)
+>>> print(evenodd)
+[(2, 3), (4, 5), (6, 7), (8, 9), (10, 11), (12, 13), (14, 15), (16, 17), (18, 19), (20, 21)]</pre>
+        <h3>Lambda functions</h3>
+        <p>
+            If you have a quick mathematical operation that you'd like to repeat with lots of different numbers
+            you could make your own function. For example, if I want a quick way to convert degrees Fahrenheit 
+            to degrees Celsius:
+        </p>
+        <pre class="prettyprint lang-py">>>> celsius = lambda f: (f-32.0)/1.8
+>>> print(celsius(32))
+0.0
+>>> print(celsius(70))
+21.1111111111</pre>
+        <h3>Putting it together</h3>
+        <p>
+            Suppose I have a list of numbers that represent temperatures in Fahrenheit, and I would like to make
+            a new list of the converted temperatures in Celsius. With my new celsius function and the list generating
+            idea:
+        </p>
+        <pre class="prettyprint lang-py">>>> f_temperatures = [32.0, 15.5, -55.3, 62, 36.3]
+>>> c_temperatures = [celsius(x) for x in f_temperatures]
+>>> print(c_temperatures)
+[0.0, -9.1666666666666661, -48.5, 16.666666666666668, 2.3888888888888871]</pre>
+        <p>
+            You could also use a builtin Python function, <code>map</code>, to do a similar thing:
+        </p>
+        <pre class="prettyprint lang-py">>>> c = map(celsius, f_temperatures)
+>>> print(c)
+[0.0, -9.1666666666666661, -48.5, 16.666666666666668, 2.3888888888888871]</pre>
+        <h3>Try It!</h3>
+        <p>
+            Write your own lambda function that does some kind of conversion. Inches to centimeters? Pounds to
+            kilograms? Then see if you can convert a list of values like the example above. Can you write a lambda
+            function that accepts two arguments? Can you write one that returns two values? You may have to do some
+            research to figure it out.
+        </p>
+{% endblock %}

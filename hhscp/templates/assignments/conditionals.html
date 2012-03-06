@@ -1,0 +1,143 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            Being able to accept input from the user and print some kind of output is all well and good, but we expect
+            computers to be able to make some <em>decisions</em> once in a while, and this is where <em>conditionals</em>
+            come in to the picture.
+        </p>
+        <p>
+            The basic idea of a conditional is to look at whether something is true or not, then make a decision
+            based on that. For example, when you are getting dressed to go to school in the morning you might look
+            at the thermometer. Your logic might go something like this:
+        </p>
+        <p>
+            <code>If the temperature is below 20 degrees (F) then wear long pants, otherwise wear short pants.</code>
+        </p>
+        <p>
+            To make it easier to see the structure of this decision, we might want to lay out the text a little
+            differently:
+        </p>
+        <pre>If the temperature is below 20 degrees (F) then
+    wear long pants
+otherwise
+    wear short pants</pre>
+        <p>
+            This is exactly the way Python likes to make its decisions, except it uses some very specific language:
+        </p>
+        <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
+if temperature &lt; 20:
+    print("You should wear your long pants.")
+else:
+    print("You should wear your short pants.")</pre>
+
+        <p>
+            Try this code out yourself to see how it works.
+        </p>
+        <p>
+            There are several ways of making decisions about objects. The example above used the &lt; symbol, which means
+            "less than". Here are some more:
+        </p>
+        <dl>
+            <dt>&gt;</dt>
+            <dd>greater than</dd>
+            <dt>==</dt>
+            <dd>equal to (do NOT use the = symbol: that is used only to assign values!)</dd>
+            <dt>!=</dt>
+            <dd>not equal to</dd>
+            <dt>is</dt>
+            <dd>is the same object as</dd>
+            <dt>&lt;=</dt>
+            <dd>less than or equal to</dd>
+            <dt>&gt;=</dt>
+            <dd>greater than or equal to</dd>
+        </dl>
+        <p>
+            There are a few other things about the example above that you should know. The code that Python should
+            execute if the condition is true must be indented following the if statement. Likewise with the code
+            that follows the else (and these can consist of more than one line). Any statement that precedes an
+            indented block must end with a colon (or, looking
+            at it another way: any if or else statement must end with a colon).
+        </p>
+        <p>
+            You can combine conditionals using <code>and</code> and <code>or</code>, thus:
+        </p>
+        <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
+gender = raw_input("Are you a boy or a girl? ")
+gender = gender.lower() # change to lower case
+if temperature < 20 and gender == "boy":
+    print("You should wear your long pants")
+elif temperature < 20 and gender == "girl":
+    print("You might want to wear a warm dress")
+elif temperature >= 20 and gender == "boy":
+    print("You should wear shorts today")
+else: # the only combination left is girl and temperature >= 20
+    print("You could wear a short skirt today")</pre>
+        <p>
+            This example only uses the <code>and</code> keyword. It will decide that the condition is True only if
+            <strong>both</strong> of the conditions are True. If one of them is False then the whole thing is False.
+            The <code>or</code> keyword (which isn't in this example) decides the condition is True if
+            <strong>either</strong> of the conditions is True. The whole thing is False only if both of them are False.
+            You can combine conditions using <code>and</code> and <code>or</code> to your heart's content by enclosing
+            combinations of them in parenthesis to control the order in which they are evaluated.
+        </p>
+        <p>
+            This example also introduced the <code>elif</code> keyword, which lets you chain a series of conditionals
+            together. This construct replaces the switch/case statement that you would be familiar with if you know 
+            some older computer languages.
+        </p>
+        <p>
+            The preceding example is actually fairly inefficient. Compare it to the following:
+        </p>
+        <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
+gender = raw_input("Are you a boy or a girl? ")
+gender = gender.lower() # change to lower case
+if temperature < 20:
+    if gender == "boy":
+        print("You should wear long pants")
+    else:
+        print("You might want to wear a warm dress") # if you're not a boy then you must be a girl?
+else:   # 20 or warmer
+    if gender == "boy":
+        print("You should wear shorts today")
+    else:
+        print("You could wear a short skirt today")
+</pre>
+        <p>
+            As these examples get more complicated, it's important to leave clues to yourself and future readers
+            (programs are often written by multiple people and someone may follow in your footsteps) clues to what
+            your thinking was, if it isn't already obvious from the code you've written. 
+        </p>
+        <p>
+            The clues you leave behind are called <em>comments</em>. You can add a comment to the end of any line
+            by typing the "#" character, then followed by a sentence or two that explains what is going on in the code.
+            If you ever write code that is starting to feel sneaky or weird, then that is a clue that you might want
+            to write a comment or two to explain it.
+        </p>
+        <p>
+            There is yet another way of using conditionals for decision making in Python. Rewriting the previous
+            example yet again:
+        </p>
+        <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
+gender = raw_input("Are you a boy or a girl? ")
+gender = gender.lower() # change to lower case
+if temperature < 20:
+    clothes = "long pants" if gender == "boy" else "a long dress"
+else:
+    clothes = "shorts" if gender == "boy" else "a short skirt"
+print("You should wear {0} today".format(clothes))</pre>
+        <p>
+            Try this code on your own and play with it until you understand how it works.
+        </p>
+        <p>
+            These all-in-one-line-conditional-statements are handy if you're simply setting a value to one of two
+            values, depending on the conditional test. For example, it is extremely handy for transforming lists:
+        </p>
+        <pre class="prettyprint lang-py">temperatures = [12, 46, 24, 67, 80, 26, 64, 24, 45, 40]
+howitfeels = ["{0} is Brr!".format(temp) if temp < 35 else temp for temp in temperatures]
+print(howitfeels)</pre>
+        <p>
+            Try this code on your own and play with it until you understand how it works.
+        </p>
+{% endblock %}

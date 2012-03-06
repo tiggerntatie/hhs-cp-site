@@ -1,0 +1,75 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            The purpose of this challenge is to practice building a graphical application with Python and Pygame.
+        </p>
+        <p>
+            Your task is to create a program using Python and Pygame that plays 
+            <a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life">Conway's Game of Life</a>. The 
+            Wikipedia article describes the rules and has an animated image that shows what it looks like. 
+            I also have an example using Python and Pygame that you can interact with or watch in action, and
+            a screencast video on <a href="http://youtu.be/I5Hb268rZyw">Youtube</a>.
+        </p>
+        <p>
+            Your finished program should look something like this when it is running (still image, of course):
+        </p>
+        <div>
+            <img src="{{url_for('static', filename='p02ConwaysLife.png')}}"
+                 alt="Screenshot of Python and Pygame implementation of Conway's Life" />
+        </div>
+        <p>
+            Some basic requirements for your submission:
+        </p>
+        <ul>
+            <li>
+                You <em>may</em> use the code supplied in the 
+                <a href="{{url_for('site_assignment', short_name='pygamesprites')}}">sprite tutorial</a> as a starting
+                point (<a href="{{url_for('static', filename='pygameapp06.py')}}">pygameapp06.py</a>).
+            </li>
+            <li>
+                The title bar of your program should display &ldquo;Conway's Life&rdquo;
+            </li>
+            <li>
+                Live cells in your program may be represented as rectangles, circles, or any other shape that you
+                would like to use. The example in the picture above uses small circles.
+            </li>
+            <li>
+                The initial state of live cells <em>may</em> be preset or randomized by you, but it must be possible
+                to start the game with a blank screen.
+            </li>
+            <li>
+                As the Wikipedia article described, your &ldquo;playing area&rdquo; may have fixed boundaries,
+                boundaries that wrap around top and bottom, or may be entirely unbounded (extra credit).
+            </li>
+            <li>
+                The user must be able to &ldquo;turn on&rdquo; cells by clicking on them with the mouse, or by
+                click-dragging across the window.
+            </li>
+            <li>
+                If your playing area is unbounded, then the up/down/right/left cursor keys should allow the user
+                to scroll the playing area within the window.
+            </li>
+            <li>
+                Your live cells should be two different colors: one for its first day of &ldquo;life&rdquo;, the second
+                for all subsequent days.
+            </li>
+        </ul>
+        <p>
+            There are TONS of implementations of Conway's Life &ldquo;out there&rdquo; on the Internet. Some live in
+            the web browser, some use Java, etc. You may certainly look at these examples to build an understanding
+            of how it works. There are also many implementations of Conway's Life written for Python and Pygame, but
+            you may not submit them for this project (obviously). You <em>may</em> look at other solutions for 
+            inspiration or ideas, but you <em>must</em> fully understand all code that you submit and <strong>give
+            credit for any borrowed code or ideas</strong>.
+        </p>
+        <p>
+            My &ldquo;reference&rdquo; implementation (which I certainly don't claim to be optimal) has 166 lines
+            (including blanks), and imports pygameapp06 so that it can use the base classes PygameApp and Circle.
+        </p>
+        <p>
+            <strong>Note:</strong> your submitted program <em>will not be automatically checked</em> for correctness.
+            Any submission will automatically &ldquo;pass&rdquo;. I will download and execute your submitted scripts, however.
+        </p>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            The purpose of this challenge is to gain proficiency with manipulating lists.
+        </p>
+        <p>
+            Write and submit a Python program that accepts a string from the user and prints it back in three different
+            ways:
+        </p>
+        <ul>
+            <li>With all letters in reversse</li>
+            <li>With all words in order, but letters reversed within the words</li>
+            <li>With words in reverse order, but letters within each word in the correct order.</li>
+        </ul>
+        <p>
+            Output of your program should look like this:
+        </p>
+        <pre>Please enter a string of text (the bigger the better): <em>There are a few techniques or tricks that you may find handy</em>
+ydnah dnif yam uoy taht skcirt ro seuqinhcet wef a era erehT
+handy find may you that tricks or techniques few a are There
+erehT era a wef seuqinhcet ro skcirt taht uoy yam dnif ydnah
+
+Process finished with exit code 0</pre>
+
+        <p>
+            There are a few techniques or tricks that you may find handy when working on this challenge. If you see
+            something here that sounds useful, feel free to learn more about it! You don't necessarily need any of
+            these techniques to solve the challenge.
+        </p>
+        <ul>
+            <li><code class="prettyprint lang-py">'a string has several characters'.count('a')</code> will 
+            return 5, which is the number of times the character 'a' appears in the string.</li>
+            <li><code class="prettyprint lang-py">zip([1,4,2],['a','z','q'])</code> will return
+            a list of <em>tuples</em> (another type of list) like this: [(1, 'a'), (4, 'z'), (2, 'q')]</li>
+            <li>If <code>mylist</code> is a list like [435, 2, 45, 2]</code> then
+                <code class="prettyprint lang-py">mylist.sort()</code> will change it to: [2, 2, 45, 435]</li>
+            <li>If <code>mylist</code> is a list like [435, 2, 45, 2]</code> then
+                <code class="prettyprint lang-py">mylist.append(99)</code> will change it to: [435, 2, 45, 2, 99]</li>
+            <li>If <code>mylist</code> is a list like [435, 2, 45, 2]</code> then mylist[-1] will return 2, the last
+            element in the list.</li>
+            <li>You can get the length of a string, or number of elements in a list using the builtin
+            <code class="prettyprint lang-py">len()</code> function. For example:
+            <code class="prettyprint lang-py">len([435, 2, 45, 2])</code> will return 4.</li>
+            <li>If you <code class="prettyprint lang-py">import string</code> then use
+            <code class="prettyprint lang-py">string.letters</code> to get a string with the letters a-z in it.</li>
+        </ul>
+{% endblock %}

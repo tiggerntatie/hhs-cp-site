@@ -1,0 +1,36 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            The purpose of this challenge is to practice building a GUI application with Python.
+        </p>
+        <p>
+            Write and submit a Python program that simulates an ordinary four function calculator, using the Tkinter
+            GUI tools in Python.
+        </p>
+        <p>
+            Your calculator should look something like this:
+        </p>
+        <div>
+            <img src="{{url_for('static', filename='p01tkcalculator.png')}}" alt="Tkinter-based Python calculator" />
+        </div>
+        <p>
+            Some basic requirements for your calculator:
+        </p>
+        <ul>
+            <li>Calculator starts with 0 in the display</li>
+            <li>Pressing a number/decimal key while 0 is in the display will replace the zero with the new number</li>
+            <li>Supports decimal numbers (i.e. floating point)</li>
+            <li>Does not allow more than one decimal point (obviously!)</li>
+            <li>Pressing a number/decimal key while the result of the last operation is displayed will replace the old
+                number with the new number</li>
+            <li>Supports using both on-screen buttons and keyboard keys</li>
+            <li>May support additional &ldquo;features&rdquo; beyond what is described here</li>
+        </ul>
+        <p>
+            <strong>Note:</strong> your submitted program <em>will not be automatically checked</em> for correctness.
+            Any submission will automatically pass. I will download and execute your submitted scripts, however.
+        </p>
+
+{% endblock %}

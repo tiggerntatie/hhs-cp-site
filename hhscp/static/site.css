@@ -1,0 +1,206 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+/*  background-image:url(pythonshot.png); */
+  background-repeat: no-repeat;
+  background-position:top left;
+  background-color: #fff;
+  font-family: georgia, times, serif;
+  font-size: 1.1em;
+}
+
+h2, h3, h4 {
+  color: #f00;
+}
+
+h1 {
+  font-family: helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 2.4em;
+  margin-left: 2em;
+}
+
+h2, h3 {
+  font-family: helvetica, sans-serif;
+  font-weight: bold;
+  font-style: italic;
+}
+
+h3 {
+  font-size: 1.3em;
+}
+
+h2 {
+  font-size: 1.6em
+}
+
+ol li {
+  padding-bottom: 0.5em;
+}
+
+/* DEFAULT table */
+
+table caption {
+    font-family: verdana, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 1em;
+    vertical-align: middle;
+}
+
+table {
+    border-spacing: 1em;
+}
+
+table th {
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+}
+
+table td {
+    border: 0 solid #eee;
+    padding: 1em;
+    background: #eee;
+}
+
+/* LAYOUT CONTAINERS */
+div.logo {
+  background-image: url(http://www.netdenizen.org/org-logo.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 135px;
+  height: 135px; 
+  float: left;
+}
+
+div.title {
+  float: left;
+  height: 135px;
+}
+
+h1 {
+    background-color: white;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.h-navigation{
+  clear: both;
+  background-color: #fff;
+  padding: 2em;
+}
+
+div.main-sidebar{
+  float: left;
+  width: 25%;
+  padding: 2%;
+  background-color: #fff;
+  border-right: 2px black solid;
+}
+
+div.main {
+/*  float: left; */
+  padding: 2%;
+  background-color: #fff;
+}
+
+div.footer {
+  clear: both;
+  border-top: 2px black solid;
+}
+
+/* HORIZONTAL NAVIGATION */
+ul.h-navigation { 
+  margin: 0;
+  padding: 0.5em;
+}
+
+ul.h-navigation li {
+  display: inline;
+  background-color: #eee;
+  padding: 0.1em 0.3em 0.1em 0.3em;
+}
+
+ul.h-navigation a {
+  text-decoration: none;
+  font-family: verdana, sans-serif;
+}
+
+ul.h-navigation li:hover {
+  background-color: #ccc;
+}
+
+/* FORM */
+form ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+
+/* CODE */
+pre {
+    background-color: #eeeeee;
+    border: #dddddd solid 1px;
+    width: auto;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 0.5em;
+}
+
+/* SUBMISSION STATUS */
+span.passed {
+    color: #00ff00;
+}
+
+span.failed {
+    color: #ff0000;
+}
+
+/* CALENDAR table */
+
+table#calendar {
+    width: 100%;
+}
+
+table#calendar caption {
+    font-family: verdana, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1.4em;
+    margin: 1em;
+}
+
+
+
+table#calendar th {
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+}
+
+table#calendar td {
+    border: 0 solid #eee;
+    padding: 0.5em;
+    width: 20%;
+    vertical-align: top;
+    background: #fff;
+}
+
+table#calendar div.date {
+    padding: 0.2em;
+    background: #ddd;
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+}
+
+table#calendar ul {
+    padding-left: 0;
+    margin-left: 1em;
+}
+
+table#calendar li {
+    margin-left: 0;
+}
+

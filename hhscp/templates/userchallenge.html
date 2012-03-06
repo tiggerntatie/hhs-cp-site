@@ -1,0 +1,40 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block subnavigation %}
+        <ul class='h-navigation'>
+            <li><a href="{{ url_for('site_user', name=user.shortname) }}">{{user.longname}}</a></li>
+            <li><a href="{{ url_for('site_assignment', short_name=challenge.testname) }}">Assignment Detail</a></li>
+        </ul>
+{% endblock %}
+{% block main %}
+        <h3>Upload new File</h3>
+        <form action="{{challenge.userchallengesubmiturl(user.shortname)}}" method="post" enctype="multipart/form-data">
+            <ul>
+                <li>Select file for upload: <input type="file" name="file"/></li>
+                <li>Enter your password: <input type="password" name="pass"/></li>
+                <li><input type="submit" value="Upload"/></li>
+            </ul>
+        </form>
+        
+
+{% if challenge.submitted() %}
+    {% if challenge.istestable %}
+        {% if challenge.passes() %}
+            <h1>Your Submission Passed!</h1>
+        {% else %}
+            <h1>Your Submission Failed!</h1>
+        {% endif %}
+        <h3>Challenge input is</h3> <pre><code>{{challenge.inputhtml()}}</code></pre>
+        <h3>Difference between correct and submitted output is</h3><pre><code>{{challenge.diff()}}</code></pre>
+    {% endif %}
+        <h3>Challenge submitted code is</h3> <pre class="prettyprint lang-py">{{challenge.testcodehtml()}}</pre>
+        Download a copy of this file:
+        <a href="{{ url_for('site_userchallengedownload', username=user.shortname, challengename=challenge.testname) }}">
+            {{user.shortname + challenge.testname + '.py' }}</a>
+{% else %}
+        <p>
+            User has not submitted code for this challenge!
+        </p>
+{% endif %}
+
+{% endblock %}

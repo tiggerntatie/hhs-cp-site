@@ -1,0 +1,189 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            By now you have had some experience with the <a href="{{url_for('site_assignment', short_name='console')}}">
+            Python console</a> and have seen how you can use it to test short pieces of Python code. There are a couple
+            of more uses for the console that you should see before we move on to writing real programs.
+        </p>
+        <h3>dir</h3>
+        <p>
+            The objects that you have created (floating point numbers, integers, strings, lists, etc.) have <em>methods</em>
+            &ldquo;attached&rdquo; to them. For example, look at a list:
+        </p>
+        <pre class="prettyprint lang-py">>>> nurseryrhymes = ['hickory', 'dickory', 'dock']
+>>> print( dir(nurseryrhymes) )
+['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__delslice__', '__doc__', '__eq__', 
+'__format__', '__ge__', '__getattribute__', '__getitem__', '__getslice__', '__gt__', '__hash__', '__iadd__', 
+'__imul__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', 
+'__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__setslice__', '__sizeof__', 
+'__str__', '__subclasshook__', 'append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+>>> nurseryrhymes.append('itsy')
+>>> print(nurseryrhymes)
+['hickory', 'dickory', 'dock', 'itsy']  # we've appended something to the list!
+>>> nurseryrhymes.remove('dickory')
+>>> print(nurseryrhymes)
+['hickory', 'dock', 'itsy']             # now we've removed something from the list</pre>
+        <p>
+            The command, <code>dir(nurseryrhymes)</code> tells Python to list all of the methods that this object
+            (a list in this case) can support. To use a method, type the name of the object, followed by a period
+            or decimal point, then the name of the method, followed by a pair of parentheses. If the method needs 
+            more information to function, you need to type the data inside the parentheses.
+        </p>
+        <p>
+            The importance of the <code>dir</code> function is that it can be used as a simple source of help about
+            the language. Notice that there are many methods that have names beginning with a double underscore 
+            character: these are intended for internal use and should not be used by YOU in your programs. The remaining
+            methods ('append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort') are fair game,
+            however.
+        </p>
+        <h3>help</h3>
+        <p>
+            Ok! So we can use <code>dir</code> to figure out <strong>what</strong> an object can do. How can we figure
+            out the meaning or purpose of an unfamiliar method, or what arguments should be typed inside the
+            parentheses? Simple: ask for help.
+        </p>
+        <pre class="prettyprint lang-py">>>> print(nurseryrhymes)
+['hickory', 'dock', 'itsy']
+>>> help(nurseryrhymes.index)   # I wonder what the index method does
+Help on built-in function index:
+
+index(...)
+L.index(value, [start, [stop]]) -> integer -- return first index of value.
+Raises ValueError if the value is not present.
+
+>>> print(nurseryrhymes.index('dock'))
+1
+>>> print(nurseryrhymes.index('itsy'))
+2
+>>> print(nurseryrhymes.index('hickory'))  # Oh! I get it! Index will tell me where in the list a particular item can be found.
+0
+        </pre>
+        <h3>Your turn</h3>
+        <p>
+            Look at the other objects you have created this week (integers, floating point numbers, etc.). Find out what
+            methods they support using the <code>dir</code> method. Which methods are mysterious to you? Do a little
+            research to figure out what they do or mean.
+        </p>
+        <h3>Input and Output</h3>
+        <p>
+            We've been playing around with the Python console for a while, and you might be wondering how we can 
+            make a persistent copy of the commands you have been typing. Before we do that, you need to figure out 
+            how to make Python print information to the console and how to make it receive information from you.
+        </p>
+        <p>
+            You have already seen the <code>print</code> command for sending information to the console. There are 
+            a few more things you should know about printing.
+        </p>
+        <p>
+            Suppose you would like to print a message that is generated from the values of several variables. You can
+            use the <code>format</code> method of string objects to do it. For example:
+        </p>
+        <pre class="prettyprint lang-py">>>> a = 99  # this song starts with 99
+>>> print ("{0} bottles on the wall, {0} bottles. Take one down, pass it around, {1} bottles left.".format(a, a-1))
+99 bottles on the wall, 99 bottles. Take one down, pass it around, 98 bottles left.
+>>> a = 53  # we've taken a lot of bottles down...
+>>> print ("{0} bottles on the wall, {0} bottles. Take one down, pass it around, {1} bottles left.".format(a, a-1))
+53 bottles on the wall, 53 bottles. Take one down, pass it around, 52 bottles left.</pre>
+        <p>
+            The special method is tacked on at the end of the string. There are two arguments inside parentheses.
+            The first argument is substituted where the {0} appears in the string and the second substitutes the
+            {1}. Actually, it would have been convenient to do this by entering the original string only once:
+        </p>
+        <pre class="prettyprint lang-py">>>> s = "{0} bottles on the wall, {0} bottles. Take one down, pass it around, {1} bottles left."
+>>> a = 99
+>>> print(s.format(a,a-1))
+99 bottles on the wall, 99 bottles. Take one down, pass it around, 98 bottles left.
+>>> a = 53
+>>> print(s.format(a,a-1))
+53 bottles on the wall, 53 bottles. Take one down, pass it around, 52 bottles left.</pre>
+        <p>
+            When we start writing real Python programs we'll need a way for the user to enter information using the
+            keyboard. There are two functions that do this. One will accept <em>any</em> kind of text and one will 
+            only accept text that is valid Python (for example, numbers). Here is an example that accepts only numbers:
+        </p>
+        <pre class="prettyprint lang-py">>>> a = input("Please enter the number of bottles:")
+Please enter the number of bottles: 85
+>>> print(a)
+85
+>>> print(s.format(a,a-1))
+85 bottles on the wall, 85 bottles. Take one down, pass it around, 84 bottles left.</pre>
+        <p>
+            If you want your user to be able to enter text that isn't necessarily a number, use the <code>raw_input</code>
+            function:
+        </p>
+        <pre class="prettyprint lang-py">>>> name = raw_input("Please tell me your first name:")
+Please tell me your first name: Eric
+>>> print(name)
+Eric
+>>> print ("What the heck is {0} doing over there?".format(name))
+What the heck is Eric doing over there?</pre>
+        <p>
+            If you want, you can use <code>raw_input</code> for any kind of input. You will have to be careful to
+            convert input if it should be interpreted as a numeric value:
+        </p>
+        <pre class="prettyprint lang-py">>>> pi = raw_input("Please enter the value of pi:")
+Please enter the value of pi: 3.141592654
+>>> print 2*pi # careful.. Python thinks pi is a string!
+3.1415926543.141592654
+>>> pi = float(pi) # convert pi (the string) to a floating point number, using the float function
+>>> print 2*pi # this should give us a proper number
+6.283185308
+>>> print("An approximate value of pi is {0:.2}!".format(pi)) #print with two sig figs
+An approximate value of pi is 3.1!
+>>> print("An approximate value of pi is {0:.2}!".format(pi*1000))
+An approximate value of pi is 3.1e+03!</pre>
+        <h3>Time for a REAL Program</h3>
+        <p>
+            In the left-hand pane of the PyCharm window you should see a folder icon that represents the project
+            you created the first time you ran PyCharm. Click on the folder to highlight it, then press apple-N 
+            (on a Mac) or right click and select <strong>New...</strong> to create a new Python file. You can name
+            the file anything you want (for example, <code>newfile.py</code>: you don't have to type the .py
+            at the end). When you are done creating the file, double click on its icon to open the file contents
+            in the PyCharm editor.
+        </p>
+        <p>
+            To start with, your file will have very little in it. By default, PyCharm will add a single line in the 
+            file that sets a variable with what it thinks is your name. You don't need this line, so you may delete
+            it. It will do you no harm to leave it in the file, however.
+        </p>
+        <p>
+            Now, instead of typing your Python commands in the console window at the bottom, you can type them
+            in the PyCharm edit window (the BIG window in the upper right portion of the PyCharm window. For example,
+            you could immortalize the commands about bottles..
+        </p>
+        <pre class="prettyprint lang-py">__author__ = 'ericdennison'
+
+a = 99 # Start with the usual number of bottles
+
+# What do we want to say
+s = "{0} bottles on the wall. {0} bottles. Take one down, now there are only {1} bottles left"
+print(s.format(a, a-1))
+a = 98  # Now say it with a few different numbers to start with
+print(s.format(a, a-1))
+a = 97
+print(s.format(a, a-1))
+
+user = raw_input("Please tell me your first name: ")
+
+print("Hello, {0}. You are looking quite frisky today!".format(user))
+
+print("Good bye!")</pre>
+        <p>
+            To run your program click on your Python file in the project window (left side) then select Run or
+            Debug from the (big surprise) Run menu. This will open a Run window at the bottom of the screen where
+            you can watch the output and enter your responses. For example:
+        </p>
+        <pre>/System/Library/Frameworks/Python.framework/Versions/2.6/bin/python "/Users/ericdennison/Dropb...
+99 bottles on the wall. 99 bottles. Take one down, now there are only 98 bottles left
+98 bottles on the wall. 98 bottles. Take one down, now there are only 97 bottles left
+97 bottles on the wall. 97 bottles. Take one down, now there are only 96 bottles left
+Please tell me your first name: Eric
+Hello, Eric. You are looking quite frisky today!
+Good bye!
+
+Process finished with exit code 0</pre>
+
+
+{% endblock %}

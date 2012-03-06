@@ -1,0 +1,44 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+<table id="calendar">
+    <thead>
+    <tr>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for week in weeks %}
+    <tr>
+{% for day in week %}
+        <td><div class="date">
+        {{ day[0].strftime("%b %d") }}
+        </div>
+{% if day[1]|count > 0 %}
+        {% for holiday in day[1] %}
+            <strong>{{ holiday.name }} </strong>
+        {% endfor %}
+{% endif %}
+{% if day[2]|count > 0 %}
+        <ul>
+            {% for event in day[2] %}
+            <li>
+                <a href="{{ event.url }}">{{ event.name }}</a>
+            </li>
+            {% endfor %}
+
+         </ul>
+{% endif %}
+        </td>
+{% endfor %}
+    </tr>
+{% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}

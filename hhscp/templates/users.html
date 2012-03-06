@@ -1,0 +1,11 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+<ul>
+{% for uname, fullname, password in users.userslist %}
+    <li><a href="{{url_for('site_user', name=uname)}}">{{fullname}}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

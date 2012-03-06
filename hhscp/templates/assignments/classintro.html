@@ -1,0 +1,231 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+        <h3>Dictionaries</h3>
+        <p>
+        One thing that Python (and computers, generally) excels at is handling information. You have had some 
+        experience managing information
+        using variables and lists, but there is much more that Python can help you with. One way of managing information
+        is using the <em>dictionary</em>. Following is an example of defining and using a dictionary with the Python
+        console:
+        </p>
+        <pre class="prettyprint lang-py">>>> ages = {'fred':9, 'bob':39, 'sally':19}
+>>> print(ages['fred'])  # now you can access the ages by name
+9
+>>> ages['jeremy'] = 13  # and you can add new people and ages by just assigning them
+>>> print(ages['jeremy'])
+13
+>>> print(ages.get('zachary', 0))  # retrieve a key, but specify a default value in case the key isn't found.
+0</pre>
+        <p>
+            You can loop through the keys in a dictionary using a for loop (sort of like looping through items
+            in a list) and you can obtain a list of key/value pairs in a dictionary using the <code>items</code>
+            method of the dictionary. Items in a dictionary are not sorted in any way and you can not depend on a for
+            loop with a dictionary to return the keys in any order.
+        </p>
+        <p>
+            The keys used in the example above were strings. Dictionary keys can not be just <em>anything</em>. They
+            have to be <em>immutable</em>. Immutable objects in Python are those which can not be changed after they
+            are created. Strings, for example, are immutable. There are many methods on string objects, but none of
+            them modify the string they are called with (they may return a <em>new</em> string, however). Other common
+            immutable objects in Python are <em>tuples</em> and numbers.
+        </p>
+        <p>
+            The values stored in a dictionary can be any kind of object in Python. For example, you can store other
+            objects (including dictionaries, if you are that crazy), classes and functions. There are very cool uses
+            for this (and an example is given at the end of this tutorial).
+        </p>
+        <h3>Arrays in Python</h3>
+        <p>
+            If you are used to writing programs in another language (such as C/C++ or Java) you may be wondering how
+            to do arrays the same way in Python. In practice, arrays are often used merely as a structure for collecting
+            objects or values of some type (and in many languages, all the items must be the same type). In Python,
+            there are many different types of collections and one of them is usually an appropriate substitute
+            for a typical application of the C/C++/Java array. For example, tuples, lists or dictionaries can be used
+            for many of the situations where an array is used in C/C++/Java.
+        </p>
+        <p>
+            Having said that, there <em>is</em> an <code>array</code> type in Python that you can access by using
+            the <code>import array</code> statement. Like a C/C++/Java array, it is restricted to a single type 
+            and is not as flexible as the "standard" Python collection types.
+        </p>
+        <h3>Classes (or "object blueprints")</h3>
+        <p>
+            Up to now you have been working with objects without even thinking about it. For example, if you create 
+            a list: 
+        </p>
+        <pre class="prettyprint lang-py">>>> l = ['z','b','c']  # here is the list object: l
+>>> l.sort()        # use a method (sort) on the object (l)
+>>> print(l)        # get its value 
+['b', 'c', 'z']</pre>
+
+        <p>
+            You can create your own <em>types</em> of objects. The name for a type of object is "class". A class is like
+            a blueprint for creating an object. You can create many objects from one blueprint. Here is an example of
+            a class that represents a 3 dimensional box:
+        </p>
+        <pre class="prettyprint lang-py">class Box3D(object):
+    def __init__(self, width, length, height):
+        self.w = width
+        self.l = length
+        self.h = height
+
+    def volume(self):
+        return self.w * self.l * self.h
+
+box = Box3D(1,3,6)    # create a box object using the Box3D class or "blueprint"
+box2 = Box3D(3,6,2)   # create another, different object using the same class
+print(box.volume())
+print(box2.volume())  # volume() is a method of the Box3D class
+print(box.h)  # you can access the members
+box.h = 99.0  # and you can change them
+print(box.volume())   # and it will change the box properties
+297.0</pre>
+        <p>
+            The class definition begins with the class statement, the name of the class followed (in parentheses) by
+            the name of a class it is based on. All of your classes should at least be based on the system <em>object</em>
+            class. If you create a new class definition based on an older one, your new class <em>inherits</em> all of
+            the methods and members of the original class. This is a powerful tool for extending existing code with
+            new functionality.
+        </p>
+        <p>
+            All classes must define an <em>initializer</em> method called <code>__init__</code> that Python will call
+            to help set up your new objects. The initializer can have zero or more arguments that are used to define
+            the behavior of the object. All methods for the class must also begin with a first argument called
+            <code>self</code>. In your class definitions, <code>self</code> refers to the object that you are creating.
+            By adding attributes to self in the __init__ function you can have information "stick" to the object you
+            created. For example, the __init__ function of the Box3D class saves the width, height and depth to 
+            member variables w, l and h.
+        </p>
+        <p>
+            Notice that all of the methods that you define in a class must be indented, relative to the first class
+            statement. Each method definition begins with the keyword <code>def</code>, followed by the method
+            name and a list of parameters (beginning with <code>self</code>) that the method requires (inside
+            parentheses). Finally, each <code>def</code>
+            statement must end with a colon, and the code <em>inside</em> the method must be indented again.
+        </p>
+        <p>
+            You can add additional methods to your classes. For example (above), the Box3D class includes a method
+            for calculating the volume of the box.
+        </p>
+        <p>
+            Following is another example of a class definition that is similar to the area calculation exercise
+            that you have already seen. Look in this code for an example of using a Python dictionary. Can you
+            understand how it is being used?
+        </p>
+        <pre class="prettyprint lang-py">import math
+
+class Circle(object):
+    """
+    Represents a circle in geometry.
+    """
+    def __init__(self, radius = 1.0):
+        self.r = radius
+
+    def area(self):
+        """
+        Compute the area of the circle.
+        """
+        return math.pi*self.r**2
+
+    def userinput(self):
+        """
+        Ask the user to enter the necessary dimensions
+        """
+        self.r = abs(float(raw_input("Please enter the circle radius: ")))
+
+    def useroutput(self):
+        """
+        Present the area to the user
+        """
+        print("The area is {0:.6}.".format(self.area()))
+
+
+class Sector(Circle):
+    """
+    Represents a sector in geometry. Angle is in degrees.
+    """
+    def __init__(self, radius = 1.0, angle = 360.0):
+        self.r = radius
+        self.a = math.radians(angle) # use radians internally
+
+    def area(self):
+        """
+        Compute the sector area.
+        """
+        return 0.5 * self.r**2 * self.a
+
+    def userinput(self):
+        """
+        Ask the user to enter the necessary dimensions
+        """
+        self.r = abs(float(raw_input("Please enter the sector radius: ")))
+        self.a = math.radians(abs(float(raw_input("Please enter the sector angle (degrees): "))))
+
+
+class Semicircle(Sector):
+    """
+    Represents a semicircle in geometry.
+    """
+    def __init__(self, radius = 1.0):
+        self.r = radius
+        self.a = math.pi
+
+    def userinput(self):
+        """
+        Ask the user to enter the necessary dimensions
+        """
+        self.r = abs(float(raw_input("Please enter the semicircle radius: ")))
+
+
+
+# handlers dictionary relates user command to objects to use
+handlers = {'circle':Circle(), 'sector':Sector(), 'semicircle':Semicircle()}
+choice = None
+while choice != "none":
+    choice = raw_input("Find area of a circle, sector or semicircle (or none)? ")
+    obj = handlers.get(choice,None)  # retrieve an object of the correct type, or None if not recognized
+    if obj:
+        obj.userinput() # Retrieve values. This is a method on what could be a Circle, Sector or Semicircle object
+        obj.useroutput() # What is the area</pre>
+        
+        <h3>Docstrings</h3>
+        <p>
+            You may have noticed that each method defined in the code above has a triple/double quotation mark
+            enclosed block of text, immediately following the function definition line. These are written to help
+            document how each method or class should be used. The strings that you include here will show up
+            if a user invokes the help system. For example, if the previous example code were followed with this
+            code:
+        </p>
+        <pre class="prettyprint lang-py">print help(Circle)</pre>
+        <p>
+            then the output of the call to help might display this on screen:
+        </p>
+        <pre><code>Help on class Circle in module __main__:
+
+class Circle(__builtin__.object)
+ |  Represents a circle in geometry.
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self, radius=1.0)
+ |
+ |  area(self)
+ |      Compute the area of the circle.
+ |
+ |  userinput(self)
+ |      Ask the user to enter the necessary dimensions
+ |
+ |  useroutput(self)
+ |      Present the area to the user
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |
+ |  __weakref__
+ |      list of weak references to the object (if defined)</code></pre>
+
+{% endblock %}

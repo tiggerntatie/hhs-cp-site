@@ -1,0 +1,61 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            The purpose of this challenge is to gain proficiency with exception handling code.
+        </p>
+        <p>
+            Write and submit a Python program that computes areas of several different types of polygons: squares,
+            rectangles, triangles, parallelograms, trapezoids and kites. Areas should be displayed with six significant
+            figures (at most). If the user enters an unknown type of polygon, the program should respond that it
+            doesn't know how to find that (see example). If the user enters a dimension that is not a valid number,
+            the program should respond that it is not valid length and invite the user to try again.
+        </p>
+        <p>
+            This challenge is <em>functionally</em> similar to
+            <a href="{{url_for('site_assignment', short_name='c08classdict')}}">Calculating Areas with Class</a>,
+            however you must add exception handling to catch data entry errors.
+        </p>
+        <p>
+            Output of your program should look like this:
+        </p>
+        <pre>Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? kite
+What is the diagonal length? -1.001
+What is the other diagonal length? -1.002.
+Sorry: -1.002. is not a valid other diagonal length.
+Please try again!
+Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? square
+What is the side length? 3
+The area is 9.0.
+Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? rectangle
+What is the base length? 3
+What is the height? h
+Sorry: h is not a valid height.
+Please try again!
+Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? rectangle
+What is the base length? 3
+What is the height? 5
+The area is 15.0.
+Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? parallelogram
+What is the base length? 3
+What is the height? 5
+The area is 15.0.
+Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? trapezoid
+What is the base length? 35
+What is the second base length? 21.3
+What is the height? 234235
+The area is 6.59372e+06.
+Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? trapezoid
+What is the base length? 23
+What is the second base length? 53
+What is the height? 2343243223h23423
+Sorry: 2343243223h23423 is not a valid height.
+Please try again!
+Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? none
+
+Process finished with exit code 0</pre>
+        
+
+
+{% endblock %}

@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>{% block head %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="{{url_for('static', filename='prettify.css')}}" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="{{url_for('static', filename='prettify.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='site.css')}}" type="text/css" media="screen" />
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+    </script>
+    <title>{% block title %}{{title}}{% endblock %}</title>
+{% endblock %}
+</head>
+<body onload="prettyPrint()">
+  {% block header %}
+  <div class='logo'>
+  </div>
+  <div class='title'>
+    <h1>{{title}}</h1>
+  </div>
+  {% endblock %}
+  {% block navigation %}
+  <ul class='h-navigation'>
+    <li><a href="{{ url_for('site_main') }}">Computer Programming Home</a></li>
+    <li><a href="{{ url_for('site_calendar') }}">Assignment Calendar</a></li>
+    <li><a href="{{ url_for('site_users') }}">Student List</a></li>
+    <li><a href="http://hanoverhigh.org">HHS Home</a></li>
+  </ul>
+  {% endblock %}
+
+  {% block subnavigation %}
+  {% endblock %}
+
+  {% block sidebarcontainer %}
+    <div class='main-sidebar'>
+  {% block sidebar %}
+    <h2>Summary</h2>
+    <p>
+        Summary Text
+    </p>
+    <h2>Purpose</h2>
+    <p>
+        Purpose Text
+    </p>
+      <h2>Due Date</h2>
+      <p>
+        Due date text
+      </p>
+  {% endblock %}
+    </div>
+  {% endblock %}
+
+  <div class='main'>
+  {% block main %}
+    <h2>Assignment</h2>
+    <p>
+        Assignment Text
+    </p>
+    <h3>Resources</h3>
+      <p>
+          Resources Text
+      </p>
+  {% endblock %}
+  </div>
+  <div class="footer">
+      {% block footer %}
+    <h3>About this page...</h3>
+    <p>
+        This site is written in 100% Python, using the <a href="http://flask.pocoo.org/">Flask</a> web framework.
+        &copy; Copyright 2012 by Eric Dennison
+    </p>
+    <p>
+      <a href="http://validator.w3.org/check?uri=referer"><img
+        src="http://www.w3.org/Icons/valid-xhtml11" alt="Valid XHTML 1.1" height="31" width="88" /></a>
+      <a href="http://jigsaw.w3.org/css-validator/check/referer">
+          <img style="border:0;width:88px;height:31px"
+            src="http://jigsaw.w3.org/css-validator/images/vcss"
+            alt="Valid CSS!" />
+      </a>
+    </p>
+      {% endblock %}
+  </div>
+</body>
+</html>

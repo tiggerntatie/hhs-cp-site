@@ -1,0 +1,177 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+        <h3>Exceptions, or When Programs Go Bad</h3>
+        <p>
+            If you tried running the example at the end of 
+            <a href="{{url_for('site_assignment', short_name='classintro')}}">Introduction to Classes</a>, or while
+            developing your solution to <a href="{{url_for('site_assignment', short_name='c05areas')}}">Calculating Areas</a>
+            or <a href="{{url_for('site_assignment', short_name='c08classdict')}}">Calculating Areas with Class</a>
+            you may have noticed that the program did not respond well if the user types the wrong thing at the wrong
+            time. For example, in the Introduction to Classes example, if you type "belch" instead of a number for 
+            the circle radius, the program fails with an ugly error:
+        </p>
+        <pre class="prettyprint">Find area of a circle, sector or semicircle (or none)? circle
+Please enter the circle radius: belch
+Traceback (most recent call last):
+  File "/Users/ericdennison/Dropbox/HHS/Courses/Computer Programming/sandbox/homework/c09exceptionsexample.py", line 76, in &lt;module>
+                obj.userinput() # Retrieve values
+                File "/Users/ericdennison/Dropbox/HHS/Courses/Computer Programming/sandbox/homework/c09exceptionsexample.py", line 22, in userinput
+                self.r = abs(float(raw_input("Please enter the circle radius: ")))
+                ValueError: invalid literal for float(): belch</pre>
+        <p>
+            You should always strive to make your programs <em>robust</em>. This means that the program does not crash, 
+            even in the face of wildly unexpected input from sensors or users. So how to accomplish this?
+        </p>
+        <h3>What is an Error, Exactly</h3>
+        <p>
+            In programming, there are several types of errors you need to cope with. The most common error that new
+            programmers face is the syntax error. Syntax errors are when you have something in your program that
+            is simply not legal Python. Syntax errors are normally detected as soon as you attempt to run your program,
+            when the Python interpreter tries to understand what you want. If it can't make sense of your program at all,
+            then you will probably receive a syntax error.
+        </p>
+        <p>
+            A second type of error happens when your program simply doesn't do what you intended. This is a design 
+            or functional error. Your program might be perfectly legal and valid Python, but it just isn't written 
+            in a way that accomplishes what you set out to do.
+        </p>
+        <p>
+            A third type of error is a run-time error that occurs when Python is unable to continue because of an 
+            unexpected situation. For example, if your program is trying to read from a file that is being deleted
+            by another user, or if your user enters something that your program can't interpret.
+        </p>
+        <p>
+            The example above fails with a <code>ValueError</code> because the program attempts to convert
+            <em>whatever junk the
+            user types</em> to a valid floating point number. Obviously, "belch" does not have an integer or floating point
+            numerical equivalent, so Python throws up its hands and surrenders with a run-time error (look to the 
+            last line of these error statements to figure out where to look in your codee).
+        </p>
+        <p>
+            This error was so severe that it actually halted the program. If you wanted this program to <em>never
+            crash</em>, then you would have to find a graceful way of handling it. In Python, this method is the 
+            <code>try except</code> block. 
+        </p>
+        <p>
+            To illustrate how it works, the original example program has been reproduced below with exception
+            handling code in place. Try it!
+        </p>
+        <pre class="prettyprint lang-py">import math
+
+class Circle(object):
+    """
+    Represents a circle in geometry.
+    """
+    def __init__(self, radius = 1.0):
+        self.r = radius
+
+    def area(self):
+        """
+        Compute the area of the circle.
+        """
+        return math.pi*self.r**2
+
+    def userinput(self):
+        """
+        Ask the user to enter the necessary dimensions
+        """
+        try:
+            self.r = abs(float(raw_input("Please enter the circle radius: ")))
+        except ValueError:
+            print("I'm sorry: you did not enter a valid number.")
+    def useroutput(self):
+        """
+        Present the area to the user
+        """
+        print("The area is {0:.6}.".format(self.area()))
+
+
+class Sector(Circle):
+    """
+    Represents a sector in geometry. Angle is in degrees.
+    """
+    def __init__(self, radius = 1.0, angle = 360.0):
+        self.r = radius
+        self.a = math.radians(angle) # use radians internally
+
+    def area(self):
+        """
+        Compute the sector area.
+        """
+        return 0.5 * self.r**2 * self.a
+
+    def userinput(self):
+        """
+        Ask the user to enter the necessary dimensions
+        """
+        try:
+            self.r = abs(float(raw_input("Please enter the sector radius: ")))
+            self.a = math.radians(abs(float(raw_input("Please enter the sector angle (degrees): "))))
+        except ValueError:
+            print("I'm sorry: you did not enter a valid number.")
+
+
+class Semicircle(Sector):
+    """
+    Represents a semicircle in geometry.
+    """
+    def __init__(self, radius = 1.0):
+        self.r = radius
+        self.a = math.pi
+
+    def userinput(self):
+        """
+        Ask the user to enter the necessary dimensions
+        """
+        try:
+            self.r = abs(float(raw_input("Please enter the semicircle radius: ")))
+        except ValueError:
+            print("I'm sorry: you did not enter a valid number.")
+
+
+
+# handlers dictionary relates user command to objects to use
+handlers = {'circle':Circle(), 'sector':Sector(), 'semicircle':Semicircle()}
+choice = None
+while choice != "none":
+    choice = raw_input("Find area of a circle, sector or semicircle (or none)? ")
+    obj = handlers.get(choice,None)  # retrieve an object of the correct type, or None if not recognized
+    if obj:
+        obj.userinput() # Retrieve values
+        obj.useroutput() # What is the area</pre>
+        
+        <p>
+            Now when you run the program and enter bogus data, the program continues running:
+        </p>
+        <pre><code>Find area of a circle, sector or semicircle (or none)? circle
+Please enter the circle radius: belch
+I'm sorry: you did not enter a valid number.
+The area is 3.14159.
+Find area of a circle, sector or semicircle (or none)? </code></pre>
+        <h3>How it Works</h3>
+        <p>
+            If you have some code that is <em>liable</em> to result in a run-time error, you should consider putting 
+            it inside a <code>try</code> block. If the "dangerous" code results in a run-time error, no more code is
+            executed <em>inside</em> the try block. Instead, code begins executing inside the <code>except</code>
+            block. The <code>except</code> block is <em>only</em> executed if a run-time error occurs in the <code>try</code>
+            block; it can be used to print an error statement or advise the user in how he/she might avoid 
+            problems in the future.
+        </p>
+        <p>
+            The <code>except</code> block names the type of exception that it will handle. There are many different
+            types of exceptions and each of the possible types can be handled by a separate <code>except</code> block.
+            This example only handles the ValueError exception type. 
+        </p>
+        <p>
+            If your exception handler's only purpose is to print a useful message, and you plan to have the exception
+            "caught" and handled at a higher level, then you can reassert the original error by using the
+            <code>raise</code> statement inside your exception handler.
+        </p>
+        <p>
+            This is a very handy feature because you don't have to give any thought to looking at the user's input
+            data and deciding whether it represents a valid floating point number. You just go ahead and convert it
+            inside a try block and express your disappointment over any failures inside the except block.
+        </p>
+
+{% endblock %}

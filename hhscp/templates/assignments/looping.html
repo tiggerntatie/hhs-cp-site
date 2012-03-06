@@ -1,0 +1,121 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            Pete and Repeat are on a boat. Pete jumps out. Who is left on the boat?
+        </p>
+        <p>
+            <em>Repeat</em>
+        </p>
+        <p>
+            Pete and Repeat are on a boat. Pete jumps out. Who is left on the boat?
+        </p>
+        <p>
+            <em>Repeat</em>
+        </p>
+        <p>
+            Pete and Repeat are on a boat. Pete jumps out. Who is left on the boat?
+        </p>
+        <p>
+            <em>Grr...</em>
+        </p>
+
+        <p>
+            One of the powerful ideas in computer programming is that you can make one piece of code do the same thing
+            over and over again. Write it once, then use it forever. This is where looping comes in.
+        </p>
+        <h3>But First</h3>
+        <p>
+            Do you remember the page on <a href="{{url_for('site_assignment',short_name = 'conditionals')}}">decision making</a>?
+            One thing that we glossed over is that a conditional statement actually evaluates to a single statement
+            of True or False. In fact, True and False are built in Python objects that you can use any time you want
+            a decision to be made 100% of the time. You can see this equivalence by playing with conditionals in 
+            the console:
+        </p>
+        <pre class="prettyprint lang-py">>>> print(1==1)
+True
+>>> print(1==0)
+False</pre>
+        <p>
+            This may come in handy below!
+        </p>
+        <h3>Shampoo, Rinse, Repeat</h3>
+        <p>
+            There are two common ways of repeating a piece of Python code over and over again. First up is the 
+            <code>for</code> statement. If you have written programs before using a language like C or Java, you might
+            know what to expect with the <code>for</code> statement. Then again, you might not! 
+        </p>
+        <p>
+            Suppose you want to come up with a method for calculating and printing the first ten perfect squares. That
+            would be easy to do with a list comprehension:
+        </p>
+        <pre class="prettyprint lang-py">>>> print([x**2 for x in range(2,12)])
+[4, 9, 16, 25, 36, 49, 64, 81, 100, 121]</pre>
+        <p>
+            But suppose the repeating statement needed to be more complicated. What if it couldn't easily be expressed
+            as a single statement, the way a list comprehension wants to see it? We could <em>describe</em> the 
+            calculation like this:
+        </p>
+        <pre>for each number n between 2 and 11
+    print n squared</pre>
+        <p>
+            That is almost exactly the way Python would like to have you do it:
+        </p>
+        <pre class="prettyprint lang-py">for i in range(2,12):
+    print i**2</pre>
+        <p>
+            This code is similar to the <code>if</code> statement that you read about in the last lesson. Let's
+            break it down. <code>range(2,12)</code> returns a list of integers: [2,3,4,5,6,7,8,9,10,11].
+            <code>for i in</code> sets i equal to each of the numbers in the list, one after the other. Each time
+            i is set to a new value from the list, Python executes all of the instructions in the indented block
+            of code that follows. Once those instructions are finished, i is set to the next value from the list.
+            When all of the values in the list have been used, the indented block is skipped and Python continues
+            executing the code following the indented block.
+        </p>
+        <p>
+            And don't forget: if you need to indent a block of code, be sure the line above the block ends with
+            a colon!
+        </p>
+        <p>
+            You can put as many lines of Python in the indented section as you need.
+        </p>
+        <p>
+            In this example, the indented code is executed with i=2, then again with i=3, then again with i=4, then
+            again with i=5, and so on until i=11. When the last number in the list has been used, the indented
+            block is <em>skipped altogether </em> and execution resumes following the indented block.
+        </p>
+        <p>
+            Although <code>for</code> loops are often written using a <code>range(start,finish)</code> statement,
+            you can use <code>for</code> with any kind of collection. Notice that the <code>for</code> loop does not
+            include a conditional test of any kind (as you might expect from C or C++): it just loops through 
+            collections of objects.
+        </p>
+        
+        <h3>While We are Thinking About It</h3>
+        <p>
+            A second kind of popular looping code in Python is the <code>while</code> loop. This type of loop is
+            very similar to loops available in C, C++ or Java. Let's look at an example.
+        </p>
+        <p>
+            Suppose you have money in your bank account. If you like to eat out for lunch you might be willing to spend
+            all your money to do it. Your thinking might go like this:
+        </p>
+        <pre>As long as I still have money,
+    Go out to eat.
+    Deduct the restaurant tab from my supply of money</pre>
+        <p>
+            By following these instructions you will just keep going out to eat until all your money is gone. You could
+            write a similar program in python like this:
+        </p>
+        <pre class="prettyprint lang-py">dinnercost = 15     # cost of dining out
+bankaccount = 150   # dollars
+while bankaccount > 0:
+    print "Yumm.. I would love to eat out tonight!"
+    bankaccount = bankaccount - dinnercost
+    print ("Uh oh.. I only have ${0} left!".format(bankaccount))</pre>
+        <p>
+            Try this code on your own and play with it until you are sure you understand what is going on.
+        </p>
+       
+{% endblock %}

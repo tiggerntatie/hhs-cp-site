@@ -1,0 +1,69 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            The purpose of this challenge is to gain proficiency with dictionaries and classes.
+        </p>
+        <p>
+            Write and submit a Python program that computes areas of several different types of polygons: squares,
+            rectangles, triangles, parallelograms, trapezoids and kites. Areas should be displayed with six significant
+            figures (at most). If the user enters an unknown type of polygon, the program should respond that it
+            doesn't know how to find that (see example).
+        </p>
+        <p>
+            This challenge is <em>functionally</em> identical to 
+            <a href="{{url_for('site_assignment', short_name='c05areas')}}">Calculating Areas</a>, however you must
+            implement the following classes: Square, Rectangle, Parallelogram, Triangle, Trapezoid and Kite. Each of
+            these classes must define a method called <code>area()</code> that returns the area of the
+            polygon, a method called <code>userinput()</code> that gathers dimensions from the user and a method
+            called <code>useroutput()</code> that prints the area of the polygon.
+        </p>
+        <p>
+            Output of your program should look like this:
+        </p>
+        <pre>Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? kite
+        What is one diagonal length? 12
+        What is another diagonal length? 5
+        The area is 30.0
+        Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? trapezoid
+        What is one base length? 12
+        What is another base length? 6
+        What is the height? 3
+        The area is 27.0
+        Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? triangle
+        What is the base length? 3
+        What is the height? 25
+        The area is 37.5
+        Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? parallelogram
+        What is the base length? 10
+        What is the height? 5
+        The area is 50.0
+        Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? rectangle
+        What is the base length? 5
+        What is the height? 10
+        The area is 50.0
+        Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? square
+        What is the side length? 3.3
+        The area is 10.89
+        Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? buffalo
+        I'm sorry: I don't know how to find the area of a buffalo!
+        Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? none
+        
+        Process finished with exit code 0</pre>
+        
+        <p>
+            Following are area formulas for these polygons (in case you don't know or can't remember)
+        </p>
+        <ul>
+            <li>Square: \(A = s^2\) where A is area and s is the length of one side</li>
+            <li>Rectangle: \(A = b h\) where A is area, b is the base length and h is the height</li>
+            <li>Parallelogram: \(A = b h\) where A is area, b is the base length and h is the height</li>
+            <li>Triangle: \(A = \frac{1}{2} b h\) where A is area, b is the base length and h is the height</li>
+            <li>Trapezoid: \(A = \frac{b_1 + b_2}{2} h\) where A is area, b<sub>1</sub> and b<sub>2</sub> are
+                the base lengths and h is the height</li>
+            <li>Kite: \(A = \frac{d_1 d_2}{2}\) where A is area, d<sub>1</sub> and d<sub>2</sub> are the
+                diagonal lengths</li>
+        </ul>
+
+{% endblock %}

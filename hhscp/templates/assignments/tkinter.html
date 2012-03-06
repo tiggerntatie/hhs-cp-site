@@ -1,0 +1,181 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+        <h3>Graphical User Interface or &ldquo;GUI&rdquo;</h3>
+        <p>
+            Up until now you have been writing console applications for Python. We will look at real-time graphical
+            output using Pygame soon enough. Before then, we will learn about Python's built in graphical user
+            interface functionality: Tkinter. 
+        </p>
+        <p>
+            Although you could experiment with Tkinter using the Python console, you will have better results if you
+            just start writing full programs with it. Let's start by importing the Tkinter module:
+        </p>
+        <pre class="prettyprint lang-py">import Tkinter as tk</pre>
+        <p>
+            This line will bring in the Tkinter GUI functionality. This line is different from other times that
+            we have used the <code>import</code> statement because of the <code>... as tk</code> section. Normally,
+            if we used:
+        </p>
+        <pre class="prettyprint lang-py">import Tkinter</pre>
+        <p>
+            we would have to access classes in Tkinter by writing, for example: <code>Tkinter.Label()</code>. Since we
+            may be using a lot of objects in the Tkinter module, it will be convenient if we don't have to type
+            <code>Tkinter</code> before each one of them. The <code>... as tk</code> bit means that we will
+            be able to call on objects in Tkinter using an abbreviated method. For example: <code>tk.Label()</code>.
+        </p>
+        <h3>Creating the Tkinter App</h3>
+        <p>
+            There are lots of ways to use Tkinter. This example will start by defining a class that is based on a 
+            Tk application:
+        </p>
+        <pre class="prettyprint lang-py">class MyDialog(tk.Tk):  # based on the Tk application
+    def __init__(self):
+        tk.Tk.__init__(self) # call the base class
+        self.title("Tkinter Program #1")</pre>
+        <p>
+            The first line defines the name of our custom class: MyDialog. The second line starts a definition
+            for our class constructor, which will take no parameters. The third line calls the original Tk constructor
+            function, to ensure that it is set up correctly (this is the "old" style that works for classes that
+            are not based on the system Object class). The final line of this snippet sets the title of the application,
+            which will appear on the title bar of your window.
+        </p>
+        <p>
+            Finish up your initial program by adding the following lines at the <em>end</em> of the file:
+        </p>
+        <pre class="prettyprint lang-py">myapp = MyDialog()
+myapp.mainloop()</pre>
+        <p>
+            Enter this code into a new Python file in PyCharm and try running it. You should see a blank window appear
+            on your screen.
+        </p>
+        <h3>Add Controls</h3>
+        <p>
+            Next we will add a text area at the top of the application window. Add the following to the MyDialog
+            __init__ method:
+        </p>
+        <pre class="prettyprint lang-py">        # label across the top
+        self.toptextstring = tk.StringVar(self,"here is a dummy string")
+        self.toptext = tk.Label(self, textvariable = self.toptextstring, justify=tk.LEFT)
+        self.toptext.grid(row=0, columnspan=2, sticky=tk.W) # first row, span 2 columns, stick to left side</pre>
+        <p>
+            Add this to your program and run it again. The first line added was a comment (of course). The next
+            line creates a Tk StringVar, which is a string class that can be "attached" to controls in the window.
+            Notice that the first argument to the StringVar constructor was a reference to <code>self</code>. This will
+            "connect" the control or widget to the application. The newly constructed StringVar object is assigned
+            to a member variable of MyDialog so we will be able to refer to it again later.
+        </p>
+        <p>
+            The next line creates a Tk Label control, which will be able to display text in the application window.
+            The parameter <code>textvariable=self.toptextstring</code> will tie this control to the StringVar that
+            was created on the previous line. 
+        </p>
+        <p>
+            The final line for this control executes the <code>grid</code> method of the control, specifying a location
+            in the window using row/column naming convention. This particular control is set to span two columns using
+            the <code>columnspan</code> argument. Execute your code to see how it works.
+        </p>
+        <h3>Interact with the User</h3>
+        <p>
+            The next control to add will be an <code>Entry</code> control. This control gives the user an edit box where
+            she can enter text using the keyboard (add this to the __init__ method).
+        </p>
+        <pre class="prettyprint lang-py">        # input window
+        self.inputtext = tk.StringVar(self)
+        self.inputarea = tk.Entry(textvariable=self.inputtext)
+        self.inputarea.grid(row=1, column=0)
+        self.inputarea.bind('&lt;Key-Return>', self.inputareaupdate)
+        self.inputarea.bind('&lt;Key>', self.inputareaanykey)</pre>
+        <p>
+            The first three lines are similar to the Label control's: they create a StringVar, connect it to a new
+            Entry control and place it on the window with <code>grid</code>. The last two lines bind the control
+            to keyboard events. If the user presses the Enter key while typing in this control, then the MyDialog member
+            function <code>self.inputareaupdate</code> will be executed automatically. If the user presses 
+            <em>any</em> key, then the <code>self.inputareaanykey</code> method will be executed. 
+        </p>
+        <p>
+            <code>self.inputareaupdate</code> and <code>self.inputareaanykey</code> methods should be added below
+            the <code>__init__</code> method:
+        </p>
+        <pre class="prettyprint lang-py">    def inputareaupdate(self, event):
+        self.toptextstring.set(self.inputtext.get())
+
+    def inputareaanykey(self, event):
+        if event.char in ['Q','q']:
+            self.toptextstring.set(self.toptextstring.get()+event.char)</pre>
+        <p>
+            The first method will fire when the user hits the enter key and will copy the contents of the Entry
+            window to the Label text above it (boring and silly, but easy to see). The second method checks for
+            the user pressing the 'Q' or 'q' key and appends that character to the Label text above it. Enter this 
+            code into your file and see if it works.
+        </p>
+        <h3>Buttons</h3>
+        <p>
+            The final control we will try in this example is an ordinary button. Add these to your
+            __init__ method:
+        </p>
+        <pre class="prettyprint lang-py">        # reversing button
+        self.reverseitbtn = tk.Button(self, text="Reverse!", command = self.reverseit)
+        self.reverseitbtn.grid(row=1, column=1)
+        # quit button
+        self.quitbtn = tk.Button(self, text="Quit", command = self.quit)
+        self.quitbtn.grid(row=2, column=1)</pre>
+        <p>
+            These are similar to the Label and Entry controls, with the addition of a new parameter in the
+            Button constructor: <code>command = self.reverseit</code>. This new argument lets you specify a 
+            class method that will be called when the user presses the button. This example code refers to a method
+            called <code>reverseit</code> which is defined as follows:
+        </p>
+        <pre class="prettyprint lang-py">    def reverseit(self):
+        self.toptextstring.set(self.toptextstring.get()[::-1])</pre>
+        <p>
+            This silly little method will take the text in the Label at the top of the window and reverse it. 
+        </p>
+        <p>
+            The final button in the example just executes the <code>quit</code> method of parent Tk class. This
+            is a convenient method for stopping a program written using Tkinter.
+        </p>
+        <p>
+            Continue to play around with this example and do some Internet research to identify other controls that
+            you might want to add to your GUI application.
+        </p>
+        <p>
+            The full example is shown here:
+        </p>
+        <pre class="prettyprint lang-py">import Tkinter as tk
+
+class MyDialog(tk.Tk):  # based on the Tk application
+    def __init__(self):
+        tk.Tk.__init__(self) # call the base class
+        self.title("Tkinter Program #1")
+        # label across the top
+        self.toptextstring = tk.StringVar(self,"here is a dummy string")
+        self.toptext = tk.Label(self, textvariable = self.toptextstring, justify=tk.LEFT)
+        self.toptext.grid(row=0, columnspan=2, sticky=tk.W) # first row, span 2 columns, stick to left side
+        # input window
+        self.inputtext = tk.StringVar(self)
+        self.inputarea = tk.Entry(textvariable=self.inputtext)
+        self.inputarea.grid(row=1, column=0)
+        self.inputarea.bind('&lt;Key-Return>', self.inputareaupdate)
+        self.inputarea.bind('&lt;Key>', self.inputareaanykey)
+        # reversing button
+        self.reverseitbtn = tk.Button(self, text="Reverse!", command = self.reverseit)
+        self.reverseitbtn.grid(row=1, column=1)
+        # quit button
+        self.quitbtn = tk.Button(self, text="Quit", command = self.quit)
+        self.quitbtn.grid(row=2, column=1)
+
+    def inputareaupdate(self, event):
+        self.toptextstring.set(self.inputtext.get())
+
+    def inputareaanykey(self, event):
+        if event.char in ['Q','q']:
+            self.toptextstring.set(self.toptextstring.get()+event.char)
+
+    def reverseit(self):
+        self.toptextstring.set(self.toptextstring.get()[::-1])
+
+myapp = MyDialog()
+myapp.mainloop()</pre>
+
+{% endblock %}
