@@ -11,7 +11,8 @@ tests = {
     'c08classdict':'AreaClass',
     'c09exceptions':'Exceptions',
     'p01tkcalculator':'TkCalculator',
-    'p02conwayslife' : 'ConwaysLife'
+    'p02conwayslife' : 'ConwaysLife',
+    'p03consolemerels' : 'ConsoleMerels'
 }
 
 def gettest(modulename):

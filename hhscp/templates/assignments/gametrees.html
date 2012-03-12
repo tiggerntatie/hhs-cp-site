@@ -1,8 +1,610 @@
 {% extends "site.html" %}
 {% block sidebarcontainer %}{% endblock %}
 {% block main %}
-<h3>A Game of Tic Tac Toe</h3>
+        <h3>A Game of Tic Tac Toe</h3>
+        <p>
+            This tutorial describes one method for implementing a simple game of Tic
+            Tac Toe. If you have played the game before, you may know that the best you
+            can hope to do against a skilled player is to not lose (that is, to draw).
+            Accordingly, this isn't considered a very serious game, but for our 
+            purposes it serves as a good opportunity to learn about game trees and
+            recursion.
+        </p>
+        
+        <p>
+            This tutorial isn't really going to attempt to teach you
+            all the ins and outs of game theory or game trees. The point is to
+            show you an example of a simple game tree in action. Later you will
+            have an opportunity to try your hand at your own game.
+        </p>
+        <p>
+            The Tic Tac Toe game listing that follows works in console mode
+            only. At some point in the future, we will reuse it as an
+            &ldquo;engine&rdquo; in a Pygame version of the same thing. For
+            now I want to focus on how the game works, and not how to make it
+            look graphically cool.
+        </p>
+        <h3>
+            A Warning!
+        </h3>
+        <p>
+            It is <strong>hard</strong> to wrap your head around someone else's 
+            program! This is a big program, with lots of unfamiliar methods
+            and Python functions and you should not expect to figure it out
+            quickly. I do expect you to use it and poke at it. Look at the 
+            methods that do the &ldquo;heavy lifting&rdquo; and spend the time
+            necessary to understand each unfamiliar line in them. If you see
+            a function name you don't recognize, like <code>reduce</code> or 
+            <code>filter</code>, then look them up and understand what they do:
+            they are workhorses for effective Python programming!
+        </p>
+        <p>
+            Lastly, I don't claim that this program is the most elegant or
+            efficient example of a game tree-based Tic Tac Toe player. In fact,
+            I know it is <em>inefficient</em>. A good game tree pays attention
+            to finding and eliminating redundant branches and remembering
+            decisions it has already made. The game tree implemented in 
+            <em>this</em> example does none of these things for the sake
+            of brevity and readability.
+        </p>
+        <h3>
+            Sample Game Output
+        </h3>
+        <p>
+            The following is a snippet from a session playing the Tic Tac Toe
+            game:
+        </p>
+        <pre>Current board position is:
+nextplayer: X, score: ~
+~~~
+~~~
+~~~
+
+Your move - enter tuple: e.g. (0,2): (1,1)
+Current board position is: 
+nextplayer: X, score: ~
+~~O
+~X~
+~~~
+
+Your move - enter tuple: e.g. (0,2): (1,0)
+Current board position is: 
+nextplayer: X, score: ~
+~XO
+~X~
+~O~
+
+Your move - enter tuple: e.g. (0,2): </pre>
+        <p>
+            You get to play first, and each time you play the game shows you 
+            the current state of the game &ldquo;board&rdquo; after the
+            computer goes. You have
+            to enter the coordinates of your next play as a tuple. This 
+            may be in parentheses or not, as you wish. The (0,0) position
+            is in the upper left corner, (2,0) is in the upper right, (2,2)
+            in the lower right and (0,2) in the lower left. 
+        </p>
+        <p>
+            After each of your moves, the computer selects its move and
+            displays the resulting board. The possible outcomes for each
+            game are for one of the two players to win, or a draw.
+        </p>
+        <h3>The Source</h3>
+        <p>
+            First let's have a look at the full source code for this example.
+            It's a little big, but it's mostly comments. I will talk about 
+            several of the features of the program after the listing, but
+            refer to the code comments for details.
+        </p>
+        <p>
+            As always, you should copy and paste this example into a new
+            Python file using PyCharm and try it out. You can download this as
+            a complete file:
+            <a href="{{url_for('static', filename='consoletictactoe.py')}}">consoletictactoe.py</a>
+        </p>
+        <pre class="prettyprint lang-py">import random
+
+class TTTPosition(object):
+    """
+    Representation of a tic tac toe board play position (where pieces are and
+    whose turn it is)
+
+    Internally, the board is represented as a tuple of 9 integers that represent
+    positions on the grid, thus:
+
+    ( 0, 0, 0,
+      0, 0, 0,
+      0, 0, 0)
+
+    X is represented by +1
+    O is represented by -1
+    In addition to the board position, the object also knows which player is to
+    move NEXT (-1 or +1)
+    """
+
+    # Coordinates for three in a row. Each tuple represents the indexes of three
+    # positions on the board that represent a win if they all hold the same
+    # non-zero value (i.e. all +1 or all -1). We will use this to "automate" the
+    # process of checking for a winning position.
+
+    threes = [  (0,1,2),
+        (3,4,5),
+        (6,7,8),
+        (0,3,6),
+        (1,4,7),
+        (2,5,8),
+        (0,4,8),
+        (2,4,6)]
+
+    # how many moves should we try to look ahead
+    searchdepth = 20
+
+    def __init__(self, statelist = [0,0,0,0,0,0,0,0,0], nextplayer = 1):
+        """
+        Initialization - you can set up the initial board to have any arrangement
+        of pieces, with any player needing to make the next move.
+        """
+        self.board = tuple(statelist)
+        self.nextplayer = nextplayer
+        self.score = None
+        self.nextmoves = []
+
+    def __repr__(self):
+        """
+        This "hidden" python method is used to customize the string
+        REPResentation of an object, so that when we print it on the console,
+        it looks sensible.
+
+        A typical print display for a TTTPosition object looks like this;
+
+        nextplayer: X, score: ~
+        X~O
+        ~X~
+        ~~O
+
+        The score parameter represents which player is favored by the current
+        position.
+
+        Defining this method will make it possible to write code like:
+
+        print(position1)
+
+        and have it print something sensible.
+        """
+        piecefromval = lambda x: 'X' if x == 1 else 'O' if x == -1 else '~'
+        retval = 'nextplayer: {0}, score: {1}\n'.format(
+            piecefromval(self.nextplayer), piecefromval(self.score))
+        for i in range(3):
+            for j in range(3):
+                retval += '{0}'.format(piecefromval(self.board[i*3+j]))
+            retval += '\n'
+        return retval
 
 
+    def __eq__(self, other):
+        """
+        Check for "equalness" with other board positions. Equalness requires that the
+        board and nextplayer members match. Defining this method will allow us to do
+        simple things like:
 
+        if position1 == position2:
+
+        """
+        if not other:
+            return False
+        else:
+            return self.board == other.board and self.nextplayer == other.nextplayer
+
+    def _ifromxy(self, coords):
+        """
+        Utility function returns index into the 9 position board list, given an
+        x,y coordinate pair.Parameter coords specifies an x,y pair relative to
+        the upper left corner of the playing board. coord (0,0) specifies UL
+        corner. (2,0) the UR corner, (2,2) the LR corner and (0,2) the LL corner.
+        This method returns an index.
+        """
+        return coords[0]+coords[1]*3
+
+    def _possiblemoves(self):
+        """
+        Return a list of new TTTPosition objects representing all possible next
+        moves. The method walks through every spot on the grid, looking for empty
+        ones. Each empty spot is used to define a new TTTPosition object with
+        that spot filled. The list of new TTTPosition objects is returned.
+
+        Note: the method sets a property: nextmoves with the result of this call.
+        If it is called a second time in the future, it just returns the
+        previously computed version.
+        """
+        if not len(self.nextmoves):
+            for i in range(9):
+                if not self.board[i]:
+                    newboard = list(self.board[:])
+                    newboard[i] = self.nextplayer
+                    self.nextmoves.append(self._newinstance(newboard, self.nextplayer * -1))
+        return self.nextmoves
+
+    def _newinstance(self, statelist, nextplayer):
+        """
+        Generate new instance of this class
+        """
+        return type(self)(statelist, nextplayer)
+
+    def setmove(self, coords):
+        """
+        Play a position on the board. Parameter specifies an x,y pair relative
+        to the upper left corner of the playing board. coord (0,0) specifies UL
+        corner. (2,0) the UR corner, (2,2) the LR corner and (0,2) the LL corner.
+        The piece played will be equal to the nextplayer attribute of the
+        current position. This method returns a NEW TTTPosition object with the
+        desired state and an updated nextplayer attribute (-1 if it was +1, or
+        +1 if it was -1)
+        """
+        boardlist = list(self.board)
+        boardlist[self._ifromxy(coords)] = self.nextplayer
+        # return a new instance of this class
+        return self._newinstance(boardlist, self.nextplayer * -1)
+
+    def checkwin(self):
+        """
+        Check the current position to see if it is a winning configuration for
+        either player.
+        If player +1 wins with this position, return +1
+        If player -1 wins with this position, return -1
+        Otherwise, return 0.
+        """
+        match = 0
+        for r in self.threes:   # check each possible set of winning indexes
+            # next line builds a list of pieces in the row, then checks to see
+            # if they all match
+            match = reduce(lambda x,y: x if x == y else 0, [self.board[x] for x in r])
+            # if there is a match that is +1 or -1, stop looking
+            if match:
+                break
+        return match
+
+    def getscore(self, searchdepth):
+        """
+        Evaluate the current position, returning a list of possible next positions
+        and a score for this position. Score is +1, 0, or -1, depending on which
+        player is favored. +1 or -1 means that player can win from the position.
+        The method returns two values: a list of possible next moves (each with
+        its own score) and a score for THIS position.
+
+        The method must RECURSIVELY call the getscore method at each oevel
+        of the tree below this position. If any set of positions contains
+        a winning score for that player, then it is assumed that player would
+        pick that option.
+
+        Searchdepth argument determines how far to go in recursion. Since the
+        the game tree grows RAPIDLY with depth, it may be worth limiting
+        the search.
+
+        The method checks for a WINNING position first, returning +1 or -1
+        as the score in that case.
+        """
+        win = self.checkwin()
+        if win:
+            # this is a winning position - the score is known
+            self.score = win
+            return [], self.score
+        elif searchdepth:
+            nextmoves = self._possiblemoves()
+            if len(nextmoves):
+                # there are multiple next moves to consider: get their scores
+                scores = [move.getscore(searchdepth-1)[1] for move in nextmoves]
+                # return the best score that favors the next player, assuming
+                # that's the move the player will make
+                if self.nextplayer > 0:
+                    retval = max(scores)    # most positive for player +1
+                else:
+                    retval = min(scores)    # most negative for player -1
+                self.score = retval
+                return nextmoves, retval   #
+            else:
+                # there are no more moves to make - no one wins
+                self.score = 0
+                return [], 0
+        else:   # recursion depth limit exceed, return ambiguous
+            return [], 0
+
+    def inputnextmove(self):
+        """
+        Solicit next move from the user. Loop until the entered move is one
+        of the possible next moves known for the current position.
+        """
+        possibles = self._possiblemoves()
+        next = None
+        if len(possibles):
+            while not next in possibles:  # ensure valid moves are taken by the human
+                print ("Current board position is: ")
+                print (self)
+                move = input("Your move - enter tuple: e.g. (0,2): ")
+                next = self.setmove(move)
+            return next
+        else:
+            return None # no more moves possible
+
+    def autonextmove(self):
+        """
+        Automatically decide from all possible next moves, which is best for
+        the next player. First, attempts to build a list of next moves whose
+        scores match our own player (+1 if we are player +1, or -1 if we are
+        -1). Otherwise, choose from the neutral options, otherwise, the losing
+        ones.
+
+        Method returns a TTTPosition object chosen at random from the
+        best list.
+        """
+        nextmoves, score = self.getscore(self.searchdepth)
+        # look for nextmoves that are best for us (nextplayer)
+        bestnextmoves = filter( lambda move, np = self.nextplayer:
+                                move.score == np,
+                                nextmoves)
+        if not len(bestnextmoves):
+            # otherwise, just take neutral ones
+            bestnextmoves = filter(lambda move: move.score == 0, nextmoves)
+            if not len(bestnextmoves):
+                # only options favor the enemy: probably should give up
+                bestnextmoves = filter( lambda move, np = -1 * self.nextplayer:
+                                        move.score == np,
+                                        nextmoves)
+        # choose randomly from the available
+        return random.choice(bestnextmoves) if len(bestnextmoves) else None
+
+    def playconsole(self):
+        """
+        Play a basic console game
+        """
+        g = self
+        lastg = g
+        # continue until a draw or a winner
+        while g and not g.checkwin():
+            lastg = g
+            # human is +1 (X)
+            if g.nextplayer > 0:
+                g = g.inputnextmove()
+            else:
+                g = g.autonextmove()
+
+        # print the outcome
+        if not g:
+            print "Draw"
+            g = lastg
+        else:
+            if g.checkwin() > 0:
+                print "You win!"
+            else:
+                print "You lose!"
+        print "Final board:"
+        print g
+
+
+# Set an initial, blank position, next player is X
+if __name__ == '__main__':
+    g = TTTPosition([0,0,0,0,0,0,0,0,0],1)
+    g.playconsole()</pre>
+        
+        
+        <h4>
+            TTTPosition
+        </h4>
+        <p>
+            The class <code>TTTPosition</code> is the only class defined or used
+            by the game. Its sole purpose is to represent everything possible
+            about a <em>single</em> snapshot of a game. The snapshot includes
+            what marks (Xs or Os) have been placed, where they have been placed
+            and whose turn is next. The game is started by creating a single
+            instance of <code>TTTPosition</code> and calling its 
+            <code>playconsole</code> method.
+        </p>
+        <p>
+            The class maintains its internal representation of which spots on 
+            the playing &ldquo;board&rdquo; are filled by using a list with
+            nine entries. The first three entries represent the first row of the
+            board, the second three are the 2nd row and the third set of three
+            are the last row.
+        </p>
+        <h4>
+            Class Attribute: <code>threes</code>
+        </h4>
+        <p>
+            There is one attribute of the class, <code>threes</code>, which
+            is not defined in terms of <code>self</code>. This attribute is
+            held in common by <em>all</em> instances of <code>TTTPosition</code>.
+            The attributes lists a bunch of tuples that in turn contain sets of
+            three board positions that correspond to all of the different ways
+            a player can get three in a row to win the game. The program
+            uses this list to check for winning board positions without having
+            to write code for every single case. Remember, if you ever find 
+            yourself writing the same code more than once, there may be a good
+            way to rewrite your program to minimize redundancy.
+        </p>
+        <h4>
+           <code>__init__</code>
+        </h4>
+        <p>
+            The class initializer takes a list of of nine integers as the initial
+            state of the board, followed by an integer that represents the next
+            or first person to play. The X player is represented always as +1 and
+            the O player is represented as -1.
+        </p>
+        <p>
+            The most important attribute of the class that is set in 
+            <code>__init__</code> is <strong><code>self.nextplayer</code></strong>.
+            This represents the identity of the next player expected to move
+            from this position.
+        </p>
+        <h4>
+            <code>__repr__</code>
+        </h4>
+        <p>
+            The <em>double</em> underscores around this method tip you off that
+            the name is special for Python. In any of your programs you can 
+            write code like: <code>print(myvar)</code> and Python usually 
+            prints something useful. When you create your own classes, like
+            <code>TTTPosition</code>, Python doesn't know how to print something
+            useful.
+        </p>
+        <p>
+            If you write a <code>__repr__</code> method for your class, and 
+            use it to return a string, that string will be the one Python
+            uses when you try to <code>print</code> the object. This class
+            is using the method to print a nicely formatted version of the
+            Tic Tac Toe board.
+        </p>
+        <h4>
+            <code>__eq__</code>
+        </h4>
+        <p>
+            This is another special method. The <code>__eq__</code> method 
+            is used by Python any time it is asked to see whether one
+            object is &ldquo;equal&rdquo; to another. If you want to compare
+            objects in this way, then you will have to define this method. My
+            implementation of the method just checks to see if the spaces
+            on both boards are filled in the same way, and have the same 
+            player ready to take the next turn.
+        </p>
+        <h4>
+            <code>_ifromxy</code>
+        </h4>
+        <p>
+            The single underscore for this method is a signal to you and
+            other programmers that this method is not expected to be directly
+            called by users of the class. It is used internally by other 
+            methods of the class. This method is used to translate an (x,y)
+            tuple of board coordinates into a single index (from 0 to 8) 
+            that will be used to look up a single space of the playing board.
+        </p>
+        <h4>
+            <code>_possiblemoves</code>
+        </h4>        
+        <p>
+            This &ldquo;private&rdquo; method walks through the list of spaces
+            on the playing board and finds all the empty ones that could be 
+            used for the next move. For each open spot it creates a new instance
+            of the <code>TTTPosition</code> class and appends it to a list of 
+            next moves that it is building. Finally, it returns the list of
+            <code>TTTPosition</code> objects to the caller.
+        </p>
+        <h4>
+            <code>setmove</code>
+        </h4>
+        <p>
+            This method accepts a board position tuple as an argument and returns
+            a new <code>TTTPosition</code> object with that position filled by
+            <code>nextplayer</code>.
+        </p>
+        <h4>
+            <code>checkwin</code>
+        </h4>
+        <p>
+            This method's only responsibility is to inspect the board and report
+            whether one player or another has actually won the game. It walks
+            through the <code>self.threes</code> attribute, using each entry
+            as a template for figuring out which spots on the board constitute
+            a three in a row. The heavy lifting for this method is done using
+            the <code>reduce</code> function and a lambda function. The reader
+            is invited to investigate how that works on his or her own.
+        </p>
+        <h4>
+            <code>getscore</code>
+        </h4>
+        <p>
+            This is the heart of the program! The <code>getscore</code> method
+            makes a very simple decision. If the current position is a winning
+            position, it returns the winner (+1 or -1). 
+        </p>
+        <p>
+            If it is <em>not</em>
+            a winning position then it builds a list of all the possible
+            <em>next</em> positions and calls <code>getscore</code> on each 
+            of them. Finally, it returns the score from that list of positions
+            that is most favorable to the next player.
+        </p>
+        <p>
+            This is cool because each time you call <code>getscore</code> on
+            a position, it may end up calling <code>getscore</code> on a bunch
+            of other positions, and each of those may call it again for another
+            bunch of positions, and so on until all of the possible positions
+            have been tested!
+        </p>
+        <p>
+            If you were to make a picture of this process, it would look like
+            an upside down tree, with the starting position as the root, at the 
+            top, and all of the branches and leaves flowing downward from there.
+        </p>
+        <p>
+            If the current position is not a winning position, and there are
+            no more moves to make then the method returns zero, which doesn't
+            favor either player. For Tic Tac Toe, this path would represent
+            a drawn game.
+        </p>
+        <h4>
+            <code>inputnextmove</code>
+        </h4>
+        <p>
+            This method interacts with the user to get the coordinates of his or
+            her desired next move. It first prints the current position of the
+            board, then asks for the move, then returns the result of calling
+            the <code>setmove</code> method.
+        </p>
+        <h4>
+            <code>autonextmove</code>
+        </h4>
+        <p>
+            This method calls the <code>getscore</code> for the current position,
+            then looks at the scores of the next possible moves to find one
+            that is most favorable. If more than one move is favorable then it 
+            chooses one of those at random. 
+        </p>
+        <p>
+            If there are no favorable positions to choose from, then it will
+            pick from one of the &ldquo;neutral&rdquo; positions, and if there
+            are none of those, it will pick from a losing option (though
+            the writing is on the wall).
+        </p>
+        <p>
+            In any case, <code>autonextmove</code> will return a chosen next
+            position. If no more positions are possible, then it will return
+            <code>None</code>.
+        </p>
+        <h4>
+            <code>playconsole</code>
+        </h4>
+        <p>
+            This last method is just a routine for calling the
+            <code>inputnextmove</code> and <code>autonextmove</code> methods
+            one after another until the game is over.
+        </p>
+        <h3>
+            The <code>__name__</code> variable
+        </h3>
+        <p>
+            Notice that after the class definition, there are only three lines
+            of actual of code that are executed:
+        </p>
+        <pre class = "prettyprint lang-py">if __name__ == '__main__':
+    g = TTTPosition([0,0,0,0,0,0,0,0,0],1)
+    g.playconsole()</pre>
+        <p>
+            Every Python module (file or program) is associated with a hidden
+            variable called <code>__name__</code>. If you <code>import</code>
+            the module, then it is assigned the name of the module.
+            If your Python program is executed (as you usually do for these
+            exercises) then the <code>__name__</code> variable is set to equal
+            <code>'__main__'</code>. 
+        </p>
+        <p>
+            Programmers often use this feature to write test code for files
+            that they expect to be imported by other files. In the case
+            of this Tic Tac Toe game, I planned to import this class,
+            <code>TTTPosition</code>, into another program, without having
+            the game actually execute. By protecting the code that creates
+            an instance of the <code>TTTPosition</code> class inside this test,
+            I can be sure it will only be instantiated and &ldquo;played&rdquo;
+            if it is executed as a stand-alone program.
+        </p>
+        
+        
 {% endblock %}

@@ -1,0 +1,100 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            The purpose of this challenge is to practice building a simple 
+            console game using a game tree.
+        </p>
+        <p>
+            Your task is to create a program using Python that plays the
+            <a href="http://gwydir.demon.co.uk/jo/games/romgame/index.htm">
+                Roman Board Game - Merels</a>. The article describes the rules
+            and let's you play the game against yourself. 
+        </p>
+        <p>
+            You may write a game playing program for another variation of Merels.
+            Refer to the Internet for rules, etc.
+        </p>
+        <p>
+            Your finished program should work in a way that is similar to the
+            example <a href="{{url_for('site_assignment', short_name='gametrees')}}">
+            Tic Tac Toe game</a>. In fact, the <code>TTTPosition</code> class
+            may be used as a base class for another program that plays the 
+            ancient Roman version of Merels. If you choose this route, you will
+            find that very few changes are necessary!
+        </p>
+        <p>
+            An example session playing the ancient Roman version of Merels:
+        </p>
+        <pre>Current board position is:
+nextplayer: X, score: ~
+~~~
+~~~
+~~~
+
+Your move - enter tuple: e.g. (0,2): (1,1)
+Current board position is:
+nextplayer: X, score: ~
+~~~
+~X~
+~O~
+
+Your move - enter tuple: e.g. (0,2): (2,2)
+Current board position is:
+nextplayer: X, score: ~
+O~~
+~X~
+~OX
+
+Your move - enter tuple: e.g. (0,2): (0,1)
+Current board position is:
+nextplayer: X, score: ~
+O~~
+XXO
+~OX
+
+Slide a piece - enter from,to: eg. (0,2),(1,1): (0,1),(0,2)
+Current board position is:
+nextplayer: X, score: O
+~~~
+OXO
+XOX
+
+Slide a piece - enter from,to: eg. (0,2),(1,1): (1,1),(0,0)
+You lose!
+Final board:
+nextplayer: X, score: O
+X~~
+OOO
+X~X</pre>
+        <p>
+            Some basic requirements for your submission:
+        </p>
+        <ul>
+            <li>
+                You <em>may</em> use the code supplied in the
+                <a href="{{url_for('site_assignment', short_name='gametrees')}}">Simple Games</a> as a starting
+                point ( <a href="{{url_for('static', filename='consoletictactoe.py')}}">consoletictactoe.py</a>).
+            </li>
+            <li>
+                As always, you may mine the Internet for ideas and inspiration, but
+                you may not submit someone else's implementation of any Merels game
+                (I don't think there are any implementations of the ancient
+                Roman version).
+            </li>
+            <li>
+                Please credit any sources for inspiration or code snippets.
+            </li>
+        </ul>
+        <p>
+            My &ldquo;reference&rdquo; implementation (which I certainly don't
+            claim to be optimal) has 147 lines
+            (including blanks and extensive comments), and imports
+            consoletictactoe so that it can use the base class TTTPosition.
+        </p>
+        <p>
+            <strong>Note:</strong> your submitted program <em>will not be automatically checked</em> for correctness.
+            Any submission will automatically &ldquo;pass&rdquo;. I will download and execute your submitted scripts, however.
+        </p>
+{% endblock %}

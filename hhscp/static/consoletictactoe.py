@@ -145,7 +145,7 @@ class TTTPosition(object):
         """
         boardlist = list(self.board)
         boardlist[self._ifromxy(coords)] = self.nextplayer
-        # return a new instance of this class, using the type function
+        # return a new instance of this class
         return self._newinstance(boardlist, self.nextplayer * -1)
 
     def checkwin(self):
