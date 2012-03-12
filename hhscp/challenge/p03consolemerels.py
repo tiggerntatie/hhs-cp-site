@@ -11,7 +11,7 @@ class ConsoleMerels(CodeTest):
     def __init__(self):
         super(ConsoleMerels,self).__init__()
         # Create the stimulus input file
-        self.testname = "p02conwayslife"
+        self.testname = "p03consolemerels"
         self.infile = StringIO() # No input text
         self.istestable = False
 
