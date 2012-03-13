@@ -1,0 +1,129 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <h3>Computers that Play Games</h3>
+        
+        <p>
+            How can a computer play chess? For that matter, how can it play 
+            something as simple as tic tac toe? 
+        </p>
+        <p>
+            A basic game playing strategy is to look ahead on the game board
+            and figure out all the possible moves that can be made, based on 
+            the current board position. This strategy uses something called
+            a &ldquo;game tree&rdquo;.
+        </p>
+        <h3>An Ultra Simple Game</h3>
+        <p>
+            Imagine a game like tic tac toe that is played on a single
+            row that has four spaces. The first player marks one of the 
+            four spaces with a +1. The second player marks with -1. The 
+            first player marks an available space with +1 and finally the
+            second player fills the last space with -1. If at any point 
+            during the game, one player has marked two consecutive spaces
+            with his or her number then the player wins.
+        </p>
+        <p>
+            A game like this is simple enough to map out all of the possible
+            moves. The diagram below shows all of the moves that can be made
+            if the first player marks the first space with a +1:
+        </p>
+        <div>
+            <img src="{{url_for('static', filename='GameTree1.png')}}"
+                 alt="Game tree showing all plays following an initial move" />
+        </div>
+        <p>
+            Play continues from the top to the bottom until the game board is 
+            filled, or a player has won.
+        </p>
+        <p>
+            The first person to play is +1, leaving 3 empty spots. The second
+            person to play is -1, and there are three possible moves. The
+            third play is +1 again, and now there are six possible moves. Two
+            of those result in a win for +1. The fourth play is -1, and there
+            are only four possible moves at this point. Two of -1's final
+            four moves result in a win for -1 and the rest are a draw game 
+            (neither player wins).
+        </p>
+        <h3>The Big Question</h3>
+        <p>
+            ...for player -1 is, &ldquo;how should I follow +1's first move?&rdquo;
+            To answer the question, we need to assign scores to each of the final
+            positions in the game. Any position where +1 wins is scored with a
+            +. Any position where -1 wins is scored with a -. Any position
+            where neither
+            player wins is a draw, scored with a zero.
+        </p>
+        <p>
+            Can player -1 win?
+        </p>
+        <div>
+            <img src="{{url_for('static', filename='GameTree2.png')}}"
+                 alt="Game tree showing final scores for terminal nodes" />
+        </div>
+        <p>
+            At the third level, where player -1 needs to make a decision
+            about getting to the fourth level, there is really no choice.
+            Each of the games that isn't already won by player +1 has only
+            one spot left to play, so there is no choice. That means
+            that each of these game positions has the same score as the game
+            below it. We show this by bringing scores from the fourth level
+            up to the third level:
+        </p>
+        <div>
+            <img src="{{url_for('static', filename='GameTree3.png')}}"
+                 alt="Game tree showing node scoring moving up from the terminal nodes" />
+        </div>
+        <p>
+            The games at the third level are the result of player +1 making
+            a decision about which games will be best for him. The assumption
+            is that whichever choice results in the best score <em>for him</em>
+            is the one he will choose. We can show this by bringing up scores
+            from the third level to the second level that <em>are most
+            favorable for player +1</em>. For example, if level three has two
+            game states with scores of 0 and -, then the 0 score is the best
+            one for player +1 (player +1 would prefer to draw than lose to
+            player -1).
+        </p>
+        <div>
+            <img src="{{url_for('static', filename='GameTree4.png')}}"
+                 alt="Game tree showing all levels and nodes scored" />
+        </div>
+        <p>
+            Now when player -1 makes a decision about which of the choices
+            at level two is best for him, he chooses the one that is best
+            for him (and worst for his opponent). The best of those, in turn,
+            becomes the score for the root node at the top of the chart. 
+        </p>
+        <p>
+            Unfortunately for player -1, the three choices available to him
+            at level two are 0, + and +. There is no possibility of winning
+            the game, assuming that player +1 will be at least as smart as
+            player -1! The best that player -1 can do is choose the left-most
+            move, knowing that the best he can hope for is a draw.
+        </p>
+        <p>
+            In going to level three, player +1 will, of course, choose the play
+            that does not result in losing to -1. In going to level four, player
+            -1 has no choice and must finish the game with a draw.
+        </p>
+        <p>
+            The top-most or root node ends up with a score of 0. This would
+            tell player +1 that if he plays this position as his opening
+            move, the best he can expect to achieve is a drawn game! If player
+            +1 builds a similar tree for each of the other three possible opening
+            positions he would choose the one that had the best (most positive)
+            score for him.
+        </p>
+        <p>
+            Note that in this trivial example, an opening play with a +1 in
+            the rightmost position would end up with the same tree as the one
+            shown here (actually, it would be a mirror image). If the best
+            that player +1 can hope for in the scenario shown is a draw, then
+            the best he could hope for by playing in the rightmost position
+            would also be a draw. A good game tree implementation would look
+            for situations like this and avoid calculating them twice.
+        </p>
+
+{% endblock %}
