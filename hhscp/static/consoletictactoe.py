@@ -74,7 +74,10 @@ class TTTPosition(object):
 
         and have it print something sensible.
         """
+        # piecefromval is a "mini" function that returns X or O, depending
+        # on whether the player is a 1 or -1
         piecefromval = lambda x: 'X' if x == 1 else 'O' if x == -1 else '~'
+
         retval = 'nextplayer: {0}, score: {1}\n'.format(
             piecefromval(self.nextplayer), piecefromval(self.score))
         for i in range(3):
@@ -160,6 +163,18 @@ class TTTPosition(object):
         for r in self.threes:   # check each possible set of winning indexes
             # next line builds a list of pieces in the row, then checks to see
             # if they all match
+            #
+            # The reduce function takes two arguments. First is a function
+            # reference and second is a list. The function takes two arguments,
+            # the first of which is accumulated from item to item. The second
+            # argument is pulled from each successive item in the list. See
+            # documentation for reduce for details.
+            #
+            # The lamba function here returns one of the arguments if both
+            # input arguments match and 0 if they do not match.
+            #
+            # The list argument to reduce is a list of board indexes to
+            # check for a winning row.
             match = reduce(lambda x,y: x if x == y else 0, [self.board[x] for x in r])
             # if there is a match that is +1 or -1, stop looking
             if match:
@@ -257,7 +272,14 @@ class TTTPosition(object):
 
     def playconsole(self):
         """
-        Play a basic console game
+        Play a basic console game.
+
+        g is set equal to self, which is the initial position of the board.
+        As player and computer make new moves, new TTTPosition objects are
+        created and assigned to g, so g is used to keep track of the current
+        position at all times. Play switches back and forth between the
+        computer (nextplayer = -1) and the human (nextplayer = +1) until
+        a winning board position is detected.
         """
         g = self
         lastg = g

@@ -37,7 +37,7 @@ def site_main():
 def site_assignment(short_name):
     c = Calendar()
     event = c.assignments.nameDict[short_name]
-    return render_template('assignments/' + short_name + '.html', title=event.name)
+    return render_template('assignments/' + short_name + '.html', title=event.name, builtins=__builtins__)
 
 
 @app.route('/user/<name>')
