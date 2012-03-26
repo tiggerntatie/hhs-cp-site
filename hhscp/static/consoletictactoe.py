@@ -256,6 +256,21 @@ class TTTPosition(object):
         """
         nextmoves, score = self.getscore(self.searchdepth)
         # look for nextmoves that are best for us (nextplayer)
+        #
+        # The filter function accepts a function (like a lambda) and a list
+        # as arguments. Filter runs the function with each member of of the
+        # list and returns the list of all members for which the function
+        # result or return was True.
+        #
+        # This lambda function is written in two parts. The first is the
+        # argument list: move and np. np is always initialized with
+        # the value of nextplayer. move is the next move from the list of
+        # possible next moves. The lambda returns True in the second part
+        # if the move's score is the same value as the next player, meaning
+        # it is a GOOD move for that player.
+        #
+        # If there are no favorable moves, we build a list of neutral moves
+        # or even unfavorable moves, using the same method.
         bestnextmoves = filter( lambda move, np = self.nextplayer:
                                 move.score == np,
                                 nextmoves)
