@@ -12,7 +12,8 @@ tests = {
     'c09exceptions':'Exceptions',
     'p01tkcalculator':'TkCalculator',
     'p02conwayslife' : 'ConwaysLife',
-    'p03consolemerels' : 'ConsoleMerels'
+    'p03consolemerels' : 'ConsoleMerels',
+    'p04pygamemerels' : 'PygameMerels'
 }
 
 def gettest(modulename):

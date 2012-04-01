@@ -1,0 +1,55 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+        <p>
+            The purpose of this challenge is to practice building a simple 
+            Pygame game using a game tree.
+        </p>
+        <p>
+            Your task is to create a program using Python and Pygame that plays the
+            <a href="http://gwydir.demon.co.uk/jo/games/romgame/index.htm">
+                Roman Board Game - Merels</a>. The article describes the rules
+            and let's you play the game against yourself. 
+        </p>
+        <p>
+            You <strong>should</strong> use or reuse your submission for 
+            <a href="{{url_for('site_assignment', short_name='p03consolemerels')}}">p03 Console Merels</a>
+            as a basis for completing this project. You should also refer to 
+            the tutorial on constructing a
+            <a href="{{url_for('site_assignment', short_name='pygametrees')}}">Graphical Tic Tac Toe</a> game.
+        </p>
+        <p>
+            You may write a game playing program for another variation of Merels.
+            Refer to the Internet for rules, etc.
+        </p>
+
+        <p>
+            Some basic requirements for your submission:
+        </p>
+        <ul>
+            <li>
+                You should allow the user to choose who will play the first
+                move.
+            </li>
+            <li>
+                You <em>may</em> use the code supplied in the
+                <a href="{{url_for('site_assignment', short_name='pygametrees')}}">Graphical Tic Tac Toe</a>
+                as a starting
+                point ( <a href="{{url_for('static', filename='exemplars/pygametictactoe.py')}}">pygametictactoe.py</a>).
+            </li>
+            <li>
+                As always, you may mine the Internet for ideas and inspiration, but
+                you may not submit someone else's implementation of any Merels game
+                (I don't think there are any implementations of the ancient
+                Roman version).
+            </li>
+            <li>
+                Please credit any sources for inspiration or code snippets.
+            </li>
+        </ul>
+        <p>
+            <strong>Note:</strong> your submitted program <em>will not be automatically checked</em> for correctness.
+            Any submission will automatically &ldquo;pass&rdquo;. I will download and execute your submitted scripts, however.
+        </p>
+{% endblock %}
