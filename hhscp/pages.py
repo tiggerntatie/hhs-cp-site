@@ -7,6 +7,7 @@ from flask import render_template
 from flask import request
 from werkzeug import secure_filename
 from flask import redirect
+import inspect
 import sys
 
 
@@ -37,7 +38,9 @@ def site_main():
 def site_assignment(short_name):
     c = Calendar()
     event = c.assignments.nameDict[short_name]
-    return render_template('assignments/' + short_name + '.html', title=event.name, builtins=__builtins__)
+    return render_template('assignments/' + short_name + '.html',
+        title=event.name,
+        builtins=__builtins__)
 
 
 @app.route('/user/<name>')
