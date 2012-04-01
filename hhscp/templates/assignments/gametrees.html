@@ -103,7 +103,7 @@ Your move - enter tuple: e.g. (0,2): </pre>
             a complete file:
             <a href="{{url_for('static', filename='exemplars/consoletictactoe.py')}}">consoletictactoe.py</a>
         </p>
-        <pre class="prettyprint lang-py">{{ builtins.file('static/exemplars/consoletictactoe.py','r').read() }}</pre>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("consoletictactoe")) }}</pre>
 
         <h4>
             TTTPosition
