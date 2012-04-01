@@ -1,0 +1,205 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+        <h3>Graphical Tic Tac Toe</h3>
+        <p>
+            This tutorial describes a method for implementing a graphical game
+            of Tic Tac Toe using Pygame, the 
+            <a href="{{url_for('site_assignment', short_name='gametrees')}}">console Tic Tac Toe demo</a>,
+            and the 
+            <a href="{{url_for('site_assignment', short_name='pygamesprites')}}">Pygame Sprites</a>
+            framework.
+        </p>
+        <h3>The Source</h3>
+        <p>
+            As usual, you should grab the necessary source files and run this
+            example yourself using PyCharm. Following are a list of all the files
+            you need to execute this example:
+        </p>
+        <ul>
+            <li>Pygame application wrapper: <a href="{{url_for('static', filename='exemplars/pygameapp06.py')}}">pygameapp06.py</a></li>
+            <li>Console tic tac toe game: <a href="{{url_for('static', filename='exemplars/consoletictactoe.py')}}">consoltictactoe.py</a></li>
+            <li>Pygame wrapper for consoletictactoe.py: <a href="{{url_for('static', filename='exemplars/pygametictactoe.py')}}">pygametictactoe.py</a></li>
+            <li>
+                Image files for pygametictactoe.py (<strong>you must put them in a folder named <code>tictactoe</code></strong>):
+                <a href="{{url_for('static', filename='exemplars/tictactoe/O.png')}}">O.png</a>,
+                <a href="{{url_for('static', filename='exemplars/tictactoe/X.png')}}">X.png</a>,
+                <a href="{{url_for('static', filename='exemplars/tictactoe/tictactoe.png')}}">tictactoe.png</a>,
+            </li>
+        </ul>
+        <p>
+            Next, let's look at the contents of <code>pygametictactoe.py</code>,
+            class by class:
+        </p>
+        <h4>
+            SuperTTTPosition
+        </h4>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygametictactoe").SuperTTTPosition) }}</pre>
+
+        <p>
+            The class <code>SuperTTTPosition</code> is based on the
+            <code>TTTPosition</code> class used in the console Tic Tac Toe
+            example. The original class was fine for its intended purpose,
+            but was missing the ability to tell the user what the computer
+            move was in terms of an x,y coordinate pair. There are two new
+            methods in <code>SuperTTTPosition</code> that help with this:
+        </p>
+        <h4><code>__sub__</code></h4>
+        <p>
+            The original class could automatically generate new board 
+            positions. One way of comparing board positions would be to find
+            the <em>difference</em> between them by subtracting. By default,
+            a class will not know how to subtract one object from another
+            unless you define the <code>__sub__</code> method. This
+            method will allow you to subtract two <code>SuperTTTPosition</code>
+            objects from each other, like this:
+        </p>
+        <pre class="prettyprint lang-py">difference = onetttposition - anothertttposition</pre>
+        <h4><code>positionlist</code></h4>
+        <p>
+            This method will examine the board member and generate a list of
+            (x,y) positions for each of the board positions that has a mark
+            in it (+1 or -1, corresponding to 'X' or 'O'). If this method is
+            called on a <code>SuperTTTPosition</code> object that was generated
+            from subtraction (above) then it will return the coordinate pairs
+            of every position that is different between the two. This will be
+            useful for the graphical tic tac toe program.
+        </p>
+
+        <h4>
+            TTTXO
+        </h4>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygametictactoe").TTTXO) }}</pre>
+
+        <p>
+            The <code>TTTXO</code> class is based on the pygame <code>DirtySprite</code>
+            and represents images for the "X" and "O" marks on the game board.
+            The sprite consists only of an <code>__init__</code> method, which
+            loads the appropriate image from disk and positions it according
+            to the coordinates passed in during creation.
+        </p>
+        <p>
+            Remember that the <code>DirtySprite</code> object must define
+            <code>image</code> and <code>rect</code> members in order to work
+            seamlessly with Pygame groups.
+        </p>
+
+        <h4>
+            TTTMessage
+        </h4>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygametictactoe").TTTMessage) }}</pre>
+
+        <p>
+            The <code>TTTMessage</code> class is based on the pygame <code>DirtySprite</code>
+            and represents an image for a prompt message that appears at the
+            bottom of the display window. Like <code>TTTXO</code>, this class
+            only consists of an <code>__init__</code> method.
+        </p>
+        <p>
+            This method uses the Pygame <code>font</code> module to create a
+            Font object and render it to a Pygame surface image that can be
+            displayed like an ordinary sprite.
+        </p>
+
+        <h4>
+            TTTApp
+        </h4>
+        <p>
+            And now, the heart of the application: <code>TTTApp</code>, which is
+            based on the <code>PygameApp</code> class that was in an earlier
+            tutorial. Rather than print the entire class here, you should
+            download <a href="{{url_for('static', filename='exemplars/pygametictactoe.py')}}">the file</a>
+            and follow along.
+        </p>
+        <h4><code>__init__</code></h4>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygametictactoe").TTTApp.__init__) }}</pre>
+        <p>
+            This method will first load a background image file, then call the
+            <code>PygameApp</code> initialization method, using the image
+            file size as the size of the game window. Since the default
+            <code>PygameApp</code> initializer sets a blank background surface,
+            this intializer will override that and use the loaded image as a
+            background surface.
+        </p>
+        <p>
+            Finally, the initializer sets a few member variables that will
+            be used later.
+        </p>
+        <h4><code>newgame</code></h4>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygametictactoe").TTTApp.newgame) }}</pre>
+
+        <p>
+            This graphical version of tic tac toe will allow users to play
+            games over and over again, so there is a new method defined
+            that does everything that needs to be done for a new game.
+        </p>
+        <p>
+            Based on whether this method is called with an 'X' or an 'O',
+            the method decides how to create a new
+            <code>SuperTTTPosition</code> object. The
+            <code>SuperTTTPosition</code> initializer accepts a -1 or +1
+            to indicate whether the computer or the human takes the first
+            move. The method also sets a variable to help this class
+            remember which player is taking next move (<code>humanmove</code>).
+        </p>
+
+        <h4><code>drawmove</code></h4>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygametictactoe").TTTApp.drawmove) }}</pre>
+        
+        <p>
+            This method is called whenever a new move is made in the game and
+            a 'X' or 'O' image needs to be drawn on the board. The
+            <code>drawmove</code> method merely creates a <code>TTTXO</code>
+            sprite at the desired position, and puts it in the app's default
+            sprite group. Once created, it will automagically be displayed
+            in the game.
+        </p>
+        
+        <h4><code>endmessage</code></h4>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygametictactoe").TTTApp.endmessage) }}</pre>
+        <p>
+            Similar to <code>drawmove</code>, this method creates a single
+            <code>TTTMessage</code> sprite, with the desired text, which
+            will automagically be displayed in the game window.
+        </p>
+
+        <h4><code>handle_event</code></h4>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygametictactoe").TTTApp.handle_event) }}</pre>
+
+        <p>
+            This method overrides the <code>handle_event</code> method in the
+            base class, and is called every time the user does something with
+            the keyboard or mouse. It is used to translate mouse clicks
+            to coordinates on the game screen when it is the human's turn to
+            play.
+        </p>
+        <p>
+            Once the click position is translated to a board position that
+            <code>SuperTTTPosition</code> understands, the human move is made
+            using the line:
+        </p>
+        <pre class="prettyprint lang-py">desiredposition = self.tttposition.setmove(humanmove)</pre>
+        <p>
+            Once a position has been selected, it is verified against a list
+            of possible (legal) moves before it is finalized and drawn to
+            the screen with:
+        </p>
+        <pre class="prettyprint lang-py">ttt.drawmove('x', humanmove)</pre>
+
+        <h4><code>poll</code></h4>
+        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygametictactoe").TTTApp.poll) }}</pre>
+
+        <p>
+            This method is called constantly by the PygameApp, but will only
+            <em>do</em> something if it is the computer's turn to move. The
+            method will call:
+        </p>
+        <pre class="prettyprint lang-py">newposition = self.tttposition.autonextmove()</pre>
+        <p>
+            to determine the computer's next move, then subtract that move from
+            the previous position to figure out a the game board coordinates
+            so the "O" can be drawn on the screen at the correct position using:
+        </p>
+        <pre class="prettypring lang-py">ttt.drawmove('o', computermoves[0])</pre>
+        
+{% endblock %}

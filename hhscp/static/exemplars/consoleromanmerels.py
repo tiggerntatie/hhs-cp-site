@@ -1,6 +1,6 @@
 #! /usr/bin/python
 #
-# Simple Roman Merels engine (to be used in a pygame application
+# Simple Roman Merels engine (to be used in a pygame application)
 #
 
 __author__ = 'ericdennison'
