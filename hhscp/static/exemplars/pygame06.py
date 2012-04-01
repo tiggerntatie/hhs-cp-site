@@ -60,5 +60,6 @@ class MyApp(PygameApp):
 
 
 # Run an instance of MyApp!
-myapp = MyApp()
-myapp.run(100)   # 100 frames per second!
+if __name__ == '__main__':
+    myapp = MyApp()
+    myapp.run(100)   # 100 frames per second!

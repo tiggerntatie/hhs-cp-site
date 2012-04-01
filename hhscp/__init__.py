@@ -7,6 +7,9 @@ Hanover High School Computer Programming web applicaton!
 
 __author__ = 'ericdennison'
 
+import sys
+
+sys.path.append('./static/exemplars')
 
 from flask import Flask
 
