@@ -78,6 +78,7 @@ def site_userchallengedownload(username, challengename):
     u = User(username)
     c = u.challenge(challengename)
     rv = app.make_response(c.testcode)
-    rv.headers.add_header('Content-Disposition: attachment', 'filename=' + u.shortname + c.testname + '.py')
+    #rv.headers.add_header('Content-Disposition: attachment', 'filename=' + u.shortname + c.testname + '.py')
+    rv.headers.add('Content-Disposition','attachment', filename=u.shortname + c.testname + '.py')
     rv.mimetype = 'text/plain'
     return rv
