@@ -3,24 +3,40 @@
 {% block main %}
         
         <p>
-            Once you have PyCharm up and running for the first time, you should create a new project. It doesn't matter
-            what you call it at this point, but you might name it something like "test". Your choice.
+            Once you have Eclipse up and running for the first time, you should create a new project 
+            (<code>File/New/PyDev Project</code>). It doesn't matter
+            what name you give it at this point, but you might name it something like "test". Your choice.
+            You can leave the rest of the settings at their defaults.
         </p>
         <p>
-            With the project created, you can access the Python console. If you are using your own personal computer
-            (especially a Mac) you can access the Python console from terminal. Since the school computers are
-            configured to not allow students access to terminal, we will have to use the terminal that is built in 
-            to PyCharm.
+            With the project created, you will need to create a new Python module (or source code) file:
+            Select the project in the left hand pane, then select <code>File/New/PyDev Module</code>. 
+            In the new module dialog, leave the Package edit window empty, and enter a name for the 
+            module in the Name edit window. Again, the exact name doesn't matter (but as a general rule, 
+            module names must not begin with a number and must not have any spaces in them). The 
+            Template window may have <code>&lt;empty&gt;</code> selected.
+        </p>
+        <p>
+            With a project and module created, you can access the Python console. If you are using your own 
+            personal computer (especially a Mac) you can access the Python console from the system terminal 
+            (or from a "DOS Box" on a Windows machine). Since the school computers are configured to not 
+            allow students access to terminal, we will have to use the terminal that is built in 
+            to Eclipse.
         </p>
         <h3>Accessing the console</h3>
         <p>
-            The console is accessible from Pycharm at <code>Tools/Run Python Console...</code>. This will open
-            a window at the bottom of the PyCharm screen. The console is divided into two sections, top and bottom.
-            The bottom section is the place where you do your typing. There is a prompt that looks like:
+            The console is accessible from Eclipse at <code>Window/Show View/Console</code>. This will open
+            a console window at the bottom of the Eclipse screen. At the upper right corner of this console
+            window you should find the <code>Open Console</code> icon. Click this and select the 
+            <code>PyDev Console</code>, then <code>Python console</code> on the window that pops up. 
+            Now the console window should display a prompt that looks something like:
         </p>
-        <pre class="prettyprint lang-py">>>></pre>
+        <pre class="prettyprint lang-py">>>> import sys; print('%s %s' % (sys.executable or sys.platform, sys.version))
+/usr/bin/python 2.7.1 (r271:86832, Aug  5 2011, 03:30:24) 
+[GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]
+>>></pre>
         <p>
-            This is where you will do your typing. The top section will display Python's response.
+            This is where you will do your typing today. 
         </p>
         <h3>By the numbers</h3>
         <p>
