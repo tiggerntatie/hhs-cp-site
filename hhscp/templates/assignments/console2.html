@@ -134,26 +134,49 @@ Please enter the value of pi: 3.141592654
 An approximate value of pi is 3.1!
 >>> print("An approximate value of pi is {0:.2}!".format(pi*1000))
 An approximate value of pi is 3.1e+03!</pre>
+
         <h3>Time for a REAL Program</h3>
+        <iframe width="420" height="315" src="http://www.youtube.com/embed/xhDDVNBv8_c" frameborder="0" allowfullscreen></iframe>
         <p>
-            In the left-hand pane of the PyCharm window you should see a folder icon that represents the project
-            you created the first time you ran PyCharm. Click on the folder to highlight it, then press apple-N 
-            (on a Mac) or right click and select <strong>New...</strong> to create a new Python file. You can name
-            the file anything you want (for example, <code>newfile.py</code>: you don't have to type the .py
-            at the end). When you are done creating the file, double click on its icon to open the file contents
-            in the PyCharm editor.
+            Typing commands in the console is all well and good, but what if we could have Python remember
+            a sequence of commands and replay them at any time in the future? That is what a program does.
+            In order to write a short program in Python using Eclipse you have to start with an Eclipse
+            project:
         </p>
+        <ul>
+            <li>Make sure the PyDev perspective is active</li>
+            <li>Navigate to <code>File/New/PyDev Project</code></li>
+            <li>Choose a name for your project. For example: <em>Computer Programming Assignments</em></li>
+            <li>Select Python as the project type.</li>
+            <li>Select Grammar 2.7</li>
+        </ul>
         <p>
-            To start with, your file will have very little in it. By default, PyCharm will add a single line in the 
-            file that sets a variable with what it thinks is your name. You don't need this line, so you may delete
-            it. It will do you no harm to leave it in the file, however.
+            With the project created, you will need to create a new Python module (or source code) file:
+        </p>
+        <ul>
+            <li>Click/select your project in the left hand pane</li>
+            <li>Navigate to <code>File/New/PyDev Module</code></li>
+            <li>Leave the "Package" edit box empty</li>
+            <li>Enter a "Name" for your module. The exact name doesn't matter (but, as a general rule
+            module names must not begin with a number and must not have any spaces or punctuation marks
+            in them. Also, you should avoid upper case characters).</li>
+            <li>Choose &lt;empty&gt; as your module template. Click "OK".</li>
+        </ul>
+        <p>
+            To start with, your Python module/file will have very little in it. By default, Eclipse will add a 
+            comment with the date the file was created and the name of the person (you) who created it. You
+            don't absolutely need this comment in your file, but it will do you no harm to leave it alone.
         </p>
         <p>
             Now, instead of typing your Python commands in the console window at the bottom, you can type them
-            in the PyCharm edit window (the BIG window in the upper right portion of the PyCharm window. For example,
-            you could immortalize the commands about bottles..
+            in the Eclipse source file edit window (the BIG window in the middle of Eclipse. For example,
+            you could immortalize some commands about bottles..
         </p>
-        <pre class="prettyprint lang-py">__author__ = 'ericdennison'
+        <pre class="prettyprint lang-py">'''
+Created on Jan 26, 2013
+
+@author: ericdennison
+'''
 
 a = 99 # Start with the usual number of bottles
 

@@ -2,33 +2,70 @@
 {% block sidebarcontainer %}{% endblock %}
 {% block main %}
         
+        <h3>Running Eclipse for the First Time</h3>
+        <iframe width="420" height="315" src="http://www.youtube.com/embed/v_YgnVObdPc" frameborder="0" allowfullscreen></iframe>
         <p>
-            Once you have Eclipse up and running for the first time, you should create a new project 
-            (<code>File/New/PyDev Project</code>). It doesn't matter
-            what name you give it at this point, but you might name it something like "test". Your choice.
-            You can leave the rest of the settings at their defaults.
+            When you execute Eclipse it will ask you to pick a location for your
+            workspace folder. This will be the location where Eclipse will look for your current
+            projects. By default, the workspace is placed in your home directory on the HHS computers, 
+            which means that its contents will not be backed up to the student server. You <em>should</em>
+            use the same computer every day, so that you don't have to repeat the initial setup of 
+            Eclipse each time you log in. Using the same computer each day will also ensure that your
+            workspace remains exactly as you left it.
         </p>
         <p>
-            With the project created, you will need to create a new Python module (or source code) file:
-            Select the project in the left hand pane, then select <code>File/New/PyDev Module</code>. 
-            In the new module dialog, leave the Package edit window empty, and enter a name for the 
-            module in the Name edit window. Again, the exact name doesn't matter (but as a general rule, 
-            module names must not begin with a number and must not have any spaces in them). The 
-            Template window may have <code>&lt;empty&gt;</code> selected.
+            Don't forget to back up your files regularly! Either copy your work to a flash drive from time
+            to time or copy the files to your Documents or Desktop folder where they will be backed up 
+            automatically. You can also consider overriding the default workspace folder by placing it 
+            directly in your Documents or Desktop folder. 
+        </p>
+
+        <h3>Other First Time Tasks: Perspective and Interpreter</h3>        
+        <p>
+            The very first time you run Eclipse on a computer you have to do some initial setup in order
+            to work with Python. If there is a "Welcome" window displayed when you run Eclipse, then you 
+            are running it for the 
+            first time. Go ahead and close the "Welcome" window.
         </p>
         <p>
-            With a project and module created, you can access the Python console. If you are using your own 
-            personal computer (especially a Mac) you can access the Python console from the system terminal 
-            (or from a "DOS Box" on a Windows machine). Since the school computers are configured to not 
-            allow students access to terminal, we will have to use the terminal that is built in 
-            to Eclipse.
+            Eclipse is a general purpose tool for doing many different software development tasks, including
+            writing Java software. These different tasks are called <em>perspectives</em>. For developing
+            Python code you will need to use the PyDev perspective. To open the perspective, do the following:
         </p>
+        <ul>
+            <li>Navigate to <code>Window/Open Perspective</code></li>
+            <li>Choose the option, <code>Other...</code></li>
+            <li>Choose the option, <code>PyDev</code> in the list displayed</li>
+        </ul>
+        <p>
+            You should now see a small PyDev button active near the upper right corner of the Eclipse window. 
+        </p>
+        <p>
+            Next you will have to configure Eclipse to use your Python interpreter. Do the following:
+        </p>
+        <ul>
+            <li>Navigate to <code>Eclipse/Preferences</code></li>
+            <li>In the list displayed, select/expand <code>PyDev</code>, then select <code>Interpreter - Python</code></li>
+            <li>If nothing is displayed in the large edit boxes to the right, then click the "Auto Config" button.</li>
+            <li>Click the "Select All" button, then..</li>
+            <li>Click "OK", then "OK" again (then start waiting)</li>
+        </ul>
+        
         <h3>Accessing the console</h3>
+        <iframe width="420" height="315" src="http://www.youtube.com/embed/cx__dDMpReo" frameborder="0" allowfullscreen></iframe>
         <p>
-            The console is accessible from Eclipse at <code>Window/Show View/Console</code>. This will open
-            a console window at the bottom of the Eclipse screen. At the upper right corner of this console
-            window you should find the <code>Open Console</code> icon. Click this and select the 
-            <code>PyDev Console</code>, then <code>Python console</code> on the window that pops up. 
+            The Python console gives you direct, interactive access to the Python language. The console
+            is a great place to test out short snippets of Python code, or investigate the behavior of 
+            built-in Python behavior without actually creating full programs. We will use the console
+            to introduce some basic Python concepts. To open the console:
+        </p> 
+        <ul>
+            <li>Navigate to <code>Window/Show View/Console</code></li>
+            <li>Click on the "Open Console" icon in the upper right corner of the lower console pane.</li>
+            <li>Select the PyDev Console.</li>
+            <li>Select the Python Console, then click "OK"</li>
+        </ul>
+        <p>
             Now the console window should display a prompt that looks something like:
         </p>
         <pre class="prettyprint lang-py">>>> import sys; print('%s %s' % (sys.executable or sys.platform, sys.version))
@@ -36,7 +73,7 @@
 [GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]
 >>></pre>
         <p>
-            This is where you will do your typing today. 
+            Click to the right of the bottom set of ">>>" brackets. This is where you will do your typing today. 
         </p>
         <h3>By the numbers</h3>
         <p>
@@ -98,7 +135,7 @@ Out[49]: 0.5844818604651163</pre>
         <h3>Strings (text)</h3>
         <p>
             Python isn't just a calculator. You can create text objects on the fly by typing text, enclosed in either
-            single ('), double ("), or triple (""" or ''') quotes. These are called <em>strings</em> (for historical)
+            single ('), double ("), or triple (""" or ''') quotes. These are called <em>strings</em> (for historical
             reasons, not because they are very stringy):
         </p>
         <pre class="prettyprint lang-py">>>> "Python is named after Monty Python"
@@ -110,6 +147,7 @@ Out[21]: 'Triple quoted text can include quotes in it (like this: ") without con
 >>> myname = "Mr. Dennison"
 >>> myname
 Out[23]: 'Mr. Dennison'</pre>
+       
         <h3>Collections</h3>
         <p>
             One of Python's strengths is that it very good at handling lots of objects at once. One way
@@ -159,9 +197,9 @@ Out[37]: ['Wilson', 'Ramalamadingdong', 'Jones']</pre>
 >>> print(morelastnames)
 ['Wilson', 'Boring', 'Jones']</pre>
         <p>
-            I made change to the list object <code>somelastnames</code>, and it changed not only <code>somelastnames</code>,
+            I made a change to the list object <code>somelastnames</code>, and it changed not only <code>somelastnames</code>,
             it also changed <code>morelastnames</code>! This is because both variables were pointing to the same object.
-            So variables are <em>not</em> exactly like the post office box model for computer memory. Different names
+            So variables are <em>not</em> exactly like a post office box model for computer memory. Different names
             (variables) can quite easily refer to the same object in memory.
         </p>
         <p>
@@ -206,6 +244,16 @@ Out[37]: ['Wilson', 'Ramalamadingdong', 'Jones']</pre>
 0.0
 >>> print(celsius(70))
 21.1111111111</pre>
+
+        <p>
+            The statement, <code>lambda</code>, generates a function object in computer memory. The function
+            takes a single argument or parameter, which <code>f</code> will point to. The behavior of the
+            function is determined by the part following the colon: <code>(f-32.0)/1.8</code>. This will
+            perform a little math on whatever argument is passed to the function and return the answer.
+            Finally, this new function object will be assigned to the variable, <code>celsius</code>,
+            so we can execute the function at any time by writing something like, <code>celsius(100.0)</code>.
+        </p>
+
         <h3>Putting it together</h3>
         <p>
             Suppose I have a list of numbers that represent temperatures in Fahrenheit, and I would like to make
@@ -225,8 +273,8 @@ Out[37]: ['Wilson', 'Ramalamadingdong', 'Jones']</pre>
         <h3>Try It!</h3>
         <p>
             Write your own lambda function that does some kind of conversion. Inches to centimeters? Pounds to
-            kilograms? Then see if you can convert a list of values like the example above. Can you write a lambda
-            function that accepts two arguments? Can you write one that returns two values? You may have to do some
-            research to figure it out.
+            kilograms? Dollars to pennies? Then see if you can convert a list of values like the example above. 
+            Can you write a lambda function that accepts two arguments? Can you write one that returns two 
+            values? You may have to do some research to figure it out.
         </p>
 {% endblock %}
