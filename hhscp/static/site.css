@@ -204,3 +204,7 @@ table#calendar li {
     margin-left: 0;
 }
 
+iframe {
+	border: none;
+}
+
