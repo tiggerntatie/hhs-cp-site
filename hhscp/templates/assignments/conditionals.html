@@ -13,24 +13,24 @@
             at the thermometer. Your logic might go something like this:
         </p>
         <p>
-            <code>If the temperature is below 20 degrees (F) then wear long pants, otherwise wear short pants.</code>
+            <code>If the temperature is below 55 degrees (F) then wear something warm, otherwise something cooler.</code>
         </p>
         <p>
             To make it easier to see the structure of this decision, we might want to lay out the text a little
             differently:
         </p>
-        <pre>If the temperature is below 20 degrees (F) then
-    wear long pants
+        <pre>If the temperature is below 55 degrees (F) then
+    wear a fleece
 otherwise
-    wear short pants</pre>
+    you don't need to wear a fleece</pre>
         <p>
             This is exactly the way Python likes to make its decisions, except it uses some very specific language:
         </p>
         <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
-if temperature &lt; 20:
-    print("You should wear your long pants.")
+if temperature < 55:
+    print("You should bring a fleece.")
 else:
-    print("You should wear your short pants.")</pre>
+    print("You don't need to bring a fleece.")</pre>
 
         <p>
             Try this code out yourself to see how it works.
@@ -43,9 +43,9 @@ else:
             <dt>&gt;</dt>
             <dd>greater than</dd>
             <dt>==</dt>
-            <dd>equal to (do NOT use the = symbol: that is used only to assign values!)</dd>
+            <dd>is equal to (do NOT use the = symbol: that is used only to assign values!)</dd>
             <dt>!=</dt>
-            <dd>not equal to</dd>
+            <dd>is not equal to</dd>
             <dt>is</dt>
             <dd>is the same object as</dd>
             <dt>&lt;=</dt>
@@ -64,16 +64,16 @@ else:
             You can combine conditionals using <code>and</code> and <code>or</code>, thus:
         </p>
         <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
-gender = raw_input("Are you a boy or a girl? ")
-gender = gender.lower() # change to lower case
-if temperature < 20 and gender == "boy":
-    print("You should wear your long pants")
-elif temperature < 20 and gender == "girl":
-    print("You might want to wear a warm dress")
-elif temperature >= 20 and gender == "boy":
-    print("You should wear shorts today")
-else: # the only combination left is girl and temperature >= 20
-    print("You could wear a short skirt today")</pre>
+weather = raw_input("Is it raining or sunny outside? ")
+weather = weather.lower() # change to lower case
+if temperature < 55 and weather == "raining":
+    print("You should bring a warm raincoat.")
+elif temperature < 55 and weather == "sunny":
+    print("You should bring a fleece.")
+elif temperature >= 55 and weather == "raining":
+    print("You should bring an umbrella.")
+else: # the only combination left is sunny and temperature >= 55
+    print("You should bring sunglasses.")</pre>
         <p>
             This example only uses the <code>and</code> keyword. It will decide that the condition is True only if
             <strong>both</strong> of the conditions are True. If one of them is False then the whole thing is False.
@@ -91,18 +91,16 @@ else: # the only combination left is girl and temperature >= 20
             The preceding example is actually fairly inefficient. Compare it to the following:
         </p>
         <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
-gender = raw_input("Are you a boy or a girl? ")
-gender = gender.lower() # change to lower case
-if temperature < 20:
-    if gender == "boy":
-        print("You should wear long pants")
-    else:
-        print("You might want to wear a warm dress") # if you're not a boy then you must be a girl?
-else:   # 20 or warmer
-    if gender == "boy":
-        print("You should wear shorts today")
-    else:
-        print("You could wear a short skirt today")
+if temperature < 55:
+    if weather == "raining":
+        print("You should bring a warm raincoat..")
+    else:   # if it's not rainy then it must be cold and sunny!
+        print("You should bring a fleece.") 
+else:   # 55 or warmer
+    if weather == "raining":
+        print("You should bring an umbrella.")
+    else:   # if it's not rainy then it must be warm and sunny!
+        print("You should bring sunglasses.")
 </pre>
         <p>
             As these examples get more complicated, it's important to leave clues to yourself and future readers
@@ -120,13 +118,11 @@ else:   # 20 or warmer
             example yet again:
         </p>
         <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
-gender = raw_input("Are you a boy or a girl? ")
-gender = gender.lower() # change to lower case
-if temperature < 20:
-    clothes = "long pants" if gender == "boy" else "a long dress"
-else:
-    clothes = "shorts" if gender == "boy" else "a short skirt"
-print("You should wear {0} today".format(clothes))</pre>
+if temperature < 55:
+    clothes = "a warm raincoat" if weather == "raining" else "a fleece"
+else:  # 55 or warmer..
+    clothes = "an umbrella" if weather == "raining" else "sunglasses"
+print("You should bring {0}.".format(clothes))</pre>
         <p>
             Try this code on your own and play with it until you understand how it works.
         </p>
