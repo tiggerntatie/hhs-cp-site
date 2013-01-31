@@ -97,13 +97,13 @@ class Holidays(EventList):
 
 class Assignments(EventList):
 
-    def __init__(self, filename):
+    def __init__(self, showall, filename):
         super(Assignments,self).__init__(filename)
         self.today = date.today()
         self.events = [AssignmentEvent(datestr, name, shortname, showdate)
                        for datestr, name, shortname, showdate in self.data]
 
-        self.events = filter(lambda x: x.showdate <= self.today, self.events)
+        self.events = filter(lambda x: showall or (x.showdate <= self.today), self.events)
         self.events.sort()
         self.refreshDict()
         self.refreshNameDict()
@@ -117,9 +117,9 @@ class Assignments(EventList):
 
 class Calendar(object):
 
-    def __init__(self, holstr='./data/holidays.csv', assstr='./data/assignments.csv'):
+    def __init__(self, showall=False, holstr='./data/holidays.csv', assstr='./data/assignments.csv'):
         self.holidays = Holidays(holstr)
-        self.assignments = Assignments(assstr)
+        self.assignments = Assignments(showall, assstr)
         lastevent = self.assignments.events[-1]
         lastdate = lastevent.date
         firstevent = self.assignments.events[0]
