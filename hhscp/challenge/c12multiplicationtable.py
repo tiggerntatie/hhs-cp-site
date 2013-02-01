@@ -18,7 +18,9 @@ class MultiplicationTable(CodeTest):
         self.infile = StringIO("{0}\n{1}\n".format(self.width, self.height))
 
     def canonicalexample(self):
-        return """
+        return "print('hello')"
+
+    """
 width = input("Width of multiplication table: ")
 height = input("Height of multiplication table: ")
 print ""
