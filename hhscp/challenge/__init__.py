@@ -10,6 +10,7 @@ tests = {
     'c07stringjumble':'StrJumble',
     'c08classdict':'AreaClass',
     'c09exceptions':'Exceptions',
+    'c12multiplicationtable':'MultiplicationTable',
     'p01tkcalculator':'TkCalculator',
     'p02conwayslife' : 'ConwaysLife',
     'p03consolemerels' : 'ConsoleMerels',
