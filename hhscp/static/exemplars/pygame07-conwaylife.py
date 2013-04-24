@@ -163,4 +163,4 @@ class ConwayApp(PygameApp):
 
 # Run an instance of MyApp!
 myapp = ConwayApp()
-myapp.run(50)   # ? frames per second!
+myapp.run(5)   # ? frames per second!

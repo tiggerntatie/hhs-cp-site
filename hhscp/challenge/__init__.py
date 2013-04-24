@@ -14,7 +14,8 @@ tests = {
     'p01tkcalculator':'TkCalculator',
     'p02conwayslife' : 'ConwaysLife',
     'p03consolemerels' : 'ConsoleMerels',
-    'p04pygamemerels' : 'PygameMerels'
+    'p04pygamemerels' : 'PygameMerels',
+    'p05pygameplatformer' : 'PygamePlatformer'
 }
 
 def gettest(modulename):

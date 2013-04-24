@@ -10,12 +10,12 @@ February 4 2013, c12 - Multiplication Table, c12multiplicationtable, January 30 
 February 5 2013, c05 - Calculating Areas, c05areas, February 1 2013
 February 6 2013, c06 - Character Distributions, c06characterdistribution, February 1 2013
 February 6 2013, c07 - String Jumble, c07stringjumble, February 1 2013
-February 11 2013, c08 - Calculating Areas with Class, c08classdict, February 6 2013
-February 11 2013, Introduction to Classes in Python, classintro, February 6 2013
+February 11 2013, c08 - Calculating Areas with Class, c08classdict, February 5 2013
+February 11 2013, Introduction to Classes in Python, classintro, February 5 2013
 February 13 2013, Exception Handling, exceptions, February 6 2013
 February 13 2013, c09 - Exception Handling, c09exceptions, February 6 2013
-February 25 2013, Graphical User Interface, tkinter, February 13 2013
-February 25 2013, p01 - Graphical User Interface: Tk, p01tkcalculator, February 13 2013
+February 25 2013, Graphical User Interface, tkinter, February 12 2013
+February 25 2013, p01 - Graphical User Interface: Tk, p01tkcalculator, February 12 2013
 March 1 2013, Introduction to Pygame, pygameintro, February 25 2013
 March 1 2013, Pygame: Make it MOVE, pygameanimate, February 25 2013
 March 4 2013, Encapsulating Display Objects as Sprites, pygamesprites, March 1 2013
@@ -25,4 +25,5 @@ March 15 2013, Simple Games, gametrees, March 5 2013
 March 15 2013, p03 - Merels in ancient Rome, p03consolemerels, March 5 2013
 April 5 2013, Game Trees with Pygame, pygametrees, March 15 2013
 April 5 2013, p04 - Merels with Pygame, p04pygamemerels, March 15 2013
+April 24 2013, p05 - Platform Game, p05pygameplatformer, March 1 2013
 April 26 2013, Final Project Proposal, projectproposal, April 5 2013
