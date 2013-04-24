@@ -116,33 +116,33 @@ myapp.run()</pre>
             actors in the game (more about this later).
         </li>
         <li>
-    		<code>__str__()</code>: Represents this actor as a string. Because 
-    		of this function, code such as <code>print my_actor</code> will 
-    		show useful information instead of default text Python provides.
+            <code>__str__()</code>: Represents this actor as a string. Because 
+            of this function, code such as <code>print my_actor</code> will 
+            show useful information instead of default text Python provides.
     	</li>
     	<li>
-		    <code>is_overlapping()</code>: Checks if this actor is 
-		    overlapping a particular other actor.
-		</li>
-		<li>
-		    <code>overlapping_actors()</code>: Gets a list of all of the 
-		    actors overlapping this actor.
-		</li>
-		<li>
-		    <code>draw()</code>: Draws the actor to the window. By default, 
-		    this draws the actor as a rectangle of color 
-		    <code>self.color</code>, but by overriding this function you can 
-		    give it any appearance you like.
-		</li>
-		<li>
-		    <code>timestep()</code>: This function is meant to be called 
-		    every frame of your application. It does nothing by default, but 
-		    by overriding it, you can make your actor do something in response
-		    to the passage of time.
-		</li>
-		<li>
-		    <code>destroy()</code>: Destroys the actor.
-		</li>
+            <code>is_overlapping()</code>: Checks if this actor is 
+            overlapping a particular other actor.
+        </li>
+        <li>
+            <code>overlapping_actors()</code>: Gets a list of all of the 
+            actors overlapping this actor.
+        </li>
+        <li>
+            <code>draw()</code>: Draws the actor to the window. By default, 
+            this draws the actor as a rectangle of color 
+            <code>self.color</code>, but by overriding this function you can 
+            give it any appearance you like.
+        </li>
+        <li>
+            <code>timestep()</code>: This function is meant to be called 
+            every frame of your application. It does nothing by default, but 
+            by overriding it, you can make your actor do something in response
+            to the passage of time.
+        </li>
+        <li>
+            <code>destroy()</code>: Destroys the actor.
+        </li>
     </ul>    
 
     <p>
@@ -172,22 +172,22 @@ myapp.run()</pre>
     </p>
     <ul>
         <li>
-			A "platform" actor that serves as a floor but not a ceiling. 
-			The player can jump through the bottom of this platform, but 
-			will land on top of it.
-		</li>
-		<li>	
-			A "laser turret" actor that fires laser bolts at the player.
-		</li>
-		<li>
-			Enemies that walk along the ground.
-		</li>
-		<li>
-			A jetpack activated by holding the down arrow key.
-		</li>
-		<li>
-			Your own ideas!
-		</li>
+            A "platform" actor that serves as a floor but not a ceiling. 
+            The player can jump through the bottom of this platform, but 
+            will land on top of it.
+        </li>
+        <li>	
+            A "laser turret" actor that fires laser bolts at the player.
+        </li>
+        <li>
+            Enemies that walk along the ground.
+        </li>
+        <li>
+            A jetpack activated by holding the down arrow key.
+        </li>
+        <li>
+            Your own ideas!
+        </li>
     </ul>
     <div>
         <img src="{{url_for('static', filename='p05img2.png')}}"
