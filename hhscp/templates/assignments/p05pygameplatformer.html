@@ -1,0 +1,251 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+
+    <p>
+        This project will give you experience writing graphical applications. 
+        You will also learn how to use classes and object-oriented programming 
+        to streamline your code.
+    </p>
+    
+    <h>What to do</h>
+
+    <p>
+        Use Python to create a sandbox platform game. A platform game is a 
+        2D game with a player that jumps between platforms (like Super 
+        Mario Bros). &ldquo;Sandbox&rdquo; simply means that instead of having structured 
+        levels, the user creates their own environment and plays around in it. 
+        In this case, the user will be able to create various objects at the 
+        mouse pointer by pressing keys on the keyboard. They will also be able 
+        to control a player object using the arrow keys.
+    </p>
+
+    <p>
+    The game will look something like this:
+    </p>
+
+        <div>
+            <img src="{{url_for('static', filename='p05img1.png')}}"
+                 alt="Screenshot of Python and Pygame implementation of sample platformer game" />
+        </div>
+
+    <p>
+    You must include the elements labeled in the image.
+    </p>
+    
+    <ol>
+        <li>
+	        Pressing 'w' creates a wall at the mouse. This is simply a square 
+	        obstacle that blocks the movement of the player and other objects. I 
+	        recommend making the walls snap to a grid so you can make smooth 
+	        platforms.
+        </li>
+        <li>
+            Pressing 'p' creates the player at the mouse (provided that 
+            there isn't already one on the screen). It is affected by gravity, 
+            and falls down until a wall stops it. The user can move the player 
+            by pressing and holding the left and right arrow keys. If the 
+            player is on the ground, the user can jump by pressing the up 
+            arrow key. These are some basic characteristics, but feel free 
+            to add extra controls for the user or interesting properties.          
+        </li>
+        <li>
+            Pressing 's' creates a spring at the mouse. If the player hits a 
+            spring, it will launch upwards (higher than a jump takes it). 
+            Springs are also affected by gravity so that, when created, they 
+            fall and come to rest on flat ground.
+        </li>
+    </ol>
+    
+
+    <h>How to do it</h>
+
+    <p>
+        Note: I recommend making a separate folder for this project, since 
+        you're going to end up with more than one .py file.
+    </p>
+
+    <p>
+        First, you'll want to create a main window to draw your game in. 
+        Download 
+        <a href="{{url_for('static', filename='exemplars/pygameapp.py')}}">pygameapp.py</a>
+        and put it in your project's folder. This simple class is all you 
+        need to create a window with a working close button. You can do this 
+        by creating an instance of the class and calling its run() function, 
+        as follows:
+
+    <pre class="prettyprint lang-py">myapp = PygameApp()
+myapp.run()</pre>
+
+
+    <p>
+        This won't get you a working game, however, and you are not allowed 
+        to change PygameApp. To add your own functionality to the class, 
+        create a new file for the game (I called mine PlatformGame.py) and 
+        import the PygameApp class. Then create a PlatformGame class that 
+        inherits from PygameApp. I won't guide you on what to do for this, 
+        but you'll probably want to override the poll() and handle_event() 
+        functions. Thanks to PygameApp, whatever code you put in the poll() 
+        function will run every tick of the clock (so if you set your app to 
+        run at 60 frames per second, this code will run 60 times each second). 
+        handle_event() is where mouse and keyboard input will come in; use 
+        this to detect keypresses and get the position of the mouse.
+    </p>
+    
+    <p>
+        You should also make classes for all of the game objects (walls, the 
+        player, and springs). All of these objects (which we'll call actors) 
+        have some basic properties in common: Every actor has a position and 
+        a size. You'll also want every actor to be able to draw itself on the 
+        screen, check if it's overlapping another actor, etc.
+    </p>
+
+    <p>
+        I've made an Actor class that encapsulates all of this basic 
+        functionality. Download 
+        <a href="{{url_for('static', filename='exemplars/actor.py')}}">actor.py</a>
+        and put it in your project's 
+        folder. Open it and take a look at the code. Here are the basic 
+        functions of an actor:
+    </p>
+
+    <ul>
+        <li>
+            <code>__init__()</code>: This initializes the actor. All actors 
+            have a position and a size, as well a shared list of all the 
+            actors in the game (more about this later).
+        </li>
+        <li>
+    		<code>__str__()</code>: Represents this actor as a string. Because 
+    		of this function, code such as <code>print my_actor</code> will 
+    		show useful information instead of default text Python provides.
+    	</li>
+    	<li>
+		    <code>is_overlapping()</code>: Checks if this actor is 
+		    overlapping a particular other actor.
+		</li>
+		<li>
+		    <code>overlapping_actors()</code>: Gets a list of all of the 
+		    actors overlapping this actor.
+		</li>
+		<li>
+		    <code>draw()</code>: Draws the actor to the window. By default, 
+		    this draws the actor as a rectangle of color 
+		    <code>self.color</code>, but by overriding this function you can 
+		    give it any appearance you like.
+		</li>
+		<li>
+		    <code>timestep()</code>: This function is meant to be called 
+		    every frame of your application. It does nothing by default, but 
+		    by overriding it, you can make your actor do something in response
+		    to the passage of time.
+		</li>
+		<li>
+		    <code>destroy()</code>: Destroys the actor.
+		</li>
+    </ul>    
+
+    <p>
+        You may not modify the Actor class. Instead, create all of your game 
+        objects by making subclasses of Actor. Start off simple by creating 
+        a Wall class. Once you've done that, I suggest making another generic 
+        actor class, but this time for objects that are influenced by gravity. 
+        I called this class GravityActor.
+    </p>
+        
+    <p>
+        You're probably wondering how to make all of these classes actually 
+        show up on the screen and do something. Remember how every actor 
+        wants a list of all the actors in the game? This is because keeping 
+        a list of actors is the best way (perhaps the only way) to keep track 
+        of them. In the poll() function in your game's main class, you can 
+        loop through all of the actors in your master list. First call its 
+        timestep() function to do anything specific to the actor, then draw it.
+    </p>
+
+    <h>Extra ideas</h>
+
+    <p>
+        There are lots of possibilities for extra features to add to your 
+        platform game.
+    </p>
+    <ul>
+        <li>
+			A "platform" actor that serves as a floor but not a ceiling. 
+			The player can jump through the bottom of this platform, but 
+			will land on top of it.
+		</li>
+		<li>	
+			A "laser turret" actor that fires laser bolts at the player.
+		</li>
+		<li>
+			Enemies that walk along the ground.
+		</li>
+		<li>
+			A jetpack activated by holding the down arrow key.
+		</li>
+		<li>
+			Your own ideas!
+		</li>
+    </ul>
+    <div>
+        <img src="{{url_for('static', filename='p05img2.png')}}"
+                 alt="Screenshot of Python and Pygame implementation of platformer extras" />
+    </div>
+        <p>
+            The purpose of this challenge is to practice building a simple 
+            Pygame game using a game tree.
+        </p>
+        <p>
+            Your task is to create a program using Python and Pygame that plays the
+            <a href="http://gwydir.demon.co.uk/jo/games/romgame/index.htm">
+                Roman Board Game - Merels</a>. The article describes the rules
+            and let's you play the game against yourself. 
+        </p>
+        <p>
+            You <strong>should</strong> use or reuse your submission for 
+            <a href="{{url_for('site_assignment', short_name='p03consolemerels')}}">p03 Console Merels</a>
+            as a basis for completing this project. You should also refer to 
+            the tutorial on constructing a
+            <a href="{{url_for('site_assignment', short_name='pygametrees')}}">Graphical Tic Tac Toe</a> game.
+        </p>
+        <p>
+            You may write a game playing program for another variation of Merels.
+            Refer to the Internet for rules, etc.
+        </p>
+
+        <p>
+            Some basic requirements for your submission:
+        </p>
+        <ul>
+            <li>
+                You should allow the user to choose who will play the first
+                move.
+            </li>
+            <li>
+                You do not have to use background images with your program. If
+                images are required, then you will have to e-mail them to me
+                or submit everything in a single zip file (unless I can
+                modify the system to allow multiple submitted files).
+            </li>
+            <li>
+                You <em>may</em> use the code supplied in the
+                <a href="{{url_for('site_assignment', short_name='pygametrees')}}">Graphical Tic Tac Toe</a>
+                as a starting
+                point ( <a href="{{url_for('static', filename='exemplars/pygametictactoe.py')}}">pygametictactoe.py</a>).
+            </li>
+            <li>
+                As always, you may mine the Internet for ideas and inspiration, but
+                you may not submit someone else's implementation of any Merels game
+                (I don't think there are any implementations of the ancient
+                Roman version).
+            </li>
+            <li>
+                Please credit any sources for inspiration or code snippets.
+            </li>
+        </ul>
+        <p>
+            <strong>Note:</strong> your submitted program <em>will not be automatically checked</em> for correctness.
+            Any submission will automatically &ldquo;pass&rdquo;. I will download and execute your submitted scripts, however.
+        </p>
+{% endblock %}
