@@ -52,7 +52,7 @@ sys.modules['os']=None
         p.stdin.write(self.infile.getvalue())
         output, error = p.communicate()
         input = self.infile.getvalue()  # hold on to the input
-        return input, output + error
+        return input, (output + error)[:100000]  # limit the size of output
 
     def _pretest(self, infile, outfile):
         self.savein, self.saveout = sys.stdin, sys.stdout
