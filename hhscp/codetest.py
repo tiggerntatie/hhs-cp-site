@@ -48,7 +48,7 @@ sys.modules['os']=None
             p = subprocess.Popen(['python',pyfile.name], stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.PIPE)
         else:
             # On server, limit subprocess execution time!
-            p = subprocess.Popen(['timelimit', '-t5', '-T1', 'python',pyfile.name], stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.PIPE)
+            p = subprocess.Popen(['timelimit', '-t1', '-T1', 'python',pyfile.name], stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.PIPE)
         p.stdin.write(self.infile.getvalue())
         output, error = p.communicate()
         input = self.infile.getvalue()  # hold on to the input
