@@ -41,6 +41,7 @@ class CodeTest(object):
         safecode = """
 import sys
 sys.modules['os']=None
+sys.modules['subprocess']=None
 """
         pyfile.file.write(safecode + testcode + self.postcheck())  # code to execute
         pyfile.file.flush()
