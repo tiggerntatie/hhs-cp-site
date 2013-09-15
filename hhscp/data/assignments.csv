@@ -1,29 +1,30 @@
-January 29 2013, The Python Console, console, January 1 2013
-January 30 2013, Python Console II, console2, January 1 2013
-February 1 2013, c01 - Hello World, c01hello, January 26 2013
-February 1 2013, c02 - Hello Friend, c02hello, January 26 2013
-February 1 2013, c03 - Calculate Pi, c03pforpi, January 26 2013
-February 4 2013, Making Decisions, conditionals, January 30 2013
-February 4 2013, Looping, looping, January 30 2013
-February 4 2013, c04 - FizzBuzz, c04fizzbuzz, January 30 2013
-February 4 2013, c12 - Multiplication Table, c12multiplicationtable, January 30 2013
-February 5 2013, c05 - Calculating Areas, c05areas, February 1 2013
-February 6 2013, c06 - Character Distributions, c06characterdistribution, February 1 2013
-February 6 2013, c07 - String Jumble, c07stringjumble, February 1 2013
-February 11 2013, c08 - Calculating Areas with Class, c08classdict, February 5 2013
-February 11 2013, Introduction to Classes in Python, classintro, February 5 2013
-February 13 2013, Exception Handling, exceptions, February 6 2013
-February 13 2013, c09 - Exception Handling, c09exceptions, February 6 2013
-February 25 2013, Graphical User Interface, tkinter, February 12 2013
-February 25 2013, p01 - Graphical User Interface: Tk, p01tkcalculator, February 12 2013
-March 1 2013, Introduction to Pygame, pygameintro, February 25 2013
-March 1 2013, Pygame: Make it MOVE, pygameanimate, February 25 2013
-March 4 2013, Encapsulating Display Objects as Sprites, pygamesprites, March 1 2013
-March 5 2013, p02 - Conway's Life, p02conwayslife, March 1 2013
-March 15 2013, Game Trees, gametreesbasics, March 5 2013
-March 15 2013, Simple Games, gametrees, March 5 2013
-March 15 2013, p03 - Merels in ancient Rome, p03consolemerels, March 5 2013
-April 5 2013, Game Trees with Pygame, pygametrees, March 15 2013
-April 5 2013, p04 - Merels with Pygame, p04pygamemerels, March 15 2013
-April 24 2013, p05 - Platform Game, p05pygameplatformer, March 1 2013
-April 26 2013, Final Project Proposal, projectproposal, April 5 2013
+August 29 2013, The Python Console, console, August 20 2013
+August 30 2013, Python Console II, console2, August 20 2013
+September 3 2013, c01 - Hello World, c01hello, September 2 2013
+September 3 2013, c02 - Hello Friend, c02hello, September 2 2013
+September 3 2013, c03 - Calculate Pi, c03pforpi, September 2 2013
+September 5 2013, Making Decisions, conditionals, September 3 2013
+September 5 2013, Looping, looping, September 3 2013
+September 5 2013, c04 - FizzBuzz, c04fizzbuzz, September 3 2013
+September 6 2013, c12 - Multiplication Table, c12multiplicationtable, September 5 2013
+September 9 2013, c05 - Calculating Areas, c05areas, September 5 2013
+September 11 2013, c07 - String Jumble, c07stringjumble, September 5 2013
+September 13 2013, c06 - Character Distributions, c06characterdistribution, September 5 2013
+September 16 2013, c08 - Calculating Areas with Class, c08classdict, September 9 2013
+September 16 2013, Introduction to Classes in Python, classintro, September 9 2013
+September 18 2013, Exception Handling, exceptions, September 9 2013
+September 18 2013, c09 - Exception Handling, c09exceptions, September 9 2013
+September 20 2013, c11 - Cryptography, c11encryption, September 15 2013
+February 25 2014, Graphical User Interface, tkinter, February 12 2014
+February 25 2014, p01 - Graphical User Interface: Tk, p01tkcalculator, February 12 2014
+March 1 2014, Introduction to Pygame, pygameintro, February 25 2014
+March 1 2014, Pygame: Make it MOVE, pygameanimate, February 25 2014
+March 4 2014, Encapsulating Display Objects as Sprites, pygamesprites, March 1 2014
+March 5 2014, p02 - Conway's Life, p02conwayslife, March 1 2014
+March 15 2014, Game Trees, gametreesbasics, March 5 2014
+March 15 2014, Simple Games, gametrees, March 5 2014
+March 15 2014, p03 - Merels in ancient Rome, p03consolemerels, March 5 2014
+April 5 2014, Game Trees with Pygame, pygametrees, March 15 2014
+April 5 2014, p04 - Merels with Pygame, p04pygamemerels, March 15 2014
+April 24 2014, p05 - Platform Game, p05pygameplatformer, March 1 2014
+April 26 2014, Final Project Proposal, projectproposal, April 5 2014
