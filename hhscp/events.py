@@ -66,7 +66,7 @@ class EventList(object):
         self.dict = {}
         if len(filename):
             self.data = list(csv.reader(open(filename,'r'), skipinitialspace=True))
-
+            self.data = filter(lambda x: len(x) != 0, self.data) # eliminate empty lines
 
     def __add__(self, other):
         newlist = EventList('')
