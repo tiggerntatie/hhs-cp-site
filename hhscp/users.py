@@ -11,8 +11,8 @@ class UserException(Exception):
     def __str__(self):
         return repr(self.value)
 
-defaultuserspath = './data/users.csv'
-defaultusersdata = './userdata/'
+defaultuserspath = './hhscp/data/users.csv'
+defaultusersdata = './hhscp/userdata/'
 
 class Users(object):
 
@@ -35,7 +35,7 @@ class User(object):
         self.password = users.passwords[x]
         self.datapath = os.path.join(usersdata,shortname)
         try:
-            os.makedirs(self.datapath, mode=0751)
+            os.makedirs(self.datapath, mode=0o751)
         except:
             pass
         self.calevents = Calendar().assignments.events

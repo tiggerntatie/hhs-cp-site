@@ -11,18 +11,6 @@ import inspect
 import sys
 
 
-
-@app.route('/test')
-def site_test():
-    savestdin = sys.stdin
-    savestdout = sys.stdout
-    sys.stdin = open('./stdin/test.txt','r')
-    sys.stdout = open('./stdout/test.txt','w')
-    exec 'inp = raw_input()\nprint "hello, %s" % (inp)'
-    sys.stdout.close()
-    sys.stdin.close()
-    return open('./stdout/test.txt','r').read()
-
 @app.route('/calendar')
 def site_calendar():
     c = Calendar()

@@ -3,7 +3,7 @@ __author__ = 'ericdennison'
 import random
 from hhscp.codetest import CodeTest
 import string
-from StringIO import StringIO
+from io import StringIO
 
 class Exceptions(CodeTest):
 
@@ -25,7 +25,7 @@ class Exceptions(CodeTest):
             for i in range(0,n):
                 numstr = "{0:.4}\n".format(0.1+random.random()*100)
                 if random.randint(0,10) > 7:
-                    s += numstr.replace(str(random.randint(0,9)),random.choice(string.lowercase)*2)
+                    s += numstr.replace(str(random.randint(0,9)),random.choice(string.ascii_lowercase)*2)
                     break
                 s += numstr
         s += "none\n"

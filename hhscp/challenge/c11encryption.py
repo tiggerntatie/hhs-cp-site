@@ -3,7 +3,7 @@ __author__ = 'ericdennison'
 import random
 from hhscp.codetest import CodeTest
 import string
-from StringIO import StringIO
+from io import StringIO
 
 class Encryption(CodeTest):
 

@@ -1,7 +1,7 @@
 __author__ = 'ericdennison'
 
 from hhscp.codetest import CodeTest
-from StringIO import StringIO
+from io import StringIO
 
 class PygameMerels(CodeTest):
 

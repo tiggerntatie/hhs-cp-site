@@ -1,4 +1,5 @@
 __author__ = 'ericdennison'
+import importlib
 
 tests = {
     'c01hello':'HelloWorld',
@@ -23,7 +24,8 @@ def gettest(modulename):
     """
     Accept challenge/test name and return a reference to its constructor
     """
-    mod =  __import__(modulename, globals(), locals(), [tests[modulename]])
+    # mod =  __import__(modulename, globals(), locals(), [tests[modulename]])
+    mod = importlib.import_module('hhscp.challenge.'+modulename)
     return getattr(mod, tests[modulename])
 
 def gettests(path, includeempty=True):

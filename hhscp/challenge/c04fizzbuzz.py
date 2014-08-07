@@ -2,7 +2,7 @@ __author__ = 'ericdennison'
 
 from random import randint
 from hhscp.codetest import CodeTest
-from StringIO import StringIO
+from io import StringIO
 
 class FizzBuzz(CodeTest):
 

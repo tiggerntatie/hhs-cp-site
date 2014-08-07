@@ -2,7 +2,8 @@ __author__ = 'ericdennison'
 
 from random import randint
 from hhscp.codetest import CodeTest
-from StringIO import StringIO
+from io import StringIO
+import datetime
 
 class HelloFriend(CodeTest):
 
@@ -19,10 +20,11 @@ class HelloFriend(CodeTest):
         self.infile = StringIO("{0}\n{1}\n".format(self.names[self.nameint], self.age))
 
     def canonicalexample(self):
+        year = datetime.datetime.now().year
         return """
-name = raw_input("Please tell me your name: ")
-age = int(raw_input("Please tell me your age: "))
-pythonage = 2012-1989
+name = input("Please tell me your name: ")
+age = int(input("Please tell me your age: "))
+pythonage = """ + str(year) + """-1989
 print("Hello, {0}. Python is {1} years older than you are!".format(name, pythonage-age))
 """
 
