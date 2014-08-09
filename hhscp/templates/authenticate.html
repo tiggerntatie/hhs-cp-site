@@ -1,0 +1,11 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+        <h3>Password for {{ user.shortname }}</h3>
+        <form action="{{ url_for('site_authenticatesubmit', name=user.shortname) }}" method="post" enctype="multipart/form-data">
+            <ul>
+                <li>Enter your password: <input type="password" name="pass"/></li>
+                <li><input type="submit" value="Log in"/></li>
+            </ul>
+        </form>
+{% endblock %}

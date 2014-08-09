@@ -1,0 +1,9 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+        <h3>Edit {{ filename }}</h3>
+        <form action="{{ url_for('admin_filessubmit', filename=filename) }}" method="post" enctype="multipart/form-data">
+            <textarea rows="20" cols="80" name="data">{{ data }}</textarea>
+            <input type="submit" value="Update File"/>
+        </form>
+{% endblock %}

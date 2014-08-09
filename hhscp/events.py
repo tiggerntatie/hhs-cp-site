@@ -6,6 +6,8 @@ from dateutil import parser
 from dateutil.relativedelta import *
 import csv
 
+HOLIDAYSFILE = './hhscp/data/holidays.csv'
+ASSIGNMENTSFILE = './hhscp/data/assignments.csv'
 
 class CalendarEvent(object):
 
@@ -117,7 +119,7 @@ class Assignments(EventList):
 
 class Calendar(object):
 
-    def __init__(self, showall=False, holstr='./hhscp/data/holidays.csv', assstr='./hhscp/data/assignments.csv'):
+    def __init__(self, showall=False, holstr=HOLIDAYSFILE, assstr=ASSIGNMENTSFILE):
         self.holidays = Holidays(holstr)
         self.assignments = Assignments(showall, assstr)
         lastevent = self.assignments.events[-1]

@@ -7,7 +7,7 @@ __author__ = 'ericdennison'
 
 import random
 
-from pygametictactoe02 import TTTPosition
+from pygametictactoe import TTTPosition
 
 class MerelsPosition(TTTPosition):
     """

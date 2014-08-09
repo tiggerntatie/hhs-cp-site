@@ -58,27 +58,30 @@ class Encryption(CodeTest):
 
     def canonicalexample(self):
         return """
-assocs = ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,:;'"+chr(34)+"/"+chr(92)+"<>(){}[]-=_+?!") * 2
-encode = lambda s: [assocs.find(c) for c in s]   # convert string to digits
-decode = lambda l: ''.join([assocs[n] for n in l]) # digits to chars to string
+associations = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,:;'\\"/\\<>(){}[]-=_+?!" * 2
+
+encode = lambda s: [associations.find(c) for c in s]   # convert string to digits
+decode = lambda l: ''.join([associations[n] for n in l]) # digits to chars to string
 keygen = lambda s, p: p*(len(s)//len(p)) + p[:len(s)%len(p)]    # generate a key of length = message
-encrypt = lambda s, k: [(sc+kc)%len(assocs) for sc,kc in zip(s,k)] # encrypt text, using key
-decrypt = lambda e, k: [(ec-kc)%len(assocs) for ec,kc in zip(e,k)]  # decrypt text, using key
+encrypt = lambda s, k: [(sc+kc)%len(associations) for sc,kc in zip(s,k)] # encrypt text, using key
+decrypt = lambda e, k: [(ec-kc)%len(associations) for ec,kc in zip(e,k)]  # decrypt text, using key
 
 while True:
-    action = raw_input("Enter e to encrypt, d to decrypt, or q to quit: ")
+    action = input("Enter e to encrypt, d to decrypt, or q to quit: ")
+    # Quit
     if action == "q":
-        print "Goodbye!"
+        print ("Goodbye!")
         break
+    # Encrypt/Decrypt
     elif action in 'ed':
-        msg = raw_input("Message: ")
-        key = raw_input("Key: ") 
+        msg = input("Message: ")
+        key = input("Key: ") 
         if action == 'e':
-            print decode(encrypt(encode(msg),encode(keygen(msg,key)))) + chr(10)
+            print (decode(encrypt(encode(msg),encode(keygen(msg,key)))) + '\\n')
         else:
-            print decode(decrypt(encode(msg),encode(keygen(msg,key)))) + chr(10)
+            print (decode(decrypt(encode(msg),encode(keygen(msg,key)))) + '\\n')
     else:
-        print "Did not understand command, try again." + chr(10)
+        print ("Did not understand command, try again.\\n")
 """
 
     def postcheck(self):

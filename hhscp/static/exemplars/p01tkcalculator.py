@@ -1,6 +1,6 @@
 __author__ = 'ericdennison'
 
-import Tkinter as tk
+import tkinter as tk
 
 class Calculator(tk.Tk):
 
@@ -63,7 +63,10 @@ class Calculator(tk.Tk):
             self.state = 'getnext'
 
     def ophandler(self, op):
-        self.accum = float(self.curval.get())
+        try:
+            self.accum = float(self.curval.get())
+        except ValueError:
+            self.accum = 0.0
         self.operation = op
         self.state = 'getfirst'
 

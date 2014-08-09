@@ -41,7 +41,7 @@ class Square(object):
         return self.b**2
 
     def _userinputgeneric(self, member, paramname):
-        inp = raw_input("What is the {0}? ".format(paramname))
+        inp = input("What is the {0}? ".format(paramname))
         try:
             self.__dict__[member] = abs(float(inp))
         except ValueError:
@@ -116,7 +116,7 @@ handlers = {
 
 choice = None
 while choice != "none":
-    choice = raw_input("Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? ")
+    choice = input("Find area of a square, rectangle, triangle, parallelogram, trapezoid or kite (or none)? ")
     obj = handlers.get(choice,None)  # retrieve an object of the correct type, or None if not recognized
     if obj:
         try:
@@ -125,7 +125,7 @@ while choice != "none":
         except ValueError:
             print("Please try again!")
     elif choice != "none":
-        print "I'm sorry: I don't know how to find the area of a {0}!".format(choice)
+        print ("I'm sorry: I don't know how to find the area of a {0}!".format(choice))
 """
 
     def postcheck(self):

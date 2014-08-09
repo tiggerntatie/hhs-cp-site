@@ -41,7 +41,7 @@ class MyApp(PygameApp):
                 circpos = (circpos[0],circpos[1]+1) # calculate a new position
             self.circ.setpos(circpos)             # update the position
         else:
-            print pygame.event.event_name(event.type)   # view unhandled events on the console
+            print (pygame.event.event_name(event.type))   # view unhandled events on the console
 
         if event.type in [MOUSEMOTION, MOUSEBUTTONDOWN, KEYDOWN]:
             self.circ.update()                      # force update to our main circle

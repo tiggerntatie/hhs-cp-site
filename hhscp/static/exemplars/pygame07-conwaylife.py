@@ -52,7 +52,7 @@ class ConwayApp(PygameApp):
         self.setbackground((220,220,220))       # set a new background color
         self.circ = MyCircle()                    # create a default circle, but not in a group yet
         self.circ.setfilled(True)
-        self.circ.setradius(self.cellsize/2)
+        self.circ.setradius(self.cellsize//2)
         self.circ.setcolor((20,20,200,150))
 
     def handle_event(self, event):
@@ -68,7 +68,7 @@ class ConwayApp(PygameApp):
             self.mousedown = False
         if (event.type == MOUSEMOTION and self.mousedown) or (event.type == MOUSEBUTTONDOWN):
             logicalcoordinates = self.logicalcoordinates(self.mousepos)         # x,y coordinates of the mouse
-            if not self.cellboard.has_key(logicalcoordinates):                  # if it isn't already created..
+            if logicalcoordinates not in self.cellboard:                  # if it isn't already created..
                 self.cellboard[logicalcoordinates] = self.newcircle(logicalcoordinates)  # add it to the playing board
         elif event.type == KEYDOWN:                 # keyboard
             if event.key == K_UP:                   # cursor up
@@ -102,7 +102,7 @@ class ConwayApp(PygameApp):
         newcellboard = {}                   # prepare to build a new cell board
         for point in points:                # for all of the expanded list
             neighborcount = self.neighborcount(point)
-            if self.cellboard.has_key(point):
+            if point in self.cellboard:
                 thiscirc = self.cellboard[point]                    # get the circle that's h
                 if neighborcount == 2 or neighborcount == 3:
                     thiscirc.setcolor(self.circ.color)
@@ -126,7 +126,7 @@ class ConwayApp(PygameApp):
         Convert screen x,y coordinates to logical coordinates
         """
         adjusted = (screenxy[0]-self.offset[0],screenxy[1]-self.offset[1])
-        return tuple(map(lambda x: (x+self.cellsize/2)/self.cellsize, adjusted))
+        return tuple(map(lambda x: (x+self.cellsize//2)//self.cellsize, adjusted))
 
     def newcircle(self, logicalxy):
         """
@@ -157,10 +157,10 @@ class ConwayApp(PygameApp):
         """
         total = 0
         for x,y in self.neighbors(logicalxy):
-            if self.cellboard.has_key((x,y)):
+            if (x,y) in self.cellboard:
                 total += 1
         return total
 
 # Run an instance of MyApp!
 myapp = ConwayApp()
-myapp.run(5)   # ? frames per second!
+myapp.run(10)   # ? frames per second!

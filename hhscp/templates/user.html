@@ -10,7 +10,11 @@
         -
         <a href="{{user.challenges[event.shortname].userchallengeurl(user.shortname)}}">Submit File</a>
             {% if user.challenges[event.shortname].submitted() and user.challenges[event.shortname].passes() %}
-            (<span class='passed'>PASSED!</span>)
+                {% if user.challenges[event.shortname].istestable %}
+                    (<span class='passed'>PASSED!</span>)
+                {% else %}
+                    (<span class='submitted'>SUBMITTED</span>)
+                {% endif %}
             {% elif user.challenges[event.shortname].submitted() and not user.challenges[event.shortname].passes() %}
             (<span class='failed'>FAILED!</span>)
             {% else %}
@@ -20,5 +24,20 @@
     </li>
 {% endfor %}
 </ul>
+
+<h3>Administrative stuff</h3>
+<ul>
+    <li><a href="{{ url_for('site_getnewpass', name=user.shortname) }}">Change your password</a></li>
+    <li><a href="{{ url_for('site_logout') }}">Logout</a></li>
+</ul>
+
+{% if user.isadminsession() %}
+    <h3>SECRET administrator stuff</h3>
+    <ul>
+        <li><a href="{{ url_for('admin_files', filename='users') }}">EDIT USER LIST (short, long, password hash)</a></li>
+        <li><a href="{{ url_for('admin_files', filename='holidays') }}">EDIT HOLIDAYS LIST (e.g. September 2 2013, Labor Day)</a></li>
+        <li><a href="{{ url_for('admin_files', filename='assignments') }}">EDIT ASSIGNMENTS LIST (e.g. September 3 2013, c01 - Hello World, c01hello, September 2 2013)</a></li>
+    </ul>
+{% endif %}
 
 {% endblock %}

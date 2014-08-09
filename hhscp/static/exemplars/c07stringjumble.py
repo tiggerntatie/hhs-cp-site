@@ -1,6 +1,6 @@
 __author__ = 'ericdennison'
 
-rawtext = raw_input("Please enter a string of text (the bigger the better): ")
+rawtext = input("Please enter a string of text (the bigger the better): ")
 
 allreversed = rawtext[::-1]
 allwords = rawtext.split()

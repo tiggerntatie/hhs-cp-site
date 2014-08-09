@@ -1,0 +1,12 @@
+{% extends "site.html" %}
+{% block sidebarcontainer %}{% endblock %}
+{% block main %}
+        <h3>Set password for {{ user.shortname }}</h3>
+        <form action="{{ url_for('site_getnewpasssubmit', name=user.shortname) }}" method="post" enctype="multipart/form-data">
+            <ul>
+                <li>Enter your password: <input type="password" name="pass1"/></li>
+                <li>Confirm password: <input type="password" name="pass2"/></li>
+                <li><input type="submit" value="Set Password"/></li>
+            </ul>
+        </form>
+{% endblock %}

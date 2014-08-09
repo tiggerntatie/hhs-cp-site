@@ -67,7 +67,7 @@ table td {
 
 /* LAYOUT CONTAINERS */
 div.logo {
-  background-image: url(http://www.netdenizen.org/org-logo.png);
+  background-image: url(hhs-logo.png);
   background-position: center;
   background-repeat: no-repeat;
   width: 135px;
@@ -157,6 +157,10 @@ span.passed {
 
 span.failed {
     color: #ff0000;
+}
+
+span.submitted {
+    color: orange;
 }
 
 /* CALENDAR table */

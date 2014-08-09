@@ -35,7 +35,7 @@ class SuperTTTPosition(TTTPosition):
         """
         # step through board member of self and other, returning a position
         # value only when they are different, otherwise a zero.
-        board = map(lambda x,y: x+y if x != y else 0, self.board, other.board)
+        board = list(map(lambda x,y: x+y if x != y else 0, self.board, other.board))
         return SuperTTTPosition(board)
 
     def positionlist(self):
@@ -125,14 +125,14 @@ class TTTApp(PygameApp):
         Convert screen coordinates to logical coordinates
         """
         mapcoordinates = lambda physical, screensize: physical * 3 // screensize
-        return map(mapcoordinates, physicalcoordinates, self.screensize)
+        return list(map(mapcoordinates, physicalcoordinates, self.screensize))
 
     def _logicaltophysical(self, logicalcoordinates):
         """
         Convert logical coordinates to screen coordinates
         """
         mapcoordinates = lambda logical, screensize: logical*(screensize/3) + screensize/6
-        return map(mapcoordinates, logicalcoordinates, self.screensize)
+        return list(map(mapcoordinates, logicalcoordinates, self.screensize))
         #return [mapcoordinates(logical,size) for (logical,size) in zip(logicalcoordinates, self.screensize)]
 
     def newgame(self, firstplayer):

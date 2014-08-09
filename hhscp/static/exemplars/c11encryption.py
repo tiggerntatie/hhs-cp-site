@@ -7,18 +7,18 @@ encrypt = lambda s, k: [(sc+kc)%len(associations) for sc,kc in zip(s,k)] # encry
 decrypt = lambda e, k: [(ec-kc)%len(associations) for ec,kc in zip(e,k)]  # decrypt text, using key
 
 while True:
-	action = raw_input("Enter e to encrypt, d to decrypt, or q to quit: ")
+	action = input("Enter e to encrypt, d to decrypt, or q to quit: ")
 	# Quit
 	if action == "q":
-		print "Goodbye!"
+		print ("Goodbye!")
 		break
 	# Encrypt/Decrypt
 	elif action in 'ed':
-		msg = raw_input("Message: ")
-		key = raw_input("Key: ") 
+		msg = input("Message: ")
+		key = input("Key: ") 
 		if action == 'e':
-			print decode(encrypt(encode(msg),encode(keygen(msg,key)))) + '\n'
+			print (decode(encrypt(encode(msg),encode(keygen(msg,key)))) + '\n')
 		else:
-			print decode(decrypt(encode(msg),encode(keygen(msg,key)))) + '\n'
+			print (decode(decrypt(encode(msg),encode(keygen(msg,key)))) + '\n')
 	else:
-		print "Did not understand command, try again.\n"
+		print ("Did not understand command, try again.\n")

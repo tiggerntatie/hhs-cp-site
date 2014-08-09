@@ -50,19 +50,17 @@ sys.modules['subprocess']=None
         conin = tempfile.SpooledTemporaryFile(max_size=1000, mode='r+')
         conin.write(self.infile.getvalue())
         conin.seek(0)
-        if app.debug:
-            subprocess.call(['python3', pyfile.name], stdout=conout, stdin=conin, stderr=conout)
-        else:
-            # On server, limit subprocess execution time!
-            subprocess.Popen(['timelimit', '-t1', '-T1', 'python',pyfile.name], stdout=conout,stdin=conin,stderr=conout)
+        try:
+            subprocess.call(['python3', pyfile.name], stdout=conout, stdin=conin, stderr=conout, timeout=1)
+            conout.seek(0)
+            output = conout.read()
+        except subprocess.TimeoutExpired:
+            output = "*** Process timed out: do you have an infinite loop? ***"
         input = self.infile.getvalue()  # hold on to the input
-        conout.seek(0)
-        output = conout.read()
         pyfile.close()
         conout.close()
         conin.close()
-        error = ''
-        return input, (output + error)[:100000] # limit the size of output
+        return input, output[:100000] # limit the size of output
 
     def _pretest(self, infile, outfile):
         self.savein, self.saveout = sys.stdin, sys.stdout

@@ -6,6 +6,8 @@
 __author__ = 'ericdennison'
 
 import random
+import functools
+import re
 
 class TTTPosition(object):
     """
@@ -175,7 +177,7 @@ class TTTPosition(object):
             #
             # The list argument to reduce is a list of board indexes to
             # check for a winning row.
-            match = reduce(lambda x,y: x if x == y else 0, [self.board[x] for x in r])
+            match = functools.reduce(lambda x,y: x if x == y else 0, [self.board[x] for x in r])
             # if there is a match that is +1 or -1, stop looking
             if match:
                 break
@@ -237,8 +239,11 @@ class TTTPosition(object):
             while not next in possibles:  # ensure valid moves are taken by the human
                 print ("Current board position is: ")
                 print (self)
-                move = input("Your move - enter tuple: e.g. (0,2): ")
-                next = self.setmove(move)
+                move = input("Your move - enter location coordinate pair: e.g. 0,2: ")
+                coords = re.search("(\d+).*,.*(\d+)", move)
+                if coords:
+                	move = [int(x) for x in coords.groups()]
+                	next = self.setmove(move)
             return next
         else:
             return None # no more moves possible
@@ -271,17 +276,17 @@ class TTTPosition(object):
         #
         # If there are no favorable moves, we build a list of neutral moves
         # or even unfavorable moves, using the same method.
-        bestnextmoves = filter( lambda move, np = self.nextplayer:
+        bestnextmoves = list(filter( lambda move, np = self.nextplayer:
                                 move.score == np,
-                                nextmoves)
+                                nextmoves))
         if not len(bestnextmoves):
             # otherwise, just take neutral ones
-            bestnextmoves = filter(lambda move: move.score == 0, nextmoves)
+            bestnextmoves = list(filter(lambda move: move.score == 0, nextmoves))
             if not len(bestnextmoves):
                 # only options favor the enemy: probably should give up
-                bestnextmoves = filter( lambda move, np = -1 * self.nextplayer:
+                bestnextmoves = list(filter( lambda move, np = -1 * self.nextplayer:
                                         move.score == np,
-                                        nextmoves)
+                                        nextmoves))
         # choose randomly from the available
         return random.choice(bestnextmoves) if len(bestnextmoves) else None
 
@@ -309,15 +314,15 @@ class TTTPosition(object):
 
         # print the outcome
         if not g:
-            print "Draw"
+            print ("Draw")
             g = lastg
         else:
             if g.checkwin() > 0:
-                print "You win!"
+                print ("You win!")
             else:
-                print "You lose!"
-        print "Final board:"
-        print g
+                print ("You lose!")
+        print ("Final board:")
+        print (g)
 
 
 # Set an initial, blank position, next player is X

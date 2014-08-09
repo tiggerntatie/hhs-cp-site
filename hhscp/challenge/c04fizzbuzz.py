@@ -25,9 +25,10 @@ class FizzBuzz(CodeTest):
 
     def canonicalexample(self):
         return """
-maxn = int(raw_input("How many numbers shall we print? "))
-fizzn = int(raw_input("For multiples of what number shall we print 'Fizz'? "))
-buzzn = int(raw_input("For multiples of what number shall we print 'Buzz'? "))
+maxn = int(input("How many numbers shall we print? "))
+fizzn = int(input("For multiples of what number shall we print 'Fizz'? "))
+buzzn = int(input("For multiples of what number shall we print 'Buzz'? "))
+
 for n in range(1,maxn+1):
     fizzmultiple = not n % fizzn # % calculates remainder of division - zero if n is multiple of fizzn
     buzzmultiple = not n % buzzn # ditto..

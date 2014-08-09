@@ -1,11 +1,13 @@
 #! /usr/bin/python
 #
 # Simple Roman Merels engine (to be used in a pygame application)
+# http://gwydir.demon.co.uk/jo/games/romgame/index.htm
 #
 
 __author__ = 'ericdennison'
 
 import random
+import re
 
 from consoletictactoe import TTTPosition
 
@@ -129,11 +131,18 @@ class MerelsPosition(TTTPosition):
                 print ("Current board position is: ")
                 print (self)
                 if self.mustslide():
-                    frmove, tomove = input("Slide a piece - enter from,to: eg. (0,2),(1,1): ")
-                    next = self.setslide(frmove, tomove)
+                    movetext = input("Slide a piece using > char - enter from > to: eg. 0,2 > 1,1: ")
+                    movecoords = re.search("(\d+).*,.*(\d+).*>.*(\d+).*,.*(\d+)", movetext)
+                    if movecoords:
+                        frmove = [int(x) for x in movecoords.groups()[:2]]
+                        tomove = [int(x) for x in movecoords.groups()[2:4]]
+                        next = self.setslide(frmove, tomove)
                 else:
-                    move = input("Your move - enter tuple: e.g. (0,2): ")
-                    next = self.setmove(move)
+                    movetext = input("Your move - enter location coordinate pair: e.g. 0,2: ")
+                    coords = re.search("(\d+).*,.*(\d+)", movetext)
+                    if coords:
+                        move = [int(x) for x in coords.groups()]
+                        next = self.setmove(move)
             return next
         else:
             return None # no more moves possible
