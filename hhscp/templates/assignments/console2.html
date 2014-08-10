@@ -10,7 +10,8 @@
         <h3>dir</h3>
         <p>
             The objects that you have created (floating point numbers, integers, strings, lists, etc.) have <em>methods</em>
-            &ldquo;attached&rdquo; to them. For example, look at a list:
+            &ldquo;attached&rdquo; to them. A method is an operation that applies to that object. For example,
+             look at a list object:
         </p>
         <pre class="prettyprint lang-py">>>> nurseryrhymes = ['hickory', 'dickory', 'dock']
 >>> print( dir(nurseryrhymes) )
@@ -19,17 +20,18 @@
 '__imul__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', 
 '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__setslice__', '__sizeof__', 
 '__str__', '__subclasshook__', 'append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
->>> nurseryrhymes.append('itsy')
+>>> nurseryrhymes.append('itsy')        # one of the methods is called "append". Let's try it.
 >>> print(nurseryrhymes)
-['hickory', 'dickory', 'dock', 'itsy']  # we've appended something to the list!
->>> nurseryrhymes.remove('dickory')
+['hickory', 'dickory', 'dock', 'itsy']  # We've appended something ('itsy') to the list!
+>>> nurseryrhymes.remove('dickory')     # Perhaps "remove" does something too.
 >>> print(nurseryrhymes)
-['hickory', 'dock', 'itsy']             # now we've removed something from the list</pre>
+['hickory', 'dock', 'itsy']             # now we've removed something ('dickory') from the list</pre>
         <p>
-            The command, <code>dir(nurseryrhymes)</code> tells Python to list all of the methods that this object
+            The command, <code>dir(nurseryrhymes)</code> tells Python to list all of the <em>methods</em> that this object
             (a list in this case) can support. To use a method, type the name of the object, followed by a period
             or decimal point, then the name of the method, followed by a pair of parentheses. If the method needs 
-            more information to function, you need to type the data inside the parentheses.
+            more information to do its thing, then you need to type that information inside the parentheses. This 
+            extra information is called <em>parameters</em> or <em>arguments</em> to the method.
         </p>
         <p>
             The importance of the <code>dir</code> function is that it can be used as a simple source of help about
@@ -53,7 +55,7 @@ index(...)
 L.index(value, [start, [stop]]) -> integer -- return first index of value.
 Raises ValueError if the value is not present.
 
->>> print(nurseryrhymes.index('dock'))
+>>> print(nurseryrhymes.index('dock'))     # Let's see try out the index method to see how it works.
 1
 >>> print(nurseryrhymes.index('itsy'))
 2
@@ -62,7 +64,7 @@ Raises ValueError if the value is not present.
         </pre>
         <h3>Your turn</h3>
         <p>
-            Look at the other objects you have created this week (integers, floating point numbers, etc.). Find out what
+            Look at the other objects you have created so far (integers, floating point numbers, etc.). Find out what
             methods they support using the <code>dir</code> method. Which methods are mysterious to you? Do a little
             research to figure out what they do or mean.
         </p>
@@ -73,7 +75,7 @@ Raises ValueError if the value is not present.
             how to make Python print information to the console and how to make it receive information from you.
         </p>
         <p>
-            You have already seen the <code>print</code> command for sending information to the console. There are 
+            You have already seen the <code>print()</code> function for sending information to the console. There are 
             a few more things you should know about printing.
         </p>
         <p>
@@ -100,43 +102,68 @@ Raises ValueError if the value is not present.
 53 bottles on the wall, 53 bottles. Take one down, pass it around, 52 bottles left.</pre>
         <p>
             When we start writing real Python programs we'll need a way for the user to enter information using the
-            keyboard. There are two functions that do this. One will accept <em>any</em> kind of text and one will 
-            only accept text that is valid Python (for example, numbers). Here is an example that accepts only numbers:
+            keyboard. The function for accepting text <em>in</em> to your program is called <code>input()</code>. 
+            Let's try using it for inputting a number for our bottle song:
         </p>
-        <pre class="prettyprint lang-py">>>> a = input("Please enter the number of bottles:")
-Please enter the number of bottles: 85
+        <pre class="prettyprint lang-py">>>> a = input("Please enter the number of botles:")
+Please enter the number of botles:85
 >>> print(a)
 85
->>> print(s.format(a,a-1))
+>>> print(s.format(a, a-1))
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/IPython/core/interactiveshell.py", line 2883, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "&lt;ipython-input-1-1f4a9da6189d&gt;", line 1, in <module>
+    print(s.format(a, a-1))
+TypeError: unsupported operand type(s) for -: 'str' and 'int'</pre>
+        <p>
+            Uh oh: our first execution error. What's wrong? The program stopped and waited for the user to type
+            the number (85) and assigned it to the variable <code>a</code>. Then the program correctly printed 
+            the value of <code>a</code> as 85. But when we tried to use <code>a</code> and <code>a-1</code> to 
+            format the bottle lyric, Python threw an error. The problem here is that the <code>input()</code> 
+            function makes no assumptions about what type of information you <em>intended</em> to enter. It doesn't
+            know that you <em>intende</em> to enter a number. Rather, Python assumes that everything you enter
+            is a string. So, in this case, a refers to a string object that is equal to the string "85" and not 
+            the number 85. When we try to calculate <code>a-1</code> Python doesn't know how to subtract the number
+            1 from a string and it returns the error instead.
+        </p>
+        <p>
+            In order to handle the input <em>as an integer</em> we will have to explicitly convert the output
+            of the <code>input()</code> function by wrapping it in the <code>int()</code> function:
+        </p>
+        <pre class="prettyprint lang-py">>>> a = int(input("Please enter the number of bottles:"))
+Please enter the number of bottles:85
+>>> print(a)
+85
+>>> print(s.format(a, a-1))
 85 bottles on the wall, 85 bottles. Take one down, pass it around, 84 bottles left.</pre>
         <p>
-            If you want your user to be able to enter text that isn't necessarily a number, use the <code>raw_input</code>
-            function:
+            If you don't plan to do any math on the input data, then you don't have to worry about 
+            converting it:
         </p>
-        <pre class="prettyprint lang-py">>>> name = raw_input("Please tell me your first name:")
-Please tell me your first name: Eric
+        <pre class="prettyprint lang-py">>>> name = input("Please tell me your first name:")
+Please tell me your first name:Eric
 >>> print(name)
 Eric
 >>> print ("What the heck is {0} doing over there?".format(name))
 What the heck is Eric doing over there?</pre>
         <p>
-            If you want, you can use <code>raw_input</code> for any kind of input. You will have to be careful to
-            convert input if it should be interpreted as a numeric value:
+            Another example of converting to a numeric object:
         </p>
-        <pre class="prettyprint lang-py">>>> pi = raw_input("Please enter the value of pi:")
-Please enter the value of pi: 3.141592654
->>> print 2*pi # careful.. Python thinks pi is a string!
+        <pre class="prettyprint lang-py">>>> pi = input("Please enter the value of pi:")
+Please enter the value of pi:3.141592654
+>>> print (2*pi)  # careful.. Python thinks pi is a string!
 3.1415926543.141592654
->>> pi = float(pi) # convert pi (the string) to a floating point number, using the float function
->>> print 2*pi # this should give us a proper number
+>>> pi = float(pi)  # convert pi (the string) to a floating point number, using the float function
+>>> print (2*pi) # this should give us a proper number
 6.283185308
->>> print("An approximate value of pi is {0:.2}!".format(pi)) #print with two sig figs
+>>> print("An approximate value of pi is {0:.2}!".format(pi)) # print with two sig figs
 An approximate value of pi is 3.1!
 >>> print("An approximate value of pi is {0:.2}!".format(pi*1000))
 An approximate value of pi is 3.1e+03!</pre>
 
         <h3>Time for a REAL Program</h3>
-        <iframe width="420" height="315" src="http://www.youtube.com/embed/xhDDVNBv8_c"></iframe>
+        <iframe src="https://docs.google.com/a/hanovernorwichschools.org/file/d/0B4qjs2EG-LFydkJQTERLZTQtNk0/preview" width="640" height="400"></iframe>
         <p>
             Typing commands in the console is all well and good, but what if we could have Python remember
             a sequence of commands and replay them at any time in the future? That is what a program does.
@@ -147,8 +174,8 @@ An approximate value of pi is 3.1e+03!</pre>
             <li>Make sure the PyDev perspective is active</li>
             <li>Navigate to <code>File/New/PyDev Project</code></li>
             <li>Choose a name for your project. For example: <em>Computer Programming Assignments</em></li>
-            <li>Select Python as the project type.</li>
-            <li>Select Grammar 2.7</li>
+            <li>Select Grammar 3.0</li>
+            <li>Select Python 3 as the project type.</li>
         </ul>
         <p>
             With the project created, you will need to create a new Python module (or source code) file:
@@ -157,15 +184,16 @@ An approximate value of pi is 3.1e+03!</pre>
             <li>Click/select your project in the left hand pane</li>
             <li>Navigate to <code>File/New/PyDev Module</code></li>
             <li>Leave the "Package" edit box empty</li>
-            <li>Enter a "Name" for your module. The exact name doesn't matter (but, as a general rule
-            module names must not begin with a number and must not have any spaces or punctuation marks
-            in them. Also, you should avoid upper case characters).</li>
+            <li>Enter a "Name" for your module. The exact name doesn't matter, but as a general rule
+            <strong>module names must not begin with a number and must not have any spaces or punctuation marks
+            in them. Also, you should avoid upper case characters</strong>.</li>
             <li>Choose &lt;empty&gt; as your module template. Click "OK".</li>
         </ul>
         <p>
             To start with, your Python module/file will have very little in it. By default, Eclipse will add a 
-            comment with the date the file was created and the name of the person (you) who created it. You
-            don't absolutely need this comment in your file, but it will do you no harm to leave it alone.
+            comment (a string, actually) with the date the file was created and the name of the person (you) who 
+            created it. You
+            don't absolutely need this comment in your file, but it will do you no harm to leave it there.
         </p>
         <p>
             Now, instead of typing your Python commands in the console window at the bottom, you can type them
@@ -188,7 +216,7 @@ print(s.format(a, a-1))
 a = 97
 print(s.format(a, a-1))
 
-user = raw_input("Please tell me your first name: ")
+user = input("Please tell me your first name: ")
 
 print("Hello, {0}. You are looking quite frisky today!".format(user))
 
@@ -199,15 +227,12 @@ print("Good bye!")</pre>
             This will open a console window at the bottom of the screen where
             you can watch the output and enter your responses. For example:
         </p>
-        <pre>/System/Library/Frameworks/Python.framework/Versions/2.6/bin/python "/Users/ericdennison/Dropb...
-99 bottles on the wall. 99 bottles. Take one down, now there are only 98 bottles left
+        <pre>99 bottles on the wall. 99 bottles. Take one down, now there are only 98 bottles left
 98 bottles on the wall. 98 bottles. Take one down, now there are only 97 bottles left
 97 bottles on the wall. 97 bottles. Take one down, now there are only 96 bottles left
 Please tell me your first name: Eric
 Hello, Eric. You are looking quite frisky today!
-Good bye!
-
-Process finished with exit code 0</pre>
+Good bye!</pre>
 
 
 {% endblock %}
