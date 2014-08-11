@@ -44,8 +44,8 @@ The approximate value of pi is 3.1315929</code></pre>
             A sample Python program for estimating the value of <em>e</em> might look like this:
         </p>
         <pre class="prettyprint lang-py">import math
-n = int(raw_input("I will estimate e. How many terms should I use? "))
-sigfigs = int(raw_input("How many sig figs should I use in the result? "))
+n = int(input("I will estimate e. How many terms should I use? "))
+sigfigs = int(input("How many sig figs should I use in the result? "))
 e = 1.0/sum([((-1.0)**k)/math.factorial(k) for k in range(0,n)])
 print("The approximate value of e is {0:.{precision}}".format(e, precision=sigfigs))
 print("(The true value of e is {0:.{precision}})".format(math.e, precision=sigfigs))</pre>

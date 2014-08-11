@@ -8,6 +8,7 @@ from flask import request, session
 from flask import redirect
 import inspect
 import sys
+import datetime
 
 
 @app.route('/calendar')
@@ -25,6 +26,7 @@ def site_assignment(short_name):
     event = c.assignments.nameDict[short_name]
     return render_template('assignments/' + short_name + '.html',
         title=event.name,
+        datetime=datetime,
         builtins=__builtins__)
 
 
