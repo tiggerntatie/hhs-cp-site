@@ -9,7 +9,8 @@ __author__ = 'ericdennison'
 
 import sys
 
-sys.path.append('./static/exemplars')
+#sys.path.append('./static/exemplars')
+sys.path.append('./hhscp/static/exemplars')
 
 from flask import Flask
 

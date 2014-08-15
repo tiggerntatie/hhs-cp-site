@@ -9,7 +9,7 @@ import pygame
 from pygame.locals import *
 from pygame import font
 from consoletictactoe import TTTPosition
-from pygameapp06 import PygameApp
+from pygameapp import PygameApp
 
 class SuperTTTPosition(TTTPosition):
     """
@@ -200,7 +200,8 @@ class TTTApp(PygameApp):
                     self.newgame('O')
                 elif event.unicode.upper() == u'Q' or event.key == K_ESCAPE: # escape or Q
                     pygame.event.post(pygame.event.Event(QUIT))
-
+        return True
+    
     def poll(self):
         """
         Periodic processing is used to generate computer move. This method

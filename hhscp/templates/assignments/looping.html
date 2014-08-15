@@ -63,14 +63,15 @@ False</pre>
             That is almost exactly the way Python would like to have you do it:
         </p>
         <pre class="prettyprint lang-py">for i in range(2,12):
-    print i**2</pre>
+    print(i**2)</pre>
         <p>
             This code is similar to the <code>if</code> statement that you read about in the last lesson. Let's
-            break it down. <code>range(2,12)</code> returns a list of integers: [2,3,4,5,6,7,8,9,10,11].
-            <code>for i in</code> sets i equal to each of the numbers in the list, one after the other. Each time
-            i is set to a new value from the list, Python executes all of the instructions in the indented block
-            of code that follows. Once those instructions are finished, i is set to the next value from the list.
-            When all of the values in the list have been used, the indented block is skipped and Python continues
+            break it down. <code>range(2,12)</code> returns an <em>iterator</em> for generating a sequence of 
+            integers: 2,3,4,5,6,7,8,9,10,11.
+            <code>for i in</code> sets i equal to each of the numbers from the iterator, one after the other. Each time
+            i is set to a new value from the iterator, Python executes all of the instructions in the indented block
+            of code that follows. Once those instructions are finished, i is set to the next value from the iterator.
+            When all of the values in the iterator have been used, the indented block is skipped and Python continues
             executing the code following the indented block.
         </p>
         <p>
@@ -82,14 +83,15 @@ False</pre>
         </p>
         <p>
             In this example, the indented code is executed with i=2, then again with i=3, then again with i=4, then
-            again with i=5, and so on until i=11. When the last number in the list has been used, the indented
+            again with i=5, and so on until i=11. When the last number in the iterator has been used, the indented
             block is <em>skipped altogether </em> and execution resumes following the indented block.
         </p>
         <p>
             Although <code>for</code> loops are often written using a <code>range(start,finish)</code> statement,
-            you can use <code>for</code> with any kind of collection. Notice that the <code>for</code> loop does not
+            you can use <code>for</code> with any kind of collection (a list, for example). Notice that the 
+            <code>for</code> loop does not
             include a conditional test of any kind (as you might expect from C or C++): it just loops through 
-            collections of objects.
+            collections of objects or iterators.
         </p>
         
         <h3>While We are Thinking About It</h3>
@@ -111,9 +113,9 @@ False</pre>
         <pre class="prettyprint lang-py">dinnercost = 15     # cost of dining out
 bankaccount = 150   # dollars
 while bankaccount > 0:
-    print "Yumm.. I would love to eat out tonight!"
+    print("Yumm.. I would love to eat out tonight!")
     bankaccount = bankaccount - dinnercost
-    print ("Uh oh.. I only have ${0} left!".format(bankaccount))</pre>
+    print("Uh oh.. I only have ${0} left!".format(bankaccount))</pre>
         <p>
             Try this code on your own and play with it until you are sure you understand what is going on.
         </p>

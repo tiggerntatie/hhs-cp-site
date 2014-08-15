@@ -191,19 +191,4 @@ sys.modules['subprocess']=None
         return retval
 
 if __name__ == '__main__':
-    test = challenge.gettest('demo')
-    ct = test()
-    ct.testcanonicalexample()
-
-    print ("input to test")
-    print (ct.input)
-    print ("output of canonical test:")
-    print (ct.canonicaloutput)
-    print ("output of test")
-    print (ct.output)
-    print ("test code source")
-    print (ct.testcode)
-    print ("are similar")
-    print (ct.aresimilar())
-    print ("are same")
-    print (ct.aresame())
+    pass

@@ -1,7 +1,8 @@
 import pygame
 from pygame.locals import *
 
-from pygameapp06 import *
+from pygameapp import PygameApp
+from circle import Circle
 
 class MyApp(PygameApp):
     """
@@ -11,9 +12,9 @@ class MyApp(PygameApp):
         """
         Application initialization is executed only ONCE!
         """
-        super(MyApp,self).__init__(screensize = screensize, title="My Test Application") # call base class initializer
+        super().__init__(screensize = screensize, title="My Test Application") # call base class initializer
         pygame.key.set_repeat(100)              # allow keys to repeat when held 100 msec
-        self.setbackground((220,220,220))       # set a new background color
+        self.setbackgroundcolor((220,220,220))  # set a new background color
         self.circ = Circle(self.spritegroup)    # create a default circle
 
     def handle_event(self, event):
@@ -29,7 +30,7 @@ class MyApp(PygameApp):
             elif event.button == 5:                 # scroll DOWN "button"
                 self.circ.setradius(self.circ.radius-1)
             elif event.button == 1:
-                newcirc = self.circ.copy()          # copy the circle on button down
+                newcirc = self.circ.copy()          # "drop" a copy of the current circle
                 newcirc.setcolor((255,0,0,200))
                 newcirc.setthickness(1)
                 newcirc.update()                    # force update and display
@@ -42,9 +43,8 @@ class MyApp(PygameApp):
             self.circ.setpos(circpos)             # update the position
         else:
             print (pygame.event.event_name(event.type))   # view unhandled events on the console
-
-        if event.type in [MOUSEMOTION, MOUSEBUTTONDOWN, KEYDOWN]:
-            self.circ.update()                      # force update to our main circle
+            
+        return True                                 # Keep going!
 
     def quit(self):
         """

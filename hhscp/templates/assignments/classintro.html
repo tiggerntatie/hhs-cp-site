@@ -132,7 +132,7 @@ class Circle(object):
         """
         Ask the user to enter the necessary dimensions
         """
-        self.r = abs(float(raw_input("Please enter the circle radius: ")))
+        self.r = abs(float(input("Please enter the circle radius: ")))
 
     def useroutput(self):
         """
@@ -159,8 +159,8 @@ class Sector(Circle):
         """
         Ask the user to enter the necessary dimensions
         """
-        self.r = abs(float(raw_input("Please enter the sector radius: ")))
-        self.a = math.radians(abs(float(raw_input("Please enter the sector angle (degrees): "))))
+        self.r = abs(float(input("Please enter the sector radius: ")))
+        self.a = math.radians(abs(float(input("Please enter the sector angle (degrees): "))))
 
 
 class Semicircle(Sector):
@@ -175,7 +175,7 @@ class Semicircle(Sector):
         """
         Ask the user to enter the necessary dimensions
         """
-        self.r = abs(float(raw_input("Please enter the semicircle radius: ")))
+        self.r = abs(float(input("Please enter the semicircle radius: ")))
 
 
 
@@ -183,7 +183,7 @@ class Semicircle(Sector):
 handlers = {'circle':Circle(), 'sector':Sector(), 'semicircle':Semicircle()}
 choice = None
 while choice != "none":
-    choice = raw_input("Find area of a circle, sector or semicircle (or none)? ")
+    choice = input("Find area of a circle, sector or semicircle (or none)? ")
     obj = handlers.get(choice,None)  # retrieve an object of the correct type, or None if not recognized
     if obj:
         obj.userinput() # Retrieve values. This is a method on what could be a Circle, Sector or Semicircle object

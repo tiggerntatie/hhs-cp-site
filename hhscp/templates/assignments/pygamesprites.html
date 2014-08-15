@@ -14,13 +14,13 @@
             <em>encapsulating</em> the complexity of our programs. 
         </p>
         <p>
-            For this example, I have broken up the listing into two sections. The first section is in a file called 
-            <code>pygameapp06.py</code> and defines two classes: <code>MyApp</code> and <code>Circle</code>
-            (download from <a href="{{url_for('static', filename='exemplars/pygameapp06.py')}}">pygameapp06.py</a>):
+            For this example, I have broken up the listing into three sections. The first section is in a file called 
+            <code>pygameapp.py</code> and defines the <code>MyApp</code> class: 
+            (download from <a href="{{url_for('static', filename='exemplars/pygameapp.py')}}" download>pygameapp.py</a>):
         </p>
-        <h4><code>pygameapp06.py</code></h4>
+        <h4><code>pygameapp.py</code></h4>
 
-        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygameapp06")) }}</pre>
+        <pre class="prettyprint lang-py">{{ builtins.open("./hhscp/static/exemplars/pygameapp.py").read() }}</pre>
 
         <p>
             Let's look at what's going on here that is new:
@@ -37,23 +37,35 @@
                 have changed (or are &ldquo;dirty&rdquo; in some way).
             </li>
             <li>
-                The second <em>important</em> change in <code>PygameApp</code> is in the <code>run</code> method:
-                <code class="prettyprint lang-py">self.spritegroup.clear(self.display, self.background)</code>,
-                and <code class="prettyprint lang-py">pygame.display.update(self.spritegroup.draw(self.display))</code>.
-                These two lines erase the sprites from their old locations, then redraw them. The fact that these
+                The second <em>important</em> set of changes in <code>PygameApp</code> are in the <code>run</code> method:
+                <code class="prettyprint lang-py">self.spritegroup.update()</code> will call the <code>update()</code>
+                method of any sprite graphics objects that you have created. The lines: 
+                <code class="prettyprint lang-py">self.spritegroup.clear(self.display, self.background)</code> 
+                and <code class="prettyprint lang-py">pygame.display.update(self.spritegroup.draw(self.display))</code>
+                erase the sprites from their old locations, then redraw them. The fact that these
                 are &ldquo;dirty&rdquo; sprites means that this occurs only for the sprites that are actually
                 in motion. Stationary sprites will not be cleared or redrawn.
             </li>
+      	</ul>
+      	<p>
+      		The second section is a file that defines a <strong>sprite</strong> class for drawing circles, 
+      		called <code>Circle</code> 
+      		(download from <a href="{{url_for('static', filename='exemplars/circle.py')}}" download>circle.py</a>):
+      	</p>
+        <h4><code>circle.py</code></h4>
+
+        <pre class="prettyprint lang-py">{{ builtins.open("./hhscp/static/exemplars/circle.py").read() }}</pre>
+
+       	<ul>
             <li>
-                The next big difference from the last example is the definition of a completely new class:
-                <code>Circle</code>, based on Pygame's <code class="prettyprint lang-py">pygame.sprite.DirtySprite</code>.
+                The <code>Circle</code> is based on Pygame's <code class="prettyprint lang-py">pygame.sprite.DirtySprite</code>.
             </li>
             <li>
                 The Circle class <code>__init__</code> method defines the default characteristics (size, location, etc.)
                 of a circle.
             </li>
             <li>
-                The <code>update</code> method is called any time a circle is redefined or resized or relocated. The
+                The <code>updateimage</code> method is called any time a circle is redefined or resized or relocated. The
                 method generates a new drawing surface for the circle, fills it with transparent background color
                 and draws a circle on it. The <code class="prettyprint lang-py">self.rect = self.image.get_rect()</code>
                 code creates a rectangle that represents the location of the circle on the window's drawing surface and
@@ -62,18 +74,28 @@
             </li>
             <li>
                 Most of the remaining <code>Circle</code> methods are short &ldquo;setter&rdquo; methods for setting
-                various attributes of the circle (radius, color, style, etc.). The final method, <code>copy</code> is
+                various attributes of the circle (radius, color, style, etc.). Each of those methods finishes with a
+                call to <code>updateimage</code> which will set the <code>dirty</code> flag and change the <code>image</code>
+                and <code>rect</code> attributes of the circle so that it will be updated on the screen.
+                The final method, <code>copy</code> is
                 written to make it easy to make a new <code>Circle</code> object that is a copy of another.
             </li>
+            <li>
+            	If you ever write your <em>own</em> sprite classes based on 
+            	<code class="prettyprint lang-py">pygame.sprite.DirtySprite</code> then you have to be sure that
+            	your class defines three members: <code>image</code>, <code>rect</code> and sets <code>dirty</code>
+            	when the sprite must be redrawn (due to movement or resize, etc.). 
+            </li>
+          
         </ul>
         <p>
             So far, the code is pretty generic. There is an application that only displays sprites and has a big
             loop and there is a Circle class that knows how to draw circles in Pygame. Neither of these classes
             will do much on their own, so we tie it all together with the <code>MyApp</code> class in the next file
-            (download from <a href="{{url_for('static', filename='exemplars/pygame06.py')}}">pygame06.py</a>):
+            (download from <a href="{{url_for('static', filename='exemplars/myapp.py')}}" download>myapp.py</a>):
         </p>
-        <h4>pygame06.py</h4>
-        <pre class="prettyprint lang-py">{{ builtins.__import__("inspect").getsource(builtins.__import__("pygame06")) }}</pre>
+        <h4>myapp.py</h4>
+        <pre class="prettyprint lang-py">{{ builtins.open("./hhscp/static/exemplars/myapp.py").read() }}</pre>
 
         <p>
             Once again, let's hit the highlights of the file:
@@ -94,7 +116,7 @@
                 (MOUSEBUTTONDOWN, event.button == 4 or event.button == 5), then the circle radius is increased
                 or decreased. If the main mouse button is pressed (MOUSEBUTTONDOWN, event.button == 1) then 
                 a copy of the original circle is made with <code class="prettyprint lang-py">newcirc = self.circ.copy()</code>,
-                its color and thickness are changed. The call to <code>update</code> will seal the deal. Just for fun,
+                its color and thickness are changed. Just for fun,
                 the keyboard UP and DOWN keys are also detected and used to shift the circle position.
             </li>
             <li>
@@ -103,9 +125,18 @@
                 circle is in.
             </li>
         </ul>
+        <h3>The Big Idea</h3>
         <p>
-            As usual, copy this code into Eclipse and <strong>try it out</strong>. Remember to create
-            <strong>two</strong> source
+        	The Big Idea here is that by creating a class (<code>PygameApp</code>) to do most of the routine work behind 
+        	defining sprites and pygame applications and event loops you can focus your attention 
+        	(in <code>MyApp</code>) on the behavior and 
+        	appearance of the objects or <strong>sprites</strong> that actually appear on the screen.
+        </p>
+        <p>
+            As usual, download these and <strong>try it out</strong>. This application uses the
+            mouse location, the mouse scroll wheel and the left mouse button, so be sure to play with it and
+            spend some time getting your mind wrapped around what's going on in the code.
+            Remember to create <strong>two</strong> source
             files instead of the usual one. You should experiment with changes to the <code>MyApp</code> class, 
             but you may be able to leave the other file completely alone. When you start working on the Pygame
             sprites project you may use the definitions for <code>PygameApp</code> and <code>Circle</code> that 

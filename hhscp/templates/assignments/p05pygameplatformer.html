@@ -2,6 +2,9 @@
 {% block sidebarcontainer %}{% endblock %}
 {% block main %}
 
+	<p>
+		<em>Challenge by Jack Boffa, HHS '14</em>
+	</p>
     <p>
         This project will give you experience writing graphical applications. 
         You will also learn how to use classes and object-oriented programming 
@@ -51,7 +54,7 @@
         </li>
         <li>
             Pressing 's' creates a spring at the mouse. If the player hits a 
-            spring, it will launch upwards (higher than a jump takes it). 
+            spring, she will launch upwards (higher than a jump takes it). 
             Springs are also affected by gravity so that, when created, they 
             fall and come to rest on flat ground.
         </li>
@@ -68,7 +71,7 @@
     <p>
         First, you'll want to create a main window to draw your game in. 
         Download 
-        <a href="{{url_for('static', filename='exemplars/pygameapp.py')}}">pygameapp.py</a>
+        <a href="{{url_for('static', filename='exemplars/pygameapp.py')}}" download>pygameapp.py</a>
         and put it in your project's folder. This simple class is all you 
         need to create a window with a working close button. You can do this 
         by creating an instance of the class and calling its run() function, 
@@ -80,11 +83,11 @@ myapp.run()</pre>
 
     <p>
         This won't get you a working game, however, and you are not allowed 
-        to change PygameApp. To add your own functionality to the class, 
+        to change PygameApp! To add your own functionality to the class, 
         create a new file for the game (I called mine PlatformGame.py) and 
         import the PygameApp class. Then create a PlatformGame class that 
         inherits from PygameApp. I won't guide you on what to do for this, 
-        but you'll probably want to override the poll() and handle_event() 
+        but you'll probably want to override the handle_event() and poll() 
         functions. Thanks to PygameApp, whatever code you put in the poll() 
         function will run every tick of the clock (so if you set your app to 
         run at 60 frames per second, this code will run 60 times each second). 
@@ -93,8 +96,8 @@ myapp.run()</pre>
     </p>
     
     <p>
-        You should also make classes for all of the game objects (walls, the 
-        player, and springs). All of these objects (which we'll call actors) 
+        You should also make classes for all of the game objects (wall, the 
+        player, and spring). All of these objects (which we'll call actors) 
         have some basic properties in common: Every actor has a position and 
         a size. You'll also want every actor to be able to draw itself on the 
         screen, check if it's overlapping another actor, etc.
@@ -102,8 +105,8 @@ myapp.run()</pre>
 
     <p>
         I've made an Actor class that encapsulates all of this basic 
-        functionality. Download 
-        <a href="{{url_for('static', filename='exemplars/actor.py')}}">actor.py</a>
+        functionality, based on the Pygame DirtySprite class. Download 
+        <a href="{{url_for('static', filename='exemplars/actor.py')}}" download>actor.py</a>
         and put it in your project's 
         folder. Open it and take a look at the code. Here are the basic 
         functions of an actor:
@@ -112,34 +115,41 @@ myapp.run()</pre>
     <ul>
         <li>
             <code>__init__()</code>: This initializes the actor. All actors 
-            have a position and a size, as well a shared list of all the 
-            actors in the game (more about this later).
+            have a position and a size (self.rect), a surface to draw themselves
+            on (self.image) as well a shared list of all the 
+            actors in the game (self.actors).
         </li>
         <li>
             <code>__str__()</code>: Represents this actor as a string. Because 
-            of this function, code such as <code>print my_actor</code> will 
+            of this function, code such as <code>print(my_actor)</code> will 
             show useful information instead of default text Python provides.
+            This can be handy for debugging.
     	</li>
-    	<li>
-            <code>is_overlapping()</code>: Checks if this actor is 
-            overlapping a particular other actor.
-        </li>
         <li>
             <code>overlapping_actors()</code>: Gets a list of all of the 
-            actors overlapping this actor.
+            actors (or actors of a specific type) overlapping this actor.
         </li>
         <li>
-            <code>draw()</code>: Draws the actor to the window. By default, 
-            this draws the actor as a rectangle of color 
+            <code>draw()</code>: Draws the actor to the <code>self.image</code>
+            surface. By default, this draws the actor as a rectangle of color 
             <code>self.color</code>, but by overriding this function you can 
             give it any appearance you like.
         </li>
         <li>
-            <code>timestep()</code>: This function is meant to be called 
+            <code>update()</code>: This function will be called 
             every frame of your application. It does nothing by default, but 
             by overriding it, you can make your actor do something in response
             to the passage of time.
         </li>
+        <li>
+        	A series of <code>@property</code> methods are defined that allow
+        	you to access the position (x and y) and size (width and height) of
+        	the actor object. To you these behave like ordinary object attributes, 
+        	but under the hood they cause some code to execute, which is handy 
+        	for doing things like setting <code>self.dirty = 1</code>. Note that
+        	while x and y can be both read and set, the height and width 
+        	properties are read only. You can not change your actor size at 
+        	run time.
         <li>
             <code>destroy()</code>: Destroys the actor.
         </li>
@@ -159,9 +169,9 @@ myapp.run()</pre>
         show up on the screen and do something. Remember how every actor 
         wants a list of all the actors in the game? This is because keeping 
         a list of actors is the best way (perhaps the only way) to keep track 
-        of them. In the poll() function in your game's main class, you can 
-        loop through all of the actors in your master list. First call its 
-        timestep() function to do anything specific to the actor, then draw it.
+        of them. Because we are using the DirtySprite as a basis for the 
+        Actor class, all you need to do to make a sprite appear on the screen
+        is <em>create</em> the object!
     </p>
 
     <h2>Extra ideas</h2>

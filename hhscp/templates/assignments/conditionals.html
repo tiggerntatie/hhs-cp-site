@@ -26,7 +26,7 @@ otherwise
         <p>
             This is exactly the way Python likes to make its decisions, except it uses some very specific language:
         </p>
-        <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
+        <pre class="prettyprint lang-py">temperature = float(input("What is the temperature outside? "))
 if temperature < 55:
     print("You should bring a fleece.")
 else:
@@ -63,8 +63,8 @@ else:
         <p>
             You can combine conditionals using <code>and</code> and <code>or</code>, thus:
         </p>
-        <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
-weather = raw_input("Is it raining or sunny outside? ")
+        <pre class="prettyprint lang-py">temperature = float(input("What is the temperature outside? "))
+weather = input("Is it raining or sunny outside? ")
 weather = weather.lower() # change to lower case
 if temperature < 55 and weather == "raining":
     print("You should bring a warm raincoat.")
@@ -90,7 +90,7 @@ else: # the only combination left is sunny and temperature >= 55
         <p>
             The preceding example is actually fairly inefficient. Compare it to the following:
         </p>
-        <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
+        <pre class="prettyprint lang-py">temperature = float(input("What is the temperature outside? "))
 if temperature < 55:
     if weather == "raining":
         print("You should bring a warm raincoat..")
@@ -117,7 +117,7 @@ else:   # 55 or warmer
             There is yet another way of using conditionals for decision making in Python. Rewriting the previous
             example yet again:
         </p>
-        <pre class="prettyprint lang-py">temperature = float(raw_input("What is the temperature outside? "))
+        <pre class="prettyprint lang-py">temperature = float(input("What is the temperature outside? "))
 if temperature < 55:
     clothes = "a warm raincoat" if weather == "raining" else "a fleece"
 else:  # 55 or warmer..

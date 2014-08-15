@@ -1,7 +1,8 @@
 import pygame
 from pygame.locals import *
 
-from pygameapp06 import *
+from pygameapp import PygameApp
+from circle import Circle
 
 class MyCircle(Circle):
     """
@@ -9,7 +10,7 @@ class MyCircle(Circle):
     """
     def __init__(self, *groups):
         self.offset = (0,0)
-        super(MyCircle,self).__init__(groups)
+        super().__init__(groups)
 
     def update(self, *args):
         super(MyCircle,self).update(args)
@@ -40,7 +41,7 @@ class ConwayApp(PygameApp):
         """
         Application initialization is executed only ONCE!
         """
-        super(ConwayApp,self).__init__(screensize = screensize, title="Conway's Life") # call base class initializer
+        super().__init__(screensize = screensize, title="Conway's Life") # call base class initializer
         pygame.key.set_repeat(100)              # allow keys to repeat when held 100 msec
         self.offset = (0,0)     # relative position of the viewport
         self.cellsize = 4
@@ -49,7 +50,7 @@ class ConwayApp(PygameApp):
         self.cellboard = {}     # an empty map for storing cells
         self.mousedown = False  # keep track of the button state
         self.mousepos = (0,0)   # keep track of the mouse position
-        self.setbackground((220,220,220))       # set a new background color
+        self.setbackgroundcolor((220,220,220))       # set a new background color
         self.circ = MyCircle()                    # create a default circle, but not in a group yet
         self.circ.setfilled(True)
         self.circ.setradius(self.cellsize//2)
@@ -80,7 +81,7 @@ class ConwayApp(PygameApp):
             elif event.key == K_LEFT:               # cursor left
                 self.offset = (self.offset[0]+self.cellsize*5,self.offset[1]) # calculate a new position
             self.spritegroup.update(self.offset)               # update the position
-
+        return True
         #print event   # view events on the console
 
     def quit(self):
@@ -134,7 +135,7 @@ class ConwayApp(PygameApp):
         """
         newcirc = self.circ.copy()
         newcirc.setpos(self.screencoordinates(logicalxy))
-        newcirc.setcolor((255,0,0,255))
+        newcirc.setcolor((255,0,0))
         newcirc.offset = self.offset
         newcirc.update()
         self.spritegroup.add(newcirc)

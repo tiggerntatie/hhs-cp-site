@@ -11,18 +11,16 @@
         </p>
         <h3>Installing Pygame</h3>
         <p>
-            If you are using one of the lab computers then they have already had Pygame installed on them and
-            are &ldquo;ready to go.&rdquo; If you are using your own Windows or Mac computer for classwork, then
-            you will probably have to install Pygame yourself. To install Pygame, head on over to the 
-            <a href="http://www.pygame.org/download.shtml">download page</a> and grab a copy. Notice that there
-            are several versions available, depending on which version of Python you are using. You should be using
-            either Python 2.6 or 2.7 on your personal machine (we are using 2.6 on the lab computers).
+            <strong>If you are using one of the lab computers then they have already had Pygame installed on them and
+            are &ldquo;ready to go.&rdquo;</strong> If you are using your own Windows or Mac computer to work at home, then
+            you will have to install Pygame yourself. Although Pygame supports Python version 3, full installer
+            support has not caught up with it yet. See me for detailed installation instructions and files.
         </p>
         <p>
             If you are installing Pygame to your Linux computer then you should be able to use your distribution's
             package manager to install it. For example, under Ubuntu you could open the terminal application and type:
         </p>
-        <pre><code>sudo apt-get install python-pygame</code></pre>
+        <pre><code>sudo apt-get install python3-pygame</code></pre>
         <p>
             Python is GPL-licensed, open source and completely free for you to download and install on your computer.
         </p>
@@ -32,18 +30,16 @@
             Assuming you have Pygame installed on your computer, you should test the installation by running
             a do-nothing &ldquo;hello, world&rdquo; application:
         </p>
-        <pre class="prettyprint lang-py">import pygame
-from pygame.locals import *
-
-pygame.init()
-displaysurface = pygame.display.set_mode((600,200))
-pygame.display.set_caption('Hello World!')
-done = False
-while not done: # main game loop
-    pygame.display.update()
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            done = True</pre>
+        
+        <pre class="prettyprint lang-py">{{ builtins.open("./hhscp/static/exemplars/pygamehello1.py").read() }}</pre>
+        
+        <p>
+        	You can download this from <a href="{{url_for('static', filename='exemplars/pygamehello1.py')}}" download>pygamehello1.py</a>
+        </p>    
+        <p>
+        	When you execute this, a dialog should pop up that looks something like this:
+       	</p>
+       	<div><img src="/static/pygamehello1.png"></div>
         <p>
             There are a few things in this example that may not be familiar:
         </p>
@@ -85,7 +81,7 @@ while not done: # main game loop
         <p>
             Python and Pygame are not a &ldquo;toy&rdquo; tool for developing graphics software. They are a tool with
             considerable depth and flexibility that can be used to develop some surprisingly capable programs. One
-            of the tasks that lies ahead of us is figuring out a pattern for using Pygame that we can use in all 
+            of the tasks that lies ahead of us is figuring out a design pattern for using Pygame that we can use in all 
             of our graphics programs. The goal here is to <em>wrap</em> or <em>encapsulate</em> some of Pygame's 
             complexity so that we won't have to worry about <em>all</em> the gory details every time we write a little
             program.
@@ -123,85 +119,82 @@ while not done: # main game loop
             the vertical axis is upside down.
         </p>
         <p>
-            The origin of the Pygame window coordinate system is the upper left hand corner of the window, 
-            surface or screen. The horizontal axis is positive to the right and negative to the left, while the
+            <strong>The origin of the Pygame window coordinate system is the upper left hand corner of the window, 
+            surface or screen.</strong> The horizontal axis is positive to the right and negative to the left, while the
             vertical axis is positive <em>going down</em> and negative <em>going up</em>.
         </p>
         <p>
             Let's see how this works in our next example (don't forget to run it on your own!):
         </p>
         
-        <pre class="prettyprint lang-py">import pygame
-from pygame.locals import *
-
-# Display some simple shapes
-
-pygame.init()
-pygame.display.set_caption('Hello World!')
-displaysurface = pygame.display.set_mode((400,400))
-alphasurface = displaysurface.convert_alpha()
-
-done = False
-while not done: # main game loop
-    displaysurface.fill((0,0,0))    # clear the display surfaces
-    alphasurface.fill((0,0,0,0))    # clear the drawing surface
-    pygame.draw.rect(alphasurface, (30,30,30,200), pygame.Rect(20,20,100,40))     # draw a rectangle
-    displaysurface.blit(alphasurface,(0,0)) # copy to the window
-    alphasurface.fill((0,0,0,0))    # clear the drawing surface
-    pygame.draw.circle(alphasurface, (250,20,30,200), (200,200),86) # draw a circle
-    displaysurface.blit(alphasurface,(0,0)) # copy to the window
-    smallsurf = pygame.Surface((200,200), SRCALPHA)             # create a smaller drawing surface
-    pygame.draw.circle(smallsurf, (80,20,90,200), (86,86),86)   # and draw a circle to it
-    displaysurface.blit(smallsurf,(200,200))                    # then copy it to the window
-    pygame.display.update()         # update tme main window
-    pygame.time.wait(10) 
-    # check for events
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            done = True
-        else:
-            print event  # see unhandled events going by</pre>
+        <pre class="prettyprint lang-py">{{ builtins.open("./hhscp/static/exemplars/pygamehello2.py").read() }}</pre>
+        
         <p>
+        	You can download this from <a href="{{url_for('static', filename='exemplars/pygamehello2.py')}}" download>pygamehello2.py</a>
+        </p>    
+        
+        <p>
+        	When you execute this, a dialog should pop up that looks something like this:
+       	</p>
+       	<div><img src="/static/pygamehello2.png"></div>
+         <p>
             Let's look at some of the highlights:
         </p>
         <ul>
+        	<li>
+        		<code class="prettyprint lang-py">WHITE = pygame.Color('white')</code> and the three lines
+        		following are simply creating some Pygame color objects to represent common colors. Instead
+        		of specifying colors with text (e.g. 'white') we could have used tuples to specify 
+        		the individual components. For example, 'white' would be: <code>(255, 255, 255)</code>
+        	</li>
             <li>
-                <code class="prettyprint lang-py">alphasurface = displaysurface.convert_alpha()</code> makes a copy
-                of the main window display surface that is capable of handling colors with an alpha (transparency)
-                component. By default, Pygame surfaces do <em>not</em> support transparency components.
+                <code class="prettyprint lang-py">drawsurface = displaysurface.copy()</code> makes a copy
+                of the main window display surface for us to draw on. This surface will have the exact same
+                dimensions as the visible window.
             </li>
             <li>
-                <code class="prettyprint lang-py">displaysurface.fill((0,0,0))</code> fills the main display surface
-                with a solid color (like a paintbucket fill in Photoshop). The color shown here has zero for each
-                of the color components, which is black. Since black is the absence of all light, all of the 
-                components have to be at zero to produce black. <strong>Note:</strong> the call looks like it has
-                too many parentheses, right? This is because the argument to the <code>fill</code> method is a color,
-                which is a tuple, which is a list of objects inside parentheses.
+            	<code class="prettyprint lang-py">drawsurface.set_colorkey(BLACK)</code> will make any 
+            	black colors drawn on the surface appear transparent. This means that the actual color
+            	black should be avoided (very dark gray can substitute). 
             </li>
             <li>
-                <code class="prettyprint lang-py">alphasurface.fill((0,0,0,0))</code> fills the alphasurface with
-                black, <em>but also specifies total transparency</em>. This surface will serve as a transparent
-                background to the objects that we will paint on the screen.
+                <code class="prettyprint lang-py">displaysurface.fill(BLACK)</code> fills the main display surface
+                with a solid color (like a paintbucket fill in Photoshop). The following line also fills the
+                <code>drawsurface</code> with black (which the <code>set_colorkey</code> function has dictated
+                will appear transparent, in preparation for drawing a shape.
             </li>
             <li>
-                <code class="prettyprint lang-py">pygame.draw.rect(alphasurface, (30,30,30,200), pygame.Rect(20,20,100,40))</code>
-                draws a rectangle (pygame.draw.rect) to the transparent surface (alphasurface) using a dark-gray
-                semi-transparent color (30,30,30,200). The last argument to pygame.draw.rect is a new Rect object
+                <code class="prettyprint lang-py">pygame.draw.rect(drawsurface, WHITE, pygame.Rect(20,20,200,300))</code>
+                draws a rectangle (pygame.draw.rect) to the drawing surface (drawsurface) using a white
+                color (WHITE). The last argument to pygame.draw.rect is a new Rect object
                 that specifies a rectangular region of the alphasurface. The four arguments to the pygame.Rect
                 constructor are the x and y coordinates of the upper left-hand corner of the rectangle, followed
                 by the width and height of the rectangle. In this example, the drawn rectangle will have its upper
-                left-hand corner start at the (20,20) point, will be 100 pixels wide and 40 pixels high.
+                left-hand corner start at the (20,20) point, will be 200 pixels wide and 300 pixels high. 
             </li>
             <li>
-                <code class="prettyprint lang-py">displaysurface.blit(alphasurface, (0,0))</code> copies the 
-                transparent drawing surface on to the window surface, such that its upper left hand corner will
+            	<code class="prettyprint lang-py">drawsurface.set_alpha(100)</code> will make the entire drawing
+            	surface semi-transparent. The number (100) shows how transparent the surface should be. A zero 
+            	would be completely transparent (also known as "invisible") and 255 would be completely opaque.
+            	Remember, the BLACK portions of the surface are already completely invisible, so those parts are
+            	not affected.
+            </li>
+            <li>
+            	<code class="prettyprint lang-py">displaysurface.blit(drawsurface,(0,0))</code> copies the image 
+            	from the drawsurface to the display surface. The tuple (0,0) tells you where on the destination
+            	surface the copy will be made. Since the displaysurface and drawsurface are the same size, the 
+            	simple destination choice is the upper left hand corner of the window (0,0). The term "blit" goes
+            	back to the early days of computer graphics in the mid-70s. It stands for BLock Transfer and was
+            	usually part of a slightly longer term: "bit blit" (which is kind of fun to say).
+            </li>
+            <li>
+                <code class="prettyprint lang-py">displaysurface.blit(drawsurface, (0,0))</code> copies the 
+                semi-transparent drawing surface on to the window surface, such that its upper left hand corner will
                 be at (0,0) on the screen.
             </li> 
             <li>
-                Most of the remaining lines are similar. The one exception is the line for drawing a circle:
-                <code class="prettyprint lang-py">pygame.draw.circle(alphasurface, (250,20,30,200), (200,200),86)</code>.
-                This example specifies a circle with a semi-transparent reddish color (250,20,30,200), whose
-                center is at (200,200) on the transparent drawing surface and has a radius of 86 pixels.
+                Most of the remaining lines are similar, but for drawing circles. The BLUE circle example illustrates
+                using a smaller surface for drawing.
             </li>
             <li>
                 <code class="prettyprint lang-py">pygame.time.wait(10)</code> forces your program to wait for 

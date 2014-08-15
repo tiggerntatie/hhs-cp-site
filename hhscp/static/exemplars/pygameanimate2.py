@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 
+
 class PygameApp(object):
     """
     Class that encapsulates a basic pygame application.
@@ -13,9 +14,6 @@ class PygameApp(object):
         self.screensize = screensize
         self.fullscreen = fullscreen
         self.title = title
-
-        # create a pygame group for tracking sprites
-        self.spritegroup = pygame.sprite.LayeredDirty() 
         
         self.elapsedms = 0                          # keep track of the elapsed time
         
@@ -39,7 +37,6 @@ class PygameApp(object):
 
     def erase(self):
         self.display.fill(self.backgroundcolor)
-        self.background = self.display.copy()       # Create a cleared background surface
 
     def run(self, fps = 50):
         """
@@ -58,9 +55,7 @@ class PygameApp(object):
             self.elapsedms += self.clock.tick(self.fps)
             # do any regular, periodic processing
             self.poll()
-            self.spritegroup.update()									# call udpate functions in sprites
-            self.spritegroup.clear(self.display, self.background)       # erase sprite backgrounds as needed
-            pygame.display.update(self.spritegroup.draw(self.display))  # update the display
+            pygame.display.update()
         # fell out of loop
         self.quit()
 
@@ -84,3 +79,65 @@ class PygameApp(object):
         be overridden in your own application.
         """
         pass
+
+
+# Now make your own application, based on PygameApp
+
+class MyApp(PygameApp):
+    """
+    Custom version of PygameApp, to display moving circle
+    """
+    def __init__(self, screensize = (600,300), velocity = (240, 60)):
+        super().__init__(screensize=screensize) # call base class initializer
+        # super().__init__(fullscreen = True)   # uncomment to try full screen!
+        self.color = pygame.Color('white')
+        self.radius = 50
+        self.linewidth = 1
+        self.xmin = self.radius
+        self.xmax = self.screensize[0] - self.radius
+        self.ymin = self.radius
+        self.ymax = self.screensize[1] - self.radius
+        self.position = [self.xmin, self.ymin]
+        self.velocity = list(velocity)
+
+
+    def poll(self):
+        """
+        Overrides the empty poll function in PygameApp
+        """
+        super().poll()                              # call super class poll function
+        
+        # compute a new position for the circle based on old position and velocity 
+        self.position = [p + v/self.fps for p,v in zip(self.position, self.velocity)] 
+                                                    # v/FPS computes pixels/frame instead of pixels/second
+                                                    # resulting position is a tuple of floats!
+        
+        # check to see if the circle is outside the margin
+        if ((self.position[0] > self.xmax and self.velocity[0] > 0) or          
+            (self.position[0] < self.xmin and self.velocity[0] < 0)):
+            self.velocity[0] *= -1                                   
+    
+        if ((self.position[1] > self.ymax and self.velocity[1] > 0) or          
+            (self.position[1] < self.ymin and self.velocity[1] < 0)):          
+            self.velocity[1] *= -1                                   
+
+        self.erase()                                # erase the display surface
+        pygame.draw.circle(self.display, 
+                           self.color,
+                           [int(x) for x in self.position],
+                           self.radius, 
+                           self.linewidth)          # draw a circle
+        
+    def handle_event(self, event):
+        """
+        Overrides the empty handle_event function in PygameApp
+        """
+        # handle a single event .. look for the 'q' key to quit
+        if event.type == KEYDOWN and event.unicode == 'q':
+            return False
+        print(event)                                # otherwise, print the event
+        return True
+
+# MyApp is created (instantiated) and executed with the run member function!
+myapp = MyApp((400,200))
+myapp.run()

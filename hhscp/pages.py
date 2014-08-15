@@ -27,6 +27,8 @@ def site_assignment(short_name):
     return render_template('assignments/' + short_name + '.html',
         title=event.name,
         datetime=datetime,
+        globals=globals,
+        locals=locals,
         builtins=__builtins__)
 
 
@@ -86,7 +88,7 @@ def site_userchallengesubmit(username, challengename):
     u = User(username)
     c = u.challenge(challengename)
     if not u.authenticated():
-        return redirect(url_for('site_authenticate', name=name))
+        return redirect(url_for('site_authenticate', name=username))
     if request.method == 'POST':
         file = request.files['file']
         if file:
@@ -108,7 +110,7 @@ def site_userchallenge(username, challengename):
 def site_userchallengedownload(username, challengename):
     u = User(username)
     if not u.authenticated() and not u.isadminsession():
-        return redirect(url_for('site_authenticate', name=name))
+        return redirect(url_for('site_authenticate', name=username))
     c = u.challenge(challengename)
     rv = app.make_response(c.testcode)
     #rv.headers.add_header('Content-Disposition: attachment', 'filename=' + u.shortname + c.testname + '.py')

@@ -11,18 +11,18 @@
             Although you could experiment with Tkinter using the Python console, you will have better results if you
             just start writing full programs with it. Let's start by importing the Tkinter module:
         </p>
-        <pre class="prettyprint lang-py">import Tkinter as tk</pre>
+        <pre class="prettyprint lang-py">import tkinter as tk</pre>
         <p>
             This line will bring in the Tkinter GUI functionality. This line is different from other times that
             we have used the <code>import</code> statement because of the <code>... as tk</code> section. Normally,
             if we used:
         </p>
-        <pre class="prettyprint lang-py">import Tkinter</pre>
+        <pre class="prettyprint lang-py">import tkinter</pre>
         <p>
-            we would have to access classes in Tkinter by writing, for example: <code>Tkinter.Label()</code>. Since we
-            may be using a lot of objects in the Tkinter module, it will be convenient if we don't have to type
-            <code>Tkinter</code> before each one of them. The <code>... as tk</code> bit means that we will
-            be able to call on objects in Tkinter using an abbreviated method. For example: <code>tk.Label()</code>.
+            we would have to access classes in Tkinter by writing, for example: <code>tkinter.Label()</code>. Since we
+            may be using a lot of objects in the tkinter module, it will be convenient if we don't have to type
+            <code>tkinter</code> before each one of them. The <code>... as tk</code> bit means that we will
+            be able to call on objects in tkinter using an abbreviated method. For example: <code>tk.Label()</code>.
         </p>
         <h3>Creating the Tkinter App</h3>
         <p>
@@ -46,13 +46,16 @@
         <pre class="prettyprint lang-py">myapp = MyDialog()
 myapp.mainloop()</pre>
         <p>
-            Enter this code into a new Python file in Eclipse and try running it. You should see a blank window appear
-            on your screen.
+            Enter this code (all three sections, 
+            starting with <code>import tkinter as tk</code>, continuing with <code>class MyDialog...</code> and ending with 
+            <code>myapp = MyDialog()...</code>) into a new Python file in Eclipse and try running it. You 
+            should see a small blank window appear on your screen:
         </p>
+        <div><img src="/static/tkinteremptyexample.png"></div>
         <h3>Add Controls</h3>
         <p>
-            Next we will add a text area at the top of the application window. Add the following to the MyDialog
-            __init__ method:
+            Next we will add a text area at the top of the application window. Add the following to the <code>MyDialog
+            __init__ method</code>:
         </p>
         <pre class="prettyprint lang-py">        # label across the top
         self.toptextstring = tk.StringVar(self,"here is a dummy string")
@@ -73,8 +76,9 @@ myapp.mainloop()</pre>
         <p>
             The final line for this control executes the <code>grid</code> method of the control, specifying a location
             in the window using row/column naming convention. This particular control is set to span two columns using
-            the <code>columnspan</code> argument. Execute your code to see how it works.
+            the <code>columnspan</code> argument. Execute your code to see it in action. It should look something like this:
         </p>
+        <div><img src="/static/tkinterdummystring.png"></div>
         <h3>Interact with the User</h3>
         <p>
             The next control to add will be an <code>Entry</code> control. This control gives the user an edit box where
@@ -91,11 +95,13 @@ myapp.mainloop()</pre>
             Entry control and place it on the window with <code>grid</code>. The last two lines bind the control
             to keyboard events. If the user presses the Enter key while typing in this control, then the MyDialog member
             function <code>self.inputareaupdate</code> will be executed automatically. If the user presses 
-            <em>any</em> key, then the <code>self.inputareaanykey</code> method will be executed. 
+            <em>any</em> key, then the <code>self.inputareaanykey</code> method will be executed. By itself this code
+            won't even execute properly because <code>inputareaupdate</code> and <code>inputareaanykey</code> have
+            not been defined. That's next:
         </p>
         <p>
-            <code>self.inputareaupdate</code> and <code>self.inputareaanykey</code> methods should be added below
-            the <code>__init__</code> method:
+            <code>self.inputareaupdate</code> and <code>self.inputareaanykey</code> methods should be added 
+            <strong>below</strong> the <code>__init__</code> method:
         </p>
         <pre class="prettyprint lang-py">    def inputareaupdate(self, event):
         self.toptextstring.set(self.inputtext.get())
@@ -107,8 +113,9 @@ myapp.mainloop()</pre>
             The first method will fire when the user hits the enter key and will copy the contents of the Entry
             window to the Label text above it (boring and silly, but easy to see). The second method checks for
             the user pressing the 'Q' or 'q' key and appends that character to the Label text above it. Enter this 
-            code into your file and see if it works.
+            code into your file and see if it works. It should look like this:          
         </p>
+        <div><img src="/static/tkinterinputtextarea.png"></div>
         <h3>Buttons</h3>
         <p>
             The final control we will try in this example is an ordinary button. Add these to your
@@ -142,7 +149,7 @@ myapp.mainloop()</pre>
         <p>
             The full example is shown here:
         </p>
-        <pre class="prettyprint lang-py">import Tkinter as tk
+        <pre class="prettyprint lang-py">import tkinter as tk
 
 class MyDialog(tk.Tk):  # based on the Tk application
     def __init__(self):
@@ -177,5 +184,8 @@ class MyDialog(tk.Tk):  # based on the Tk application
 
 myapp = MyDialog()
 myapp.mainloop()</pre>
+
+		<p>The full example should look like this:</p>
+		<div><img src="/static/tkinterfullexample.png"></div>
 
 {% endblock %}
