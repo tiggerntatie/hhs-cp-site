@@ -51,7 +51,7 @@ myapp.mainloop()</pre>
             <code>myapp = MyDialog()...</code>) into a new Python file in Eclipse and try running it. You 
             should see a small blank window appear on your screen:
         </p>
-        <div><img src="/static/tkinteremptyexample.png"></div>
+        <div><img src="{{url_for('static', filename='tkinteremptyexample.png')}}" /></div>
         <h3>Add Controls</h3>
         <p>
             Next we will add a text area at the top of the application window. Add the following to the <code>MyDialog
@@ -78,7 +78,7 @@ myapp.mainloop()</pre>
             in the window using row/column naming convention. This particular control is set to span two columns using
             the <code>columnspan</code> argument. Execute your code to see it in action. It should look something like this:
         </p>
-        <div><img src="/static/tkinterdummystring.png"></div>
+        <div><img src="{{url_for('static', filename='tkinterdummystring.png')}}" /></div>
         <h3>Interact with the User</h3>
         <p>
             The next control to add will be an <code>Entry</code> control. This control gives the user an edit box where
@@ -115,7 +115,7 @@ myapp.mainloop()</pre>
             the user pressing the 'Q' or 'q' key and appends that character to the Label text above it. Enter this 
             code into your file and see if it works. It should look like this:          
         </p>
-        <div><img src="/static/tkinterinputtextarea.png"></div>
+        <div><img src="{{url_for('static', filename='tkinterinputtextarea.png')}}" /></div>
         <h3>Buttons</h3>
         <p>
             The final control we will try in this example is an ordinary button. Add these to your
@@ -186,6 +186,6 @@ myapp = MyDialog()
 myapp.mainloop()</pre>
 
 		<p>The full example should look like this:</p>
-		<div><img src="/static/tkinterfullexample.png"></div>
+		<div><img src="{{url_for('static', filename='tkinterfullexample.png')}}" /></div>
 
 {% endblock %}
