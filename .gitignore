@@ -1,6 +1,9 @@
 *.py[cod]
 hhscp/userdata/*
 hhscp/data*
+.settings
+distribute*.gz
+c10guessinggame.py
 
 # C extensions
 *.so
