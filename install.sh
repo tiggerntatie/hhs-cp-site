@@ -1,4 +1,5 @@
 #! /bin/bash
-sudo chmod a+w hhscp/data
-sudo mkdir hhscp/userdata
-sudo chmod a+w hhscp/userdata
+chmod a+w hhscp/data
+mkdir hhscp/userdata
+mkdir hhscp/data
+chmod a+w hhscp/userdata
