@@ -25,7 +25,7 @@ def site_assignment(short_name):
     # certain assignment templates may need access to exemplar sources
     importlist = []
     if short_name == 'pygametrees':
-        import pygametictactoe
+        import hhscp.static.exemplars.pygametictactoe as pygametictactoe
         importlist.append(pygametictactoe)
 
     c = Calendar(True)          # allow all assignments
