@@ -1,8 +1,6 @@
 """
 Hanover High School Computer Programming web applicaton!
 
-Edit test TWO (github)
-
 """
 
 __author__ = 'ericdennison'

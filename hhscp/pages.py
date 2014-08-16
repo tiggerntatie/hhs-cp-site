@@ -22,13 +22,18 @@ def site_main():
 
 @app.route('/assignment/<short_name>')
 def site_assignment(short_name):
+    # certain assignment templates may need access to exemplar sources
+    importlist = []
+    if short_name == 'pygametrees':
+        import pygametictactoe
+        importlist.append(pygametictactoe)
+
     c = Calendar(True)          # allow all assignments
     event = c.assignments.nameDict[short_name]
     return render_template('assignments/' + short_name + '.html',
         title=event.name,
         datetime=datetime,
-        globals=globals,
-        locals=locals,
+        importlist=importlist,
         builtins=__builtins__)
 
 
