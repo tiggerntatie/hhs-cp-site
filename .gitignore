@@ -4,6 +4,7 @@ hhscp/data*
 .settings
 distribute*.gz
 c10guessinggame.py
+.DS_Store
 
 # C extensions
 *.so
