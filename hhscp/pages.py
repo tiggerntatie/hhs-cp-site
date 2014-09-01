@@ -9,6 +9,7 @@ from flask import redirect
 import inspect
 import sys
 import datetime
+import tempfile
 
 
 @app.route('/calendar')
@@ -89,10 +90,16 @@ def site_userchallengesubmit(username, challengename):
         return redirect(url_for('site_authenticate', name=username))
     if request.method == 'POST':
         file = request.files['file']
-        if file:
-            c.testcanonicalexample()
-            c.runtest(file)
-            c.savestate(u.datapath)
+        file.seek(0,2)
+        if not file.tell():
+            file.close()
+            file = tempfile.NamedTemporaryFile(mode='br+')
+            print(request.form['data'])
+            file.write(bytes(request.form['data'], 'UTF-8'))
+        file.seek(0)
+        c.testcanonicalexample()
+        c.runtest(file)
+        c.savestate(u.datapath)
     return redirect(c.userchallengeurl(username))
 
 

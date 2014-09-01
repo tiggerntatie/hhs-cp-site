@@ -11,6 +11,7 @@
         <form action="{{challenge.userchallengesubmiturl(user.shortname)}}" method="post" enctype="multipart/form-data">
             <ul>
                 <li>Select file for upload: <input type="file" name="file"/></li>
+                <li><textarea rows="10" cols="80" name="data">Or paste code here...</textarea>
                 <li><input type="submit" value="Upload"/></li>
             </ul>
         </form>
