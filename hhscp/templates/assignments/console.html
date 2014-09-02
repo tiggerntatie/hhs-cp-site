@@ -93,7 +93,7 @@ Out[4]: 3.0
 >>> 55532235
 Out[5]: 55532235
 >>> 234234.23423525
-Out[6]: 234234.23423525001
+Out[6]: 234234.23423525
 >>> 32j
 Out[7]: 32j</pre>
         <p>
@@ -102,6 +102,8 @@ Out[7]: 32j</pre>
         </p>
         <pre class="prettyprint lang-py">>>> a = 1
 >>> b = 23.5
+>>> c = 0.1
+>>> d = 0.2
 >>> pi = 3.14159
 >>> num77 = 77
 >>> a
@@ -109,10 +111,9 @@ Out[12]: 1
 >>> b
 Out[13]: 23.5
 >>> pi
-Out[14]: 3.1415899999999999</pre>
+Out[14]: 3.14159</pre>
         <p>
-            Notice that floating point numbers often aren't <em>exactly</em> the same as what you entered! Integer
-            numbers <em>will</em> be exactly what you entered. Variable names must begin with a letter (upper or
+            Variable names must begin with a letter (upper or
             lower case) and can be as long as you like, and may contain underscore characters or numerals (but not
             as the first character). Since there a lot of variable names that you could imagine, this is like having
             as many M+ keys on a calculator as you want.
@@ -138,7 +139,17 @@ Out[47]: 0.0
 >>> b//a
 Out[48]: 23.0
 >>> (3+5)*pi/43.0 # Parentheses are good too
-Out[49]: 0.5844818604651163</pre>
+Out[49]: 0.5844818604651163
+>>> c + d
+Out[50]: 0.30000000000000004</pre>
+        <p>
+            As you can see in the last example (go back and refer to the values assigned to c and d), simple 
+            arithmetic with floating point (decimal) numbers can lead to some interesting surprises. This is
+            because many decimal fractions (numbers with a decimal part) can not be perfectly represented in 
+            binary. And since binary is the only way computers can really do math (under the hood), they sometimes
+            will show you values that are very, very close to correct, but not exactly.
+        </p>
+
         <h3>Strings (text)</h3>
         <p>
             Python isn't just a calculator. You can create text objects on the fly by typing text, enclosed in either
