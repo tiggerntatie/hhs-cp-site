@@ -39,6 +39,12 @@ ol li {
   padding-bottom: 0.5em;
 }
 
+textarea.code {
+  font-family: Andale Mono, monospace;
+  font-size: 0.8em;
+}
+
+
 /* DEFAULT table */
 
 table caption {
