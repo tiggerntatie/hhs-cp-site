@@ -94,7 +94,6 @@ def site_userchallengesubmit(username, challengename):
         if not file.tell():
             file.close()
             file = tempfile.NamedTemporaryFile(mode='br+')
-            print(request.form['data'])
             file.write(bytes(request.form['data'], 'UTF-8'))
         file.seek(0)
         c.testcanonicalexample()
