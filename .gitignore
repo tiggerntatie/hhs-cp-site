@@ -1,6 +1,6 @@
 env
 *.py[cod]
-hhscp/userdata/*
+hhscp/userdata*
 hhscp/data*
 .settings
 distribute*.gz
