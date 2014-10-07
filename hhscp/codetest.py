@@ -36,7 +36,7 @@ class CodeTest(object):
         """
         run code test and return input and output
         """
-        pyfile = tempfile.NamedTemporaryFile(mode='r+')
+        pyfile = tempfile.NamedTemporaryFile(mode='w+', encoding='utf-8')  
         #self.testcode = string.translate(testfile.read(),None,'\r') # strip unwanted characters
         safecode = """
 import sys
@@ -87,14 +87,14 @@ sys.modules['subprocess']=None
 
     def savestate(self, path=''):
         for typ, data in self._stateinfo:
-            f = open(os.path.join(path, self.testname+'.'+typ), 'w')
+            f = open(os.path.join(path, self.testname+'.'+typ), 'w+', encoding='utf-8')
             f.write(getattr(self, data))
             f.close()
 
     def loadstate(self, path=''):
         try:
             for typ, data in self._stateinfo:
-                f = open(os.path.join(path, self.testname+'.'+typ), 'r')
+                f = open(os.path.join(path, self.testname+'.'+typ), 'r', encoding='utf-8')
                 setattr(self, data, f.read())
                 f.close()
         except IOError or UnicodeDecodeError:
