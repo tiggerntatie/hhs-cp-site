@@ -15,8 +15,10 @@ class MyCircle(Circle):
     def update(self, *args):
         super(MyCircle,self).update(args)
         if len(args) == 1:
+            offsetdelta = tuple(x-y for x,y in zip(args[0], self.offset))
             self.offset = args[0]
-        self.rect.move_ip(self.offset)
+            self.setpos(tuple(x+y for x,y in zip(self.pos,offsetdelta)))
+        #self.rect.move_ip(self.offset)
 
     def copy(self):
         """
@@ -45,8 +47,8 @@ class ConwayApp(PygameApp):
         pygame.key.set_repeat(100)              # allow keys to repeat when held 100 msec
         self.offset = (0,0)     # relative position of the viewport
         self.cellsize = 4
-        self.cellswide = self.screensize[0] / self.cellsize
-        self.cellshigh = self.screensize[1] / self.cellsize
+        self.cellswide = self.screensize[0] // self.cellsize
+        self.cellshigh = self.screensize[1] // self.cellsize
         self.cellboard = {}     # an empty map for storing cells
         self.mousedown = False  # keep track of the button state
         self.mousepos = (0,0)   # keep track of the mouse position
@@ -55,6 +57,7 @@ class ConwayApp(PygameApp):
         self.circ.setfilled(True)
         self.circ.setradius(self.cellsize//2)
         self.circ.setcolor((20,20,200,150))
+        self.running = False
 
     def handle_event(self, event):
         """
@@ -71,16 +74,19 @@ class ConwayApp(PygameApp):
             logicalcoordinates = self.logicalcoordinates(self.mousepos)         # x,y coordinates of the mouse
             if logicalcoordinates not in self.cellboard:                  # if it isn't already created..
                 self.cellboard[logicalcoordinates] = self.newcircle(logicalcoordinates)  # add it to the playing board
-        elif event.type == KEYDOWN:                 # keyboard
-            if event.key == K_UP:                   # cursor up
-                self.offset = (self.offset[0],self.offset[1]+self.cellsize*5) # calculate a new position
-            elif event.key == K_DOWN:               # cursor down
-                self.offset = (self.offset[0],self.offset[1]-self.cellsize*5) # calculate a new position
-            elif event.key == K_RIGHT:              # cursor right
-                self.offset = (self.offset[0]-self.cellsize*5,self.offset[1]) # calculate a new position
-            elif event.key == K_LEFT:               # cursor left
-                self.offset = (self.offset[0]+self.cellsize*5,self.offset[1]) # calculate a new position
-            self.spritegroup.update(self.offset)               # update the position
+        elif event.type == KEYDOWN:       # keyboard
+            if self.running and event.key != K_SPACE:                 
+                if event.key == K_UP:                   # cursor up
+                    self.offset = (self.offset[0],self.offset[1]+self.cellsize*5) # calculate a new position
+                elif event.key == K_DOWN:               # cursor down
+                    self.offset = (self.offset[0],self.offset[1]-self.cellsize*5) # calculate a new position
+                elif event.key == K_RIGHT:              # cursor right
+                    self.offset = (self.offset[0]-self.cellsize*5,self.offset[1]) # calculate a new position
+                elif event.key == K_LEFT:               # cursor left
+                    self.offset = (self.offset[0]+self.cellsize*5,self.offset[1]) # calculate a new position
+                self.spritegroup.update(self.offset)            # update the position
+            elif event.key == K_SPACE:     
+                self.running = not self.running
         return True
         #print event   # view events on the console
 
@@ -95,6 +101,8 @@ class ConwayApp(PygameApp):
         Perform the rules of Life on each element on the grid that might be affected by constructing
         a set of all points within range of known points
         """
+        if not self.running:
+            return
         points = set(self.cellboard)        # will be a set of all keys
         newpoints = set()
         for point in points:
@@ -120,7 +128,8 @@ class ConwayApp(PygameApp):
         """
         Convert logical x,y coordinates to screen coordinates
         """
-        return tuple(map(lambda x: x*self.cellsize, logicalxy))
+        rawscreen = tuple(map(lambda x: x*self.cellsize, logicalxy))
+        return (rawscreen[0] + self.offset[0], rawscreen[1] + self.offset[1])
 
     def logicalcoordinates(self, screenxy):
         """
@@ -164,4 +173,4 @@ class ConwayApp(PygameApp):
 
 # Run an instance of MyApp!
 myapp = ConwayApp()
-myapp.run(10)   # ? frames per second!
+myapp.run(50)   # ? frames per second!
