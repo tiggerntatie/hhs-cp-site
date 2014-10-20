@@ -39,14 +39,14 @@ class ConwayApp(PygameApp):
     """
     Custom version of PygameApp, to run Conway's Game of Life. Grid is fixed at 80x80 cells, 10 pixels per cell.
     """
-    def __init__(self, screensize = (600,600)):
+    def __init__(self, screensize = (600,600), fullscreen = False):
         """
         Application initialization is executed only ONCE!
         """
-        super().__init__(screensize = screensize, title="Conway's Life") # call base class initializer
+        super().__init__(screensize = screensize, fullscreen = fullscreen, title="Conway's Life") # call base class initializer
         pygame.key.set_repeat(100)              # allow keys to repeat when held 100 msec
         self.offset = (0,0)     # relative position of the viewport
-        self.cellsize = 4
+        self.cellsize = 20
         self.cellswide = self.screensize[0] // self.cellsize
         self.cellshigh = self.screensize[1] // self.cellsize
         self.cellboard = {}     # an empty map for storing cells
@@ -75,6 +75,8 @@ class ConwayApp(PygameApp):
             if logicalcoordinates not in self.cellboard:                  # if it isn't already created..
                 self.cellboard[logicalcoordinates] = self.newcircle(logicalcoordinates)  # add it to the playing board
         elif event.type == KEYDOWN:       # keyboard
+            if event.key == K_q:          # quit
+                return False
             if self.running and event.key != K_SPACE:                 
                 if event.key == K_UP:                   # cursor up
                     self.offset = (self.offset[0],self.offset[1]+self.cellsize*5) # calculate a new position
@@ -172,5 +174,5 @@ class ConwayApp(PygameApp):
         return total
 
 # Run an instance of MyApp!
-myapp = ConwayApp()
+myapp = ConwayApp((1024,768), True)
 myapp.run(50)   # ? frames per second!
