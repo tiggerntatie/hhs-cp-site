@@ -87,7 +87,7 @@ class User(object):
     
     def isadminsession(self):
         # Returns TRUE if the administrator is logged in 
-        return 'admin' in session and session['admin'] and session['passhash'] == self.passhash
+        return 'admin' in session and session['admin']
     
     def hashpass(self, password):
         return hashlib.sha512(bytes(password,'utf-8')).hexdigest()
@@ -98,7 +98,7 @@ class User(object):
         
     def login(self, password):
         session['passhash'] = self.hashpass(password)
-        if self.shortname == ADMIN:
+        if self.shortname == ADMIN and self.passhash == session['passhash']:
             session['admin'] = True
         else:
             session['admin'] = None
