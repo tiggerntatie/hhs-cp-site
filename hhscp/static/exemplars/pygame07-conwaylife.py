@@ -174,5 +174,5 @@ class ConwayApp(PygameApp):
         return total
 
 # Run an instance of MyApp!
-myapp = ConwayApp((1024,768), True)
+myapp = ConwayApp((1024,768), False)
 myapp.run(50)   # ? frames per second!

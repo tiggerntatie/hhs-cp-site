@@ -98,7 +98,7 @@ class User(object):
         
     def login(self, password):
         session['passhash'] = self.hashpass(password)
-        if self.shortname == ADMIN:
+        if self.shortname == ADMIN and self.passhash == session['passhash']:
             session['admin'] = True
         else:
             session['admin'] = None
